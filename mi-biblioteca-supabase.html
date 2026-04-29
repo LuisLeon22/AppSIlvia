@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mi Biblioteca">
+<title>Mi Biblioteca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --cream:#FAF7F2;--ink:#1C1410;--warm-brown:#8B6F47;--light-brown:#C4A882;
+    --pale:#F0E8DC;--accent:#D4622A;--muted:#9B8B7A;--surface:#FFFFFF;
+    --border:#E8DDD0;--star:#E8A020;--tag-bg:#F0E8DC;
+    --safe-top:env(safe-area-inset-top);--safe-bottom:env(safe-area-inset-bottom);
+  }
+  html,body{height:100%;overflow:hidden}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink)}
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif}
+
+  .app{display:flex;height:100vh;height:100dvh}
+  .sidebar{width:230px;background:var(--ink);padding-top:calc(24px + var(--safe-top));padding-bottom:calc(16px + var(--safe-bottom));display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+  .main{flex:1;overflow-y:auto;background:var(--cream);padding-top:var(--safe-top)}
+
+  .logo{padding:0 20px 28px;border-bottom:1px solid rgba(255,255,255,0.1)}
+  .logo h1{font-size:24px;color:#FAF7F2;font-weight:300;letter-spacing:0.5px}
+  .logo p{font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:1.5px;text-transform:uppercase}
+  .sync-indicator{display:flex;align-items:center;gap:5px;margin-top:8px}
+  .sync-dot{width:6px;height:6px;border-radius:50%;background:#E8A020;flex-shrink:0}
+  .sync-dot.ok{background:#5B9B6A}.sync-dot.err{background:#c0392b}
+  .sync-label{font-size:10px;color:rgba(250,247,242,0.4);letter-spacing:0.5px}
+
+  .nav{padding:20px 0}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:12px 20px;cursor:pointer;transition:all 0.2s;border-left:3px solid transparent;font-size:14px;color:rgba(250,247,242,0.6)}
+  .nav-item:hover{background:rgba(255,255,255,0.05);color:#FAF7F2}
+  .nav-item.active{background:rgba(212,98,42,0.15);color:#FAF7F2;border-left-color:var(--accent)}
+  .nav-icon{font-size:17px}
+  .sidebar-stats{margin-top:auto;padding:20px;border-top:1px solid rgba(255,255,255,0.1)}
+  .stat-pill{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .stat-pill span:first-child{font-size:12px;color:rgba(250,247,242,0.5)}
+  .stat-pill span:last-child{font-size:14px;font-weight:500;color:#FAF7F2}
+
+  .page-header{padding:28px 32px 0;display:flex;align-items:flex-start;justify-content:space-between}
+  .page-header h2{font-size:34px;font-weight:300;letter-spacing:-0.5px}
+  .page-header p{font-size:14px;color:var(--muted);margin-top:3px}
+  .btn-primary{background:var(--accent);color:white;border:none;padding:11px 22px;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:all 0.2s;white-space:nowrap}
+  .btn-primary:hover{background:#bf561f}
+  .btn-primary:active{transform:scale(0.97)}
+
+  .filters{padding:16px 32px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .filter-btn{padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s}
+  .filter-btn.active,.filter-btn:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+  .search-box{margin-left:auto;position:relative}
+  .search-box input{padding:8px 12px 8px 34px;border:1px solid var(--border);border-radius:20px;background:white;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;width:210px;transition:all 0.2s}
+  .search-box input:focus{border-color:var(--warm-brown);box-shadow:0 0 0 3px rgba(139,111,71,0.1)}
+  .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--muted)}
+
+  .books-grid{padding:16px 32px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:20px}
+  .loading-grid{padding:48px 32px;text-align:center;color:var(--muted)}
+  .loading-grid p{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--light-brown)}
+  .loading-grid small{font-size:13px;display:block;margin-top:4px}
+
+  .book-card{background:white;border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.25s;border:1px solid var(--border)}
+  .book-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(28,20,16,0.12)}
+  .book-card:active{transform:scale(0.98)}
+  .book-cover{height:210px;display:flex;align-items:flex-end;padding:16px;position:relative;overflow:hidden}
+  .book-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0) 40%,rgba(0,0,0,0.5))}
+  .cover-title{position:relative;z-index:1;font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;color:white;line-height:1.2;text-shadow:0 1px 4px rgba(0,0,0,0.4)}
+  .book-info{padding:14px}
+  .book-author{font-size:12px;color:var(--muted);margin-bottom:8px}
+  .book-author strong{color:var(--warm-brown);font-weight:500}
+  .stars{display:flex;gap:2px;margin-bottom:8px}
+  .star{color:var(--border);font-size:13px}
+  .star.filled{color:var(--star)}
+  .book-tags{display:flex;gap:4px;flex-wrap:wrap}
+  .tag{background:var(--tag-bg);color:var(--warm-brown);font-size:10px;padding:3px 8px;border-radius:10px;font-weight:500;display:inline-flex;align-items:center;gap:3px}
+  .status-dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0}
+  .status-read{background:#5B9B6A}.status-reading{background:#D4622A}.status-wishlist{background:#9B8B7A}
+
+  .detail-panel{position:fixed;top:0;right:-500px;width:460px;max-width:92vw;height:100vh;background:white;box-shadow:-4px 0 32px rgba(28,20,16,0.15);z-index:100;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;padding-top:var(--safe-top);padding-bottom:var(--safe-bottom)}
+  .detail-panel.open{right:0}
+  .panel-header{padding:20px 24px;position:sticky;top:0;background:white;z-index:10;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+  .panel-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);padding:4px 8px;border-radius:6px}
+  .panel-close:hover{background:var(--pale)}
+  .panel-cover{height:230px;margin:0 24px 24px;border-radius:12px;overflow:hidden}
+  .panel-body{padding:0 24px 32px}
+  .panel-title{font-size:28px;font-weight:400;line-height:1.2;margin-bottom:4px}
+  .panel-author{color:var(--warm-brown);font-size:15px;margin-bottom:12px}
+  .panel-meta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;font-size:12px;color:var(--muted)}
+  .panel-section{margin-bottom:24px}
+  .panel-section h4{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:10px;font-weight:500}
+  .review-text{font-size:15px;line-height:1.85;color:#4A3F35;font-family:'Cormorant Garamond',serif;font-style:italic}
+  .quote-block{border-left:3px solid var(--accent);padding:12px 16px;background:var(--cream);border-radius:0 8px 8px 0;margin-bottom:12px}
+  .quote-text{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--ink);line-height:1.7}
+  .quote-context{font-size:11px;color:var(--muted);margin-top:5px}
+  .rating-big{display:flex;gap:4px}
+  .rating-big .star{font-size:22px}
+  .panel-actions{display:flex;gap:10px;margin-top:24px}
+
+  .modal-overlay{position:fixed;inset:0;background:rgba(28,20,16,0.5);z-index:200;display:none;align-items:flex-end;justify-content:center;padding-bottom:var(--safe-bottom)}
+  .modal-overlay.open{display:flex}
+  @media(min-width:600px){.modal-overlay{align-items:center;padding:24px}}
+  .modal{background:white;border-radius:20px 20px 0 0;width:100%;max-width:620px;max-height:92vh;overflow-y:auto}
+  @media(min-width:600px){.modal{border-radius:16px;max-height:90vh}}
+  .modal-header{padding:24px 24px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:16px;position:sticky;top:0;background:white;z-index:5}
+  .modal-header h3{font-size:22px;font-weight:400}
+  .modal-body{padding:24px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .form-group{margin-bottom:16px}
+  .form-group label{display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:all 0.2s;background:var(--cream);-webkit-appearance:none;appearance:none}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--warm-brown);background:white;box-shadow:0 0 0 3px rgba(139,111,71,0.1)}
+  .form-group textarea{resize:vertical;min-height:90px;line-height:1.6}
+  .star-rating-input{display:flex;gap:8px;margin-top:4px}
+  .star-rating-input span{font-size:28px;cursor:pointer;transition:transform 0.1s;user-select:none;-webkit-user-select:none}
+  .star-rating-input span:active{transform:scale(1.3)}
+  .modal-footer{padding:0 24px 24px;display:flex;gap:12px;justify-content:flex-end}
+  .btn-secondary{background:transparent;border:1px solid var(--border);color:var(--ink);padding:11px 20px;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500}
+
+  .quotes-grid{padding:16px 32px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+  .quote-card{background:white;border-radius:12px;padding:20px;border:1px solid var(--border);transition:all 0.2s}
+  .quote-card-text{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--ink);line-height:1.75;margin-bottom:14px}
+  .quote-card-book{font-size:12px;color:var(--warm-brown);font-weight:500}
+  .quote-card-author{font-size:11px;color:var(--muted);margin-top:2px}
+
+  .stats-page{padding:28px 32px 40px}
+  .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px}
+  @media(min-width:700px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+  .stat-card{background:white;border-radius:12px;padding:20px;border:1px solid var(--border);text-align:center}
+  .stat-number{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--ink);line-height:1}
+  .stat-label{font-size:11px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
+  .genre-bars{background:white;border-radius:12px;padding:24px;border:1px solid var(--border)}
+  .genre-bars h3{font-size:20px;font-weight:400;margin-bottom:20px}
+  .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .bar-label{width:140px;font-size:13px;color:var(--ink);text-align:right;flex-shrink:0;line-height:1.3}
+  .bar-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+  .bar-fill{height:100%;background:var(--accent);border-radius:4px;transition:width 0.9s ease}
+  .bar-count{width:24px;font-size:12px;color:var(--muted);text-align:right}
+
+  .toast{position:fixed;bottom:calc(32px + var(--safe-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--cream);padding:13px 26px;border-radius:30px;font-size:13px;opacity:0;transition:all 0.3s;z-index:300;pointer-events:none;white-space:nowrap}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .empty-state{text-align:center;padding:80px 32px;color:var(--muted)}
+  .empty-state p{font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:8px;color:var(--light-brown)}
+  .empty-state small{font-size:13px}
+  .color-swatches{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .color-swatch{width:32px;height:32px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all 0.15s}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">
+      <h1>Biblioteca</h1>
+      <p>mi diario literario</p>
+      <div class="sync-indicator">
+        <span class="sync-dot" id="sync-dot"></span>
+        <span class="sync-label" id="sync-label">Conectando...</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="nav-item active" onclick="showPage('library')" id="nav-library"><span class="nav-icon">📚</span> Mi colección</div>
+      <div class="nav-item" onclick="showPage('quotes')" id="nav-quotes"><span class="nav-icon">✦</span> Citas favoritas</div>
+      <div class="nav-item" onclick="showPage('stats')" id="nav-stats"><span class="nav-icon">◎</span> Estadísticas</div>
+    </nav>
+    <div class="sidebar-stats">
+      <div class="stat-pill"><span>Leídos</span><span id="sb-read">0</span></div>
+      <div class="stat-pill"><span>Leyendo</span><span id="sb-reading">0</span></div>
+      <div class="stat-pill"><span>Lista</span><span id="sb-wishlist">0</span></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div id="page-library">
+      <div class="page-header">
+        <div><h2 class="serif">Mi Colección</h2><p>Todos los libros que han pasado por tus manos</p></div>
+        <button class="btn-primary" onclick="openModal()">+ Añadir libro</button>
+      </div>
+      <div class="filters">
+        <button class="filter-btn active" onclick="filterBooks('all',this)">Todos</button>
+        <button class="filter-btn" onclick="filterBooks('read',this)">✓ Leídos</button>
+        <button class="filter-btn" onclick="filterBooks('reading',this)">◉ Leyendo</button>
+        <button class="filter-btn" onclick="filterBooks('wishlist',this)">♡ Lista</button>
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+          <input type="text" id="search" placeholder="Buscar libro o autor..." oninput="renderBooks()">
+        </div>
+      </div>
+      <div class="books-grid" id="books-grid"><div class="loading-grid" style="grid-column:1/-1"><p>Cargando tu biblioteca...</p><small>Conectando con la nube</small></div></div>
+    </div>
+
+    <div id="page-quotes" style="display:none">
+      <div class="page-header"><div><h2 class="serif">Citas Favoritas</h2><p>Palabras que te han marcado</p></div></div>
+      <div class="quotes-grid" id="quotes-grid"></div>
+    </div>
+
+    <div id="page-stats" style="display:none">
+      <div class="stats-page">
+        <div style="margin-bottom:24px"><h2 class="serif" style="font-size:34px;font-weight:300">Estadísticas</h2><p style="font-size:14px;color:var(--muted)">Tu historia como lectora</p></div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-number" id="st-total">0</div><div class="stat-label">Total libros</div></div>
+          <div class="stat-card"><div class="stat-number" id="st-read">0</div><div class="stat-label">Leídos</div></div>
+          <div class="stat-card"><div class="stat-number" id="st-avg">—</div><div class="stat-label">Puntuación media</div></div>
+          <div class="stat-card"><div class="stat-number" id="st-quotes">0</div><div class="stat-label">Citas guardadas</div></div>
+        </div>
+        <div class="genre-bars"><h3 class="serif">Por género</h3><div id="genre-chart"></div></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Detail Panel -->
+<div class="detail-panel" id="detail-panel">
+  <div class="panel-header"><div id="panel-status"></div><button class="panel-close" onclick="closePanel()">✕</button></div>
+  <div class="panel-cover" id="panel-cover"></div>
+  <div class="panel-body" id="panel-body"></div>
+</div>
+<div style="position:fixed;inset:0;background:rgba(28,20,16,0.3);z-index:99;display:none" id="panel-overlay" onclick="closePanel()"></div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header"><h3 class="serif" id="modal-title">Añadir nuevo libro</h3><button class="panel-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row" style="margin-bottom:0">
+        <div class="form-group"><label>Título</label><input id="f-title" placeholder="El nombre del libro"></div>
+        <div class="form-group"><label>Autor</label><input id="f-author" placeholder="Nombre del autor"></div>
+      </div>
+      <div class="form-row" style="margin-bottom:0">
+        <div class="form-group"><label>Editorial</label><input id="f-publisher" placeholder="Editorial"></div>
+        <div class="form-group"><label>Año</label><input id="f-year" type="number" placeholder="2024"></div>
+      </div>
+      <div class="form-row" style="margin-bottom:0">
+        <div class="form-group">
+          <label>Género</label>
+          <select id="f-genre">
+            <option value="">Seleccionar...</option>
+            <option>Ficción literaria</option><option>Ciencia ficción</option><option>Romance</option>
+            <option>Misterio/Thriller</option><option>Fantasía</option><option>No ficción</option>
+            <option>Historia</option><option>Ensayo</option><option>Poesía</option><option>Clásico</option><option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Estado</label>
+          <select id="f-status">
+            <option value="read">Leído ✓</option>
+            <option value="reading">Leyendo ahora ◉</option>
+            <option value="wishlist">Lista de deseos ♡</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Mi puntuación</label>
+        <div class="star-rating-input" id="star-input">
+          <span onclick="setRating(1)">☆</span><span onclick="setRating(2)">☆</span>
+          <span onclick="setRating(3)">☆</span><span onclick="setRating(4)">☆</span><span onclick="setRating(5)">☆</span>
+        </div>
+      </div>
+      <div class="form-group"><label>Mi reseña / diario</label><textarea id="f-review" rows="4" placeholder="¿Qué te pareció? ¿Cómo te hizo sentir? Escribe libremente..."></textarea></div>
+      <div class="form-group"><label>Citas favoritas</label><textarea id="f-quote" rows="3" placeholder="Una cita por línea. Puedes añadir varias separadas por Enter."></textarea></div>
+      <div class="form-group">
+        <label>Color de portada</label>
+        <div class="color-swatches">
+          <div class="color-swatch" style="background:#8B5E3C" onclick="pickColor('#8B5E3C',this)"></div>
+          <div class="color-swatch" style="background:#2C4A6E" onclick="pickColor('#2C4A6E',this)"></div>
+          <div class="color-swatch" style="background:#4A7A4C" onclick="pickColor('#4A7A4C',this)"></div>
+          <div class="color-swatch" style="background:#7A3F4A" onclick="pickColor('#7A3F4A',this)"></div>
+          <div class="color-swatch" style="background:#5C4A7A" onclick="pickColor('#5C4A7A',this)"></div>
+          <div class="color-swatch" style="background:#7A6A3C" onclick="pickColor('#7A6A3C',this)"></div>
+          <div class="color-swatch" style="background:#3A6A7A" onclick="pickColor('#3A6A7A',this)"></div>
+          <div class="color-swatch" style="background:#6A3A3A" onclick="pickColor('#6A3A3A',this)"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+      <button class="btn-primary" id="btn-save" onclick="saveBook()">Guardar libro</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Supabase config ──────────────────────────────────────
+const SUPA_URL='https://whrfnboqhypusoggvbqv.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndocmZuYm9xaHlwdXNvZ2d2YnF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NDkyODYsImV4cCI6MjA5MTQyNTI4Nn0.Z86mWomiz9ScEPYObvL4eXazwcfVXzuAQLelSZEV98I';
+
+async function supa(path,method,body){
+  method=method||'GET';
+  const url=SUPA_URL+'/rest/v1/'+path;
+  const h={'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'};
+  if(method==='POST'||method==='PATCH') h['Prefer']='return=representation';
+  const opts={method,headers:h};
+  if(body) opts.body=JSON.stringify(body);
+  const r=await fetch(url,opts);
+  if(!r.ok){const t=await r.text();throw new Error(t);}
+  if(r.status===204)return null;
+  const txt=await r.text();
+  return txt?JSON.parse(txt):null;
+}
+
+// ── State ────────────────────────────────────────────────
+let books=[];let currentFilter='all';let selectedRating=0;let selectedColor='#8B5E3C';let editingId=null;
+
+// ── Init ─────────────────────────────────────────────────
+async function init(){
+  setSyncStatus('loading');
+  try{
+    const data=await supa('biblioteca?order=author.asc');
+    books=data.map(b=>({...b,quotes:parseQuotes(b.quotes)}));
+    setSyncStatus('ok');
+    renderBooks();updateSidebar();
+  }catch(e){
+    setSyncStatus('err');
+    // fallback a localStorage
+    const saved=localStorage.getItem('biblioteca_fallback');
+    if(saved){books=JSON.parse(saved);renderBooks();updateSidebar();}
+    else{document.getElementById('books-grid').innerHTML='<div class="empty-state" style="grid-column:1/-1"><p>Sin conexión</p><small>Verifica tu internet e intenta de nuevo</small></div>';}
+  }
+}
+
+function parseQuotes(raw){
+  if(!raw)return[];
+  if(Array.isArray(raw))return raw;
+  try{return JSON.parse(raw);}catch{return raw.split('\n').filter(Boolean);}
+}
+
+function serializeQuotes(arr){return JSON.stringify(arr);}
+
+function setSyncStatus(state){
+  const dot=document.getElementById('sync-dot');
+  const lbl=document.getElementById('sync-label');
+  if(!dot)return;
+  dot.className='sync-dot '+(state==='ok'?'ok':state==='err'?'err':'');
+  lbl.textContent=state==='ok'?'Sincronizado':state==='err'?'Sin conexión':'Sincronizando...';
+}
+
+// ── Render books ─────────────────────────────────────────
+function renderBooks(){
+  const q=(document.getElementById('search').value||'').toLowerCase();
+  let filtered=books.filter(b=>{
+    if(currentFilter!=='all'&&b.status!==currentFilter)return false;
+    if(q&&!b.title.toLowerCase().includes(q)&&!b.author.toLowerCase().includes(q))return false;
+    return true;
+  });
+  filtered.sort((a,b)=>a.author.localeCompare(b.author,'es'));
+  const grid=document.getElementById('books-grid');
+  if(!filtered.length){
+    grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><p>Ningún libro aquí todavía</p><small>Añade tu primer libro con el botón de arriba</small></div>';
+    return;
+  }
+  grid.innerHTML=filtered.map(b=>`
+    <div class="book-card" onclick="openDetail(${b.id})">
+      <div class="book-cover" style="background:${b.color||'#8B5E3C'}">
+        <div class="cover-title">${esc(b.title)}</div>
+      </div>
+      <div class="book-info">
+        <div class="book-author">por <strong>${esc(b.author)}</strong></div>
+        <div class="stars">${renderStars(b.rating||0)}</div>
+        <div class="book-tags">
+          <span class="tag"><span class="status-dot status-${b.status}"></span>${statusLabel(b.status)}</span>
+          ${b.genre?`<span class="tag">${esc(b.genre)}</span>`:''}
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function renderStars(n){return[1,2,3,4,5].map(i=>`<span class="star${i<=n?' filled':''}">${i<=n?'★':'☆'}</span>`).join('')}
+function statusLabel(s){return{read:'Leído',reading:'Leyendo',wishlist:'Lista de deseos'}[s]||s}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function filterBooks(f,el){
+  currentFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderBooks();
+}
+
+// ── Detail panel ─────────────────────────────────────────
+function openDetail(id){
+  const b=books.find(x=>x.id===id);if(!b)return;
+  const quotes=parseQuotes(b.quotes);
+  document.getElementById('panel-status').innerHTML=`<span class="tag"><span class="status-dot status-${b.status}"></span>${statusLabel(b.status)}</span>`;
+  document.getElementById('panel-cover').innerHTML=`<div style="height:100%;background:${b.color||'#8B5E3C'};display:flex;align-items:flex-end;padding:20px"><div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:rgba(255,255,255,0.95);font-weight:400;line-height:1.2">${esc(b.title)}</div></div>`;
+  document.getElementById('panel-body').innerHTML=`
+    <p class="panel-title serif">${esc(b.title)}</p>
+    <p class="panel-author">${esc(b.author)}</p>
+    <div class="panel-meta">
+      ${b.publisher?`<span>${esc(b.publisher)}</span>`:''}
+      ${b.year?`<span>${b.year}</span>`:''}
+      ${b.genre?`<span>${esc(b.genre)}</span>`:''}
+    </div>
+    ${b.rating?`<div class="panel-section"><h4>Puntuación</h4><div class="rating-big">${renderStars(b.rating)}</div></div>`:''}
+    ${b.review?`<div class="panel-section"><h4>Mi reseña</h4><p class="review-text">${esc(b.review).replace(/\n/g,'<br>')}</p></div>`:''}
+    ${quotes.length?`<div class="panel-section"><h4>Citas favoritas</h4>${quotes.map(q=>`<div class="quote-block"><p class="quote-text">"${esc(q)}"</p><p class="quote-context">— ${esc(b.title)}, ${esc(b.author)}</p></div>`).join('')}</div>`:''}
+    <div class="panel-actions">
+      <button class="btn-primary" onclick="editBook(${b.id})">Editar</button>
+      <button class="btn-secondary" onclick="if(confirm('¿Eliminar este libro?'))deleteBook(${b.id})">Eliminar</button>
+    </div>`;
+  document.getElementById('detail-panel').classList.add('open');
+  document.getElementById('panel-overlay').style.display='block';
+}
+
+function closePanel(){
+  document.getElementById('detail-panel').classList.remove('open');
+  document.getElementById('panel-overlay').style.display='none';
+}
+
+// ── Modal ────────────────────────────────────────────────
+function openModal(editId){
+  editingId=editId||null;
+  document.getElementById('modal-title').textContent=editId?'Editar libro':'Añadir nuevo libro';
+  if(editId){
+    const b=books.find(x=>x.id===editId);
+    document.getElementById('f-title').value=b.title||'';
+    document.getElementById('f-author').value=b.author||'';
+    document.getElementById('f-publisher').value=b.publisher||'';
+    document.getElementById('f-year').value=b.year||'';
+    document.getElementById('f-genre').value=b.genre||'';
+    document.getElementById('f-status').value=b.status||'read';
+    document.getElementById('f-review').value=b.review||'';
+    const quotes=parseQuotes(b.quotes);
+    document.getElementById('f-quote').value=quotes.join('\n');
+    setRating(b.rating||0);
+    pickColor(b.color||'#8B5E3C',null);
+  }else{
+    ['f-title','f-author','f-publisher','f-year','f-review','f-quote'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('f-genre').value='';
+    document.getElementById('f-status').value='read';
+    setRating(0);pickColor('#8B5E3C',null);
+  }
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+
+function setRating(n){
+  selectedRating=n;
+  document.querySelectorAll('#star-input span').forEach((s,i)=>{s.textContent=i<n?'★':'☆';s.style.color=i<n?'#E8A020':'#ccc'});
+}
+
+function pickColor(c,el){
+  selectedColor=c;
+  document.querySelectorAll('.color-swatch').forEach(d=>d.style.border='3px solid transparent');
+  if(el){el.style.border='3px solid var(--ink)';return;}
+  document.querySelectorAll('.color-swatch').forEach(d=>{if(d.style.background===c)d.style.border='3px solid var(--ink)'});
+}
+
+// ── Save / Edit / Delete ─────────────────────────────────
+async function saveBook(){
+  const title=(document.getElementById('f-title').value||'').trim();
+  const author=(document.getElementById('f-author').value||'').trim();
+  if(!title||!author){showToast('Por favor añade título y autor');return}
+  const btn=document.getElementById('btn-save');
+  btn.disabled=true;btn.textContent='Guardando...';
+  const quoteRaw=(document.getElementById('f-quote').value||'').trim();
+  const quotesArr=quoteRaw?quoteRaw.split('\n').map(q=>q.trim()).filter(Boolean):[];
+  const payload={
+    title,author,
+    publisher:(document.getElementById('f-publisher').value||'').trim(),
+    year:document.getElementById('f-year').value||null,
+    genre:document.getElementById('f-genre').value||null,
+    status:document.getElementById('f-status').value,
+    rating:selectedRating||null,
+    review:(document.getElementById('f-review').value||'').trim()||null,
+    quotes:serializeQuotes(quotesArr),
+    color:selectedColor
+  };
+  try{
+    if(editingId){
+      const updated=await supa('biblioteca?id=eq.'+editingId,'PATCH',payload);
+      const idx=books.findIndex(x=>x.id===editingId);
+      if(idx>-1)books[idx]={...books[idx],...payload,quotes:quotesArr,id:editingId};
+    }else{
+      const created=await supa('biblioteca','POST',payload);
+      const newBook=Array.isArray(created)?created[0]:created;
+      books.push({...newBook,quotes:quotesArr});
+    }
+    setSyncStatus('ok');
+    localStorage.setItem('biblioteca_fallback',JSON.stringify(books));
+    renderBooks();updateSidebar();closeModal();closePanel();
+    showToast(editingId?'Libro actualizado ✓':'Libro añadido a tu colección ✓');
+  }catch(e){
+    showToast('Error al guardar — verifica conexión');
+    setSyncStatus('err');
+  }
+  btn.disabled=false;btn.textContent='Guardar libro';
+}
+
+function editBook(id){closePanel();setTimeout(()=>openModal(id),300)}
+
+async function deleteBook(id){
+  try{
+    await supa('biblioteca?id=eq.'+id,'DELETE');
+    books=books.filter(b=>b.id!==id);
+    localStorage.setItem('biblioteca_fallback',JSON.stringify(books));
+    renderBooks();updateSidebar();closePanel();
+    showToast('Libro eliminado');
+  }catch(e){showToast('Error al eliminar');}
+}
+
+// ── Sidebar stats ────────────────────────────────────────
+function updateSidebar(){
+  document.getElementById('sb-read').textContent=books.filter(b=>b.status==='read').length;
+  document.getElementById('sb-reading').textContent=books.filter(b=>b.status==='reading').length;
+  document.getElementById('sb-wishlist').textContent=books.filter(b=>b.status==='wishlist').length;
+}
+
+// ── Pages ────────────────────────────────────────────────
+function showPage(p){
+  ['library','quotes','stats'].forEach(x=>{
+    document.getElementById('page-'+x).style.display=x===p?'block':'none';
+    document.getElementById('nav-'+x).classList.toggle('active',x===p);
+  });
+  if(p==='quotes')renderQuotes();
+  if(p==='stats')renderStats();
+}
+
+function renderQuotes(){
+  const all=books.flatMap(b=>{
+    const qs=parseQuotes(b.quotes);
+    return qs.map(q=>({text:q,book:b.title,author:b.author,color:b.color||'#8B5E3C'}));
+  });
+  const g=document.getElementById('quotes-grid');
+  if(!all.length){g.innerHTML='<div class="empty-state" style="grid-column:1/-1"><p>Ninguna cita guardada</p><small>Añade citas al registrar tus libros</small></div>';return}
+  g.innerHTML=all.map(q=>`
+    <div class="quote-card" style="border-top:3px solid ${q.color}">
+      <p class="quote-card-text">"${esc(q.text)}"</p>
+      <p class="quote-card-book">${esc(q.book)}</p>
+      <p class="quote-card-author">${esc(q.author)}</p>
+    </div>`).join('');
+}
+
+function renderStats(){
+  const read=books.filter(b=>b.status==='read');
+  const rated=read.filter(b=>b.rating>0);
+  const avg=rated.length?(rated.reduce((s,b)=>s+b.rating,0)/rated.length).toFixed(1):0;
+  document.getElementById('st-total').textContent=books.length;
+  document.getElementById('st-read').textContent=read.length;
+  document.getElementById('st-avg').textContent=rated.length?avg+'★':'—';
+  const totalQuotes=books.reduce((s,b)=>s+parseQuotes(b.quotes).length,0);
+  document.getElementById('st-quotes').textContent=totalQuotes;
+  const genres={};
+  books.forEach(b=>{if(b.genre)genres[b.genre]=(genres[b.genre]||0)+1});
+  const sorted=Object.entries(genres).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  const max=sorted[0]?sorted[0][1]:1;
+  document.getElementById('genre-chart').innerHTML=sorted.length
+    ?sorted.map(([g,c])=>`<div class="bar-row"><span class="bar-label">${esc(g)}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/max*100)}%"></div></div><span class="bar-count">${c}</span></div>`).join('')
+    :'<p style="color:var(--muted);font-size:14px">Añade libros con género para ver el gráfico</p>';
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+init();
+</script>
+</body>
+</html>
