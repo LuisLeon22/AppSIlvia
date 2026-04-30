@@ -463,21 +463,22 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .dedicatoria-btn{
   margin:16px 20px 0;
   display:flex;align-items:center;gap:10px;
-  background:linear-gradient(135deg,var(--rose-pale),var(--mint-pale));
-  border:1.5px solid var(--rose-light);border-radius:12px;
+  background:rgba(196,120,138,0.12);
+  border:1px solid rgba(196,120,138,0.25);
+  border-radius:12px;
   padding:12px 14px;cursor:pointer;transition:all 0.2s;
   animation:pulse-soft 3s ease-in-out infinite;
 }
-.dedicatoria-btn:hover{transform:scale(1.02);box-shadow:0 4px 16px rgba(196,120,138,0.25)}
+.dedicatoria-btn:hover{background:rgba(196,120,138,0.22);transform:scale(1.02)}
 @keyframes pulse-soft{
   0%,100%{box-shadow:0 0 0 0 rgba(196,120,138,0)}
-  50%{box-shadow:0 0 0 6px rgba(196,120,138,0.12)}
+  50%{box-shadow:0 0 0 6px rgba(196,120,138,0.10)}
 }
 .dedicatoria-icon{font-size:20px}
 .dedicatoria-label{flex:1}
-.dedicatoria-label strong{display:block;font-size:12px;color:var(--rose-deep);font-weight:600}
-.dedicatoria-label span{font-size:10px;color:var(--muted);font-style:italic}
-.dedicatoria-arrow{font-size:14px;color:var(--rose-light)}
+.dedicatoria-label strong{display:block;font-size:12px;color:var(--rose-light);font-weight:600}
+.dedicatoria-label span{font-size:10px;color:rgba(250,247,242,0.35);font-style:italic}
+.dedicatoria-arrow{font-size:14px;color:rgba(196,120,138,0.5)}
 
 .dedicatoria-overlay{
   position:fixed;inset:0;background:rgba(42,31,21,0.6);
@@ -1227,43 +1228,38 @@ const POSTIT_COLORS=[
 ];
 
 // ── QUOTES INPUT ───────────────────────────────────────────────
+let quoteCounter=0;
 function addQuoteInput(value, color){
   const list=document.getElementById('quotes-list');
+  const uid='qcard-'+(++quoteCounter);
   const div=document.createElement('div');
-  div.style.cssText='background:white;border:1.5px solid var(--border);border-radius:12px;padding:12px;margin-bottom:2px;transition:background 0.2s';
-  if(color){
-    const pc=POSTIT_COLORS.find(c=>c.id===color);
-    if(pc)div.style.background=pc.bg;
-  }
+  div.id=uid;
+  div.style.cssText='border:1.5px solid var(--border);border-radius:12px;padding:12px;margin-bottom:6px;transition:background 0.2s';
+  const pc=color&&color!=='none'?POSTIT_COLORS.find(c=>c.id===color):null;
+  div.style.background=pc?pc.bg:'white';
   const selectedColor=color||'none';
   const swatchesHtml=`
     <div class="postit-swatches">
-      <div class="postit-none ${selectedColor==='none'?'selected':''}" onclick="selectPostitColor(this,'none')" title="Sin color"></div>
-      ${POSTIT_COLORS.map(c=>`<div class="postit-swatch ${selectedColor===c.id?'selected':''}" style="background:${c.bg}" onclick="selectPostitColor(this,'${c.id}')" title="${c.label}" data-color="${c.id}"></div>`).join('')}
+      <div class="postit-none ${selectedColor==='none'?'selected':''}" onclick="selectPostitColor('${uid}','none')" title="Sin color">✕</div>
+      ${POSTIT_COLORS.map(c=>`<div class="postit-swatch ${selectedColor===c.id?'selected':''}" style="background:${c.bg}" onclick="selectPostitColor('${uid}','${c.id}')" title="${c.label}"></div>`).join('')}
     </div>`;
   div.innerHTML=`
     <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px">
-      <textarea class="quote-input" rows="2" placeholder="Escribe la cita aquí..." data-color="${selectedColor}" style="flex:1;padding:8px 10px;border:none;border-radius:8px;font-size:14px;font-family:'Cormorant Garamond',serif;font-style:italic;outline:none;resize:none;background:transparent;line-height:1.6;color:var(--ink)">${esc(value||'')}</textarea>
-      <button type="button" onclick="this.closest('div[style]').remove()" style="background:rgba(42,31,21,0.08);color:var(--muted);border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:12px;flex-shrink:0;margin-top:2px;transition:background 0.2s">✕</button>
+      <textarea class="quote-input" rows="2" placeholder="Escribe la cita aquí..." data-color="${selectedColor}" data-card="${uid}" style="flex:1;padding:8px 10px;border:none;border-radius:8px;font-size:14px;font-family:'Cormorant Garamond',serif;font-style:italic;outline:none;resize:none;background:transparent;line-height:1.6;color:var(--ink)">${esc(value||'')}</textarea>
+      <button type="button" onclick="document.getElementById('${uid}').remove()" style="background:rgba(42,31,21,0.08);color:var(--muted);border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:12px;flex-shrink:0;margin-top:2px">✕</button>
     </div>
     <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:500">Color de post-it</div>
     ${swatchesHtml}`;
   list.appendChild(div);
 }
 
-function selectPostitColor(el, colorId){
-  const card=el.closest('div[style]');
-  // Remove selected from all swatches in this card
+function selectPostitColor(uid, colorId){
+  const card=document.getElementById(uid);
+  if(!card)return;
   card.querySelectorAll('.postit-swatch,.postit-none').forEach(s=>s.classList.remove('selected'));
-  el.classList.add('selected');
-  // Update card background
-  if(colorId==='none'){
-    card.style.background='white';
-  }else{
-    const pc=POSTIT_COLORS.find(c=>c.id===colorId);
-    if(pc)card.style.background=pc.bg;
-  }
-  // Update textarea data-color
+  card.querySelector(colorId==='none'?'.postit-none':`.postit-swatch[onclick*="'${colorId}'"]`)?.classList.add('selected');
+  const pc=colorId!=='none'?POSTIT_COLORS.find(c=>c.id===colorId):null;
+  card.style.background=pc?pc.bg:'white';
   const ta=card.querySelector('.quote-input');
   if(ta)ta.dataset.color=colorId;
 }
