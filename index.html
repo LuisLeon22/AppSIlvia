@@ -6,177 +6,535 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mi Biblioteca">
- <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
-<link rel="apple-touch-icon" href="LOGO APP.png">  <!-- 👈 AQUÍ -->
 <title>Mi Biblioteca</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
- <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --cream:#FAF7F2;--ink:#1C1410;--warm-brown:#8B6F47;--light-brown:#C4A882;
-    --pale:#F0E8DC;--accent:#D4622A;--muted:#9B8B7A;--surface:#FFFFFF;
-    --border:#E8DDD0;--star:#E8A020;--tag-bg:#F0E8DC;
-    --safe-top:env(safe-area-inset-top);--safe-bottom:env(safe-area-inset-bottom);
-  }
-  html,body{height:100%;overflow:hidden}
-  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink)}
-  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif}
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* Browns - base */
+  --cream:#FAF7F2;
+  --cream-dark:#F2EBE0;
+  --ink:#2A1F15;
+  --warm-brown:#8B6F47;
+  --mid-brown:#C4A882;
+  --light-brown:#E8D8C0;
+  /* Rose - primary accent */
+  --rose:#C4788A;
+  --rose-light:#E8B4C0;
+  --rose-pale:#F7E8EC;
+  --rose-deep:#A85A6E;
+  /* Mint - secondary accent */
+  --mint:#7AB5A0;
+  --mint-light:#B4D9CE;
+  --mint-pale:#E8F5F1;
+  --mint-deep:#4A9080;
+  /* UI */
+  --muted:#9B8B7A;
+  --border:#E8DDD0;
+  --star:#D4A853;
+  --shadow:0 4px 24px rgba(42,31,21,0.10);
+  --shadow-lg:0 12px 48px rgba(42,31,21,0.18);
+  --safe-top:env(safe-area-inset-top);
+  --safe-bottom:env(safe-area-inset-bottom);
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 
-  .app{display:flex;height:100vh;height:100dvh}
-  .sidebar{width:230px;background:var(--ink);padding-top:calc(24px + var(--safe-top));padding-bottom:calc(16px + var(--safe-bottom));display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
-  .main{flex:1;overflow-y:auto;background:var(--cream);padding-top:var(--safe-top)}
+/* ── AUTH SCREEN ─────────────────────────────── */
+.auth-screen{
+  position:fixed;inset:0;background:var(--cream);z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+.auth-card{
+  width:100%;max-width:400px;
+  background:white;border-radius:24px;
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+}
+.auth-header{
+  background:var(--ink);padding:36px 32px 28px;text-align:center;
+  position:relative;
+}
+.auth-header::after{
+  content:'';position:absolute;bottom:-1px;left:0;right:0;height:24px;
+  background:white;border-radius:24px 24px 0 0;
+}
+.auth-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:300;color:#FAF7F2;letter-spacing:1px;
+  margin-bottom:4px;
+}
+.auth-tagline{font-size:11px;color:var(--mid-brown);letter-spacing:2px;text-transform:uppercase}
+.auth-body{padding:28px 32px 32px}
+.auth-title{font-size:22px;font-weight:400;color:var(--ink);margin-bottom:6px}
+.auth-sub{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.5}
+.auth-tabs{display:flex;background:var(--cream-dark);border-radius:10px;padding:3px;margin-bottom:24px}
+.auth-tab{
+  flex:1;text-align:center;padding:8px;border-radius:8px;font-size:13px;
+  cursor:pointer;transition:all 0.2s;color:var(--muted);font-weight:500;
+}
+.auth-tab.active{background:white;color:var(--ink);box-shadow:0 1px 4px rgba(42,31,21,0.1)}
+.auth-field{margin-bottom:16px}
+.auth-field label{display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.auth-field input{
+  width:100%;padding:12px 14px;border:1.5px solid var(--border);
+  border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;
+  outline:none;background:var(--cream);transition:all 0.2s;
+}
+.auth-field input:focus{border-color:var(--rose);background:white;box-shadow:0 0 0 3px var(--rose-pale)}
+.auth-hint{font-size:11px;color:var(--muted);margin-top:5px}
+.auth-btn{
+  width:100%;padding:13px;background:var(--rose);color:white;border:none;
+  border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;
+  font-weight:500;cursor:pointer;transition:all 0.2s;margin-top:4px;
+}
+.auth-btn:hover{background:var(--rose-deep)}
+.auth-btn:active{transform:scale(0.98)}
+.auth-btn:disabled{opacity:0.6;cursor:not-allowed}
+.auth-error{background:var(--rose-pale);color:var(--rose-deep);font-size:12px;padding:10px 14px;border-radius:8px;margin-bottom:12px;display:none}
+.auth-error.show{display:block}
+.auth-decoration{
+  width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--rose-pale),var(--mint-pale));
+  margin:0 auto 20px;display:flex;align-items:center;justify-content:center;
+  font-size:26px;
+}
 
-  .logo{padding:0 20px 28px;border-bottom:1px solid rgba(255,255,255,0.1)}
-  .logo h1{font-size:24px;color:#FAF7F2;font-weight:300;letter-spacing:0.5px}
-  .logo p{font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:1.5px;text-transform:uppercase}
-  .sync-indicator{display:flex;align-items:center;gap:5px;margin-top:8px}
-  .sync-dot{width:6px;height:6px;border-radius:50%;background:#E8A020;flex-shrink:0}
-  .sync-dot.ok{background:#5B9B6A}.sync-dot.err{background:#c0392b}
-  .sync-label{font-size:10px;color:rgba(250,247,242,0.4);letter-spacing:0.5px}
+/* ── APP LAYOUT ──────────────────────────────── */
+.app{display:flex;height:100vh;height:100dvh;opacity:0;transition:opacity 0.4s}
+.app.visible{opacity:1}
+.sidebar{
+  width:240px;background:var(--ink);
+  padding-top:calc(24px + var(--safe-top));
+  padding-bottom:calc(16px + var(--safe-bottom));
+  display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;
+}
+.main{flex:1;overflow-y:auto;background:var(--cream);padding-top:var(--safe-top)}
 
-  .nav{padding:20px 0}
-  .nav-item{display:flex;align-items:center;gap:10px;padding:12px 20px;cursor:pointer;transition:all 0.2s;border-left:3px solid transparent;font-size:14px;color:rgba(250,247,242,0.6)}
-  .nav-item:hover{background:rgba(255,255,255,0.05);color:#FAF7F2}
-  .nav-item.active{background:rgba(212,98,42,0.15);color:#FAF7F2;border-left-color:var(--accent)}
-  .nav-icon{font-size:17px}
-  .sidebar-stats{margin-top:auto;padding:20px;border-top:1px solid rgba(255,255,255,0.1)}
-  .stat-pill{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-  .stat-pill span:first-child{font-size:12px;color:rgba(250,247,242,0.5)}
-  .stat-pill span:last-child{font-size:14px;font-weight:500;color:#FAF7F2}
+/* ── SIDEBAR ─────────────────────────────────── */
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.sidebar-logo h1{font-size:26px;color:#FAF7F2;font-weight:300;letter-spacing:0.5px}
+.sidebar-logo p{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:2px;text-transform:uppercase}
+.user-chip{
+  display:flex;align-items:center;gap:8px;margin-top:12px;
+  background:rgba(255,255,255,0.06);border-radius:8px;padding:7px 10px;
+}
+.user-avatar{
+  width:24px;height:24px;border-radius:50%;
+  background:linear-gradient(135deg,var(--rose),var(--rose-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:white;font-weight:600;flex-shrink:0;
+}
+.user-name{font-size:12px;color:rgba(250,247,242,0.7);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.user-logout{font-size:10px;color:var(--muted);cursor:pointer;padding:2px 4px;border-radius:4px;transition:color 0.2s}
+.user-logout:hover{color:var(--rose-light)}
+.sync-row{display:flex;align-items:center;gap:5px;margin-top:8px}
+.sync-dot{width:5px;height:5px;border-radius:50%;background:var(--star);flex-shrink:0;transition:background 0.3s}
+.sync-dot.ok{background:#7AB580}.sync-dot.err{background:var(--rose)}
+.sync-lbl{font-size:10px;color:rgba(250,247,242,0.3);letter-spacing:0.3px}
 
-  .page-header{padding:28px 32px 0;display:flex;align-items:flex-start;justify-content:space-between}
-  .page-header h2{font-size:34px;font-weight:300;letter-spacing:-0.5px}
-  .page-header p{font-size:14px;color:var(--muted);margin-top:3px}
-  .btn-primary{background:var(--accent);color:white;border:none;padding:11px 22px;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:all 0.2s;white-space:nowrap}
-  .btn-primary:hover{background:#bf561f}
-  .btn-primary:active{transform:scale(0.97)}
+.nav{padding:16px 0}
+.nav-section{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,247,242,0.25);padding:0 20px;margin-bottom:6px;margin-top:12px}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:11px 20px;
+  cursor:pointer;transition:all 0.2s;border-left:3px solid transparent;
+  font-size:13px;color:rgba(250,247,242,0.55);
+}
+.nav-item:hover{background:rgba(255,255,255,0.05);color:#FAF7F2}
+.nav-item.active{background:rgba(196,120,138,0.15);color:#FAF7F2;border-left-color:var(--rose)}
+.nav-icon{font-size:15px;width:18px;text-align:center}
 
-  .filters{padding:16px 32px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-  .filter-btn{padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s}
-  .filter-btn.active,.filter-btn:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
-  .search-box{margin-left:auto;position:relative}
-  .search-box input{padding:8px 12px 8px 34px;border:1px solid var(--border);border-radius:20px;background:white;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;width:210px;transition:all 0.2s}
-  .search-box input:focus{border-color:var(--warm-brown);box-shadow:0 0 0 3px rgba(139,111,71,0.1)}
-  .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--muted)}
+.sidebar-stats{margin-top:auto;padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08)}
+.stat-pill{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.stat-pill span:first-child{font-size:11px;color:rgba(250,247,242,0.4)}
+.stat-pill span:last-child{font-size:13px;font-weight:500;color:#FAF7F2}
+.stat-pill .badge{
+  background:var(--rose);color:white;font-size:10px;
+  padding:1px 7px;border-radius:10px;font-weight:600;
+}
+.stat-pill .badge.mint{background:var(--mint-deep)}
 
-  .books-grid{padding:16px 32px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:20px}
-  .loading-grid{padding:48px 32px;text-align:center;color:var(--muted)}
-  .loading-grid p{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--light-brown)}
-  .loading-grid small{font-size:13px;display:block;margin-top:4px}
+/* ── PAGE HEADER ─────────────────────────────── */
+.page-header{padding:28px 32px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.page-header-text h2{font-size:34px;font-weight:300;letter-spacing:-0.5px}
+.page-header-text p{font-size:13px;color:var(--muted);margin-top:3px}
 
-  .book-card{background:white;border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.25s;border:1px solid var(--border)}
-  .book-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(28,20,16,0.12)}
-  .book-card:active{transform:scale(0.98)}
-  .book-cover{height:210px;display:flex;align-items:flex-end;padding:16px;position:relative;overflow:hidden}
-  .book-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0) 40%,rgba(0,0,0,0.5))}
-  .cover-title{position:relative;z-index:1;font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;color:white;line-height:1.2;text-shadow:0 1px 4px rgba(0,0,0,0.4)}
-  .book-info{padding:14px}
-  .book-author{font-size:12px;color:var(--muted);margin-bottom:8px}
-  .book-author strong{color:var(--warm-brown);font-weight:500}
-  .stars{display:flex;gap:2px;margin-bottom:8px}
-  .star{color:var(--border);font-size:13px}
-  .star.filled{color:var(--star)}
-  .book-tags{display:flex;gap:4px;flex-wrap:wrap}
-  .tag{background:var(--tag-bg);color:var(--warm-brown);font-size:10px;padding:3px 8px;border-radius:10px;font-weight:500;display:inline-flex;align-items:center;gap:3px}
-  .status-dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0}
-  .status-read{background:#5B9B6A}.status-reading{background:#D4622A}.status-wishlist{background:#9B8B7A}
+/* ── BUTTONS ─────────────────────────────────── */
+.btn-primary{
+  background:var(--rose);color:white;border:none;
+  padding:11px 22px;border-radius:10px;font-size:13px;
+  font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;
+  transition:all 0.2s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;
+}
+.btn-primary:hover{background:var(--rose-deep);transform:translateY(-1px);box-shadow:0 4px 12px rgba(196,120,138,0.35)}
+.btn-primary:active{transform:scale(0.97)}
+.btn-secondary{
+  background:transparent;border:1.5px solid var(--border);color:var(--ink);
+  padding:11px 20px;border-radius:10px;font-size:13px;
+  font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:all 0.2s;
+}
+.btn-secondary:hover{border-color:var(--mid-brown);background:var(--cream-dark)}
+.btn-mint{
+  background:var(--mint);color:white;border:none;
+  padding:11px 22px;border-radius:10px;font-size:13px;
+  font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:all 0.2s;
+}
+.btn-mint:hover{background:var(--mint-deep)}
 
-  .detail-panel{position:fixed;top:0;right:-500px;width:460px;max-width:92vw;height:100vh;background:white;box-shadow:-4px 0 32px rgba(28,20,16,0.15);z-index:100;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;padding-top:var(--safe-top);padding-bottom:var(--safe-bottom)}
-  .detail-panel.open{right:0}
-  .panel-header{padding:20px 24px;position:sticky;top:0;background:white;z-index:10;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-  .panel-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);padding:4px 8px;border-radius:6px}
-  .panel-close:hover{background:var(--pale)}
-  .panel-cover{height:230px;margin:0 24px 24px;border-radius:12px;overflow:hidden}
-  .panel-body{padding:0 24px 32px}
-  .panel-title{font-size:28px;font-weight:400;line-height:1.2;margin-bottom:4px}
-  .panel-author{color:var(--warm-brown);font-size:15px;margin-bottom:12px}
-  .panel-meta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;font-size:12px;color:var(--muted)}
-  .panel-section{margin-bottom:24px}
-  .panel-section h4{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:10px;font-weight:500}
-  .review-text{font-size:15px;line-height:1.85;color:#4A3F35;font-family:'Cormorant Garamond',serif;font-style:italic}
-  .quote-block{border-left:3px solid var(--accent);padding:12px 16px;background:var(--cream);border-radius:0 8px 8px 0;margin-bottom:12px}
-  .quote-text{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--ink);line-height:1.7}
-  .quote-context{font-size:11px;color:var(--muted);margin-top:5px}
-  .rating-big{display:flex;gap:4px}
-  .rating-big .star{font-size:22px}
-  .panel-actions{display:flex;gap:10px;margin-top:24px}
+/* ── FILTERS ─────────────────────────────────── */
+.filters{padding:14px 32px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.filter-btn{
+  padding:7px 16px;border-radius:20px;border:1.5px solid var(--border);
+  background:transparent;font-size:12px;font-family:'DM Sans',sans-serif;
+  cursor:pointer;color:var(--muted);transition:all 0.2s;
+}
+.filter-btn:hover{border-color:var(--rose-light);color:var(--rose-deep);background:var(--rose-pale)}
+.filter-btn.active{background:var(--rose);color:white;border-color:var(--rose)}
+.search-box{margin-left:auto;position:relative}
+.search-box input{
+  padding:8px 12px 8px 34px;border:1.5px solid var(--border);
+  border-radius:20px;background:white;font-size:13px;
+  font-family:'DM Sans',sans-serif;outline:none;width:200px;transition:all 0.2s;
+}
+.search-box input:focus{border-color:var(--rose-light);box-shadow:0 0 0 3px var(--rose-pale)}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted)}
 
-  .modal-overlay{position:fixed;inset:0;background:rgba(28,20,16,0.5);z-index:200;display:none;align-items:flex-end;justify-content:center;padding-bottom:var(--safe-bottom)}
-  .modal-overlay.open{display:flex}
-  @media(min-width:600px){.modal-overlay{align-items:center;padding:24px}}
-  .modal{background:white;border-radius:20px 20px 0 0;width:100%;max-width:620px;max-height:92vh;overflow-y:auto}
-  @media(min-width:600px){.modal{border-radius:16px;max-height:90vh}}
-  .modal-header{padding:24px 24px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:16px;position:sticky;top:0;background:white;z-index:5}
-  .modal-header h3{font-size:22px;font-weight:400}
-  .modal-body{padding:24px}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .form-group{margin-bottom:16px}
-  .form-group label{display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-  .form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:all 0.2s;background:var(--cream);-webkit-appearance:none;appearance:none}
-  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--warm-brown);background:white;box-shadow:0 0 0 3px rgba(139,111,71,0.1)}
-  .form-group textarea{resize:vertical;min-height:90px;line-height:1.6}
-  .star-rating-input{display:flex;gap:8px;margin-top:4px}
-  .star-rating-input span{font-size:28px;cursor:pointer;transition:transform 0.1s;user-select:none;-webkit-user-select:none}
-  .star-rating-input span:active{transform:scale(1.3)}
-  .modal-footer{padding:0 24px 24px;display:flex;gap:12px;justify-content:flex-end}
-  .btn-secondary{background:transparent;border:1px solid var(--border);color:var(--ink);padding:11px 20px;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500}
+/* ── BOOKS GRID ──────────────────────────────── */
+.books-grid{padding:12px 32px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:20px}
 
-  .quotes-grid{padding:16px 32px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-  .quote-card{background:white;border-radius:12px;padding:20px;border:1px solid var(--border);transition:all 0.2s}
-  .quote-card-text{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--ink);line-height:1.75;margin-bottom:14px}
-  .quote-card-book{font-size:12px;color:var(--warm-brown);font-weight:500}
-  .quote-card-author{font-size:11px;color:var(--muted);margin-top:2px}
+/* ── BOOK CARD ───────────────────────────────── */
+.book-card{
+  background:white;border-radius:16px;overflow:hidden;cursor:pointer;
+  transition:all 0.25s;border:1px solid var(--border);
+}
+.book-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(42,31,21,0.14)}
+.book-card:active{transform:scale(0.98)}
+.book-cover{
+  height:210px;display:flex;align-items:flex-end;padding:14px;
+  position:relative;overflow:hidden;background:var(--light-brown);
+}
+.book-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.book-cover-gradient{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(42,31,21,0.65))}
+.cover-title{
+  position:relative;z-index:1;font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-weight:500;color:white;line-height:1.2;
+  text-shadow:0 1px 6px rgba(0,0,0,0.5);
+}
+.book-info{padding:13px 14px 14px}
+.book-author{font-size:11px;color:var(--muted);margin-bottom:7px}
+.book-author strong{color:var(--warm-brown);font-weight:500}
+.stars{display:flex;gap:2px;margin-bottom:8px}
+.star{color:var(--border);font-size:12px}
+.star.filled{color:var(--star)}
+.book-tags{display:flex;gap:4px;flex-wrap:wrap}
+.tag{
+  font-size:10px;padding:3px 8px;border-radius:10px;font-weight:500;
+  display:inline-flex;align-items:center;gap:3px;
+}
+.tag-status{background:var(--rose-pale);color:var(--rose-deep)}
+.tag-genre{background:var(--mint-pale);color:var(--mint-deep)}
+.status-dot{width:5px;height:5px;border-radius:50%;display:inline-block;flex-shrink:0}
+.status-read{background:#7AB580}
+.status-reading{background:var(--rose)}
+.status-wishlist{background:var(--mid-brown)}
 
-  .stats-page{padding:28px 32px 40px}
-  .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px}
-  @media(min-width:700px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
-  .stat-card{background:white;border-radius:12px;padding:20px;border:1px solid var(--border);text-align:center}
-  .stat-number{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--ink);line-height:1}
-  .stat-label{font-size:11px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
-  .genre-bars{background:white;border-radius:12px;padding:24px;border:1px solid var(--border)}
-  .genre-bars h3{font-size:20px;font-weight:400;margin-bottom:20px}
-  .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-  .bar-label{width:140px;font-size:13px;color:var(--ink);text-align:right;flex-shrink:0;line-height:1.3}
-  .bar-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
-  .bar-fill{height:100%;background:var(--accent);border-radius:4px;transition:width 0.9s ease}
-  .bar-count{width:24px;font-size:12px;color:var(--muted);text-align:right}
+/* ── DETAIL PANEL ────────────────────────────── */
+.detail-panel{
+  position:fixed;top:0;right:-500px;width:460px;max-width:92vw;
+  height:100vh;background:white;
+  box-shadow:-4px 0 40px rgba(42,31,21,0.15);
+  z-index:100;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);
+  overflow-y:auto;
+  padding-top:var(--safe-top);padding-bottom:var(--safe-bottom);
+}
+.detail-panel.open{right:0}
+.panel-header{
+  padding:18px 24px;position:sticky;top:0;background:white;z-index:10;
+  border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;
+}
+.panel-close{
+  background:var(--cream-dark);border:none;width:32px;height:32px;
+  border-radius:50%;cursor:pointer;color:var(--muted);font-size:14px;
+  display:flex;align-items:center;justify-content:center;transition:all 0.2s;
+}
+.panel-close:hover{background:var(--rose-pale);color:var(--rose-deep)}
+.panel-cover{height:240px;position:relative;overflow:hidden;background:var(--light-brown)}
+.panel-cover img{width:100%;height:100%;object-fit:cover}
+.panel-cover-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(42,31,21,0.7))}
+.panel-cover-title{
+  position:absolute;bottom:20px;left:24px;right:24px;
+  font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;
+  color:white;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,0.4);
+}
+.panel-body{padding:20px 24px 32px}
+.panel-author{color:var(--rose);font-size:15px;font-weight:500;margin-bottom:10px}
+.panel-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;font-size:12px;color:var(--muted)}
+.panel-meta span{display:flex;align-items:center;gap:4px}
+.panel-section{margin-bottom:22px}
+.panel-section h4{
+  font-size:10px;text-transform:uppercase;letter-spacing:2px;
+  color:var(--mint-deep);margin-bottom:10px;font-weight:500;font-family:'DM Sans',sans-serif;
+}
+.review-text{
+  font-size:15px;line-height:1.9;color:#4A3F35;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+}
+.quote-block{
+  border-left:3px solid var(--rose-light);padding:12px 16px;
+  background:var(--rose-pale);border-radius:0 10px 10px 0;margin-bottom:10px;
+}
+.quote-text{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--ink);line-height:1.7}
+.quote-context{font-size:11px;color:var(--muted);margin-top:5px}
+.rating-big{display:flex;gap:4px}
+.rating-big .star{font-size:22px}
+.panel-actions{display:flex;gap:10px;margin-top:24px;padding-top:20px;border-top:1px solid var(--border)}
 
-  .toast{position:fixed;bottom:calc(32px + var(--safe-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--cream);padding:13px 26px;border-radius:30px;font-size:13px;opacity:0;transition:all 0.3s;z-index:300;pointer-events:none;white-space:nowrap}
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-  .empty-state{text-align:center;padding:80px 32px;color:var(--muted)}
-  .empty-state p{font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:8px;color:var(--light-brown)}
-  .empty-state small{font-size:13px}
-  .color-swatches{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
-  .color-swatch{width:32px;height:32px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all 0.15s}
+/* ── MODAL ───────────────────────────────────── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(42,31,21,0.5);
+  z-index:200;display:none;align-items:flex-end;justify-content:center;
+  padding-bottom:var(--safe-bottom);backdrop-filter:blur(4px);
+}
+.modal-overlay.open{display:flex}
+@media(min-width:600px){.modal-overlay{align-items:center;padding:24px}}
+.modal{
+  background:white;border-radius:24px 24px 0 0;width:100%;
+  max-width:640px;max-height:93vh;overflow-y:auto;
+}
+@media(min-width:600px){.modal{border-radius:20px;max-height:90vh}}
+.modal-header{
+  padding:20px 24px;display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid var(--border);position:sticky;top:0;background:white;z-index:5;
+}
+.modal-header h3{font-size:22px;font-weight:400}
+.modal-body{padding:22px 24px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{margin-bottom:16px}
+.form-group label{
+  display:block;font-size:10px;font-weight:500;color:var(--muted);
+  text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;
+}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;
+  font-size:14px;font-family:'DM Sans',sans-serif;outline:none;
+  transition:all 0.2s;background:var(--cream);-webkit-appearance:none;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+  border-color:var(--rose-light);background:white;box-shadow:0 0 0 3px var(--rose-pale);
+}
+.form-group textarea{resize:vertical;min-height:88px;line-height:1.6}
+.star-input{display:flex;gap:8px;margin-top:4px}
+.star-input span{font-size:28px;cursor:pointer;transition:transform 0.15s;user-select:none;-webkit-user-select:none}
+.star-input span:active{transform:scale(1.3)}
+.modal-footer{padding:0 24px 24px;display:flex;gap:10px;justify-content:flex-end}
+
+/* ── PHOTO UPLOAD ────────────────────────────── */
+.photo-upload-area{
+  border:2px dashed var(--border);border-radius:12px;
+  padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;
+  background:var(--cream);position:relative;overflow:hidden;
+}
+.photo-upload-area:hover{border-color:var(--rose-light);background:var(--rose-pale)}
+.photo-upload-area.has-photo{border-style:solid;border-color:var(--mint-light);padding:0}
+.photo-preview{width:100%;height:160px;object-fit:cover;border-radius:10px;display:block}
+.photo-upload-icon{font-size:28px;margin-bottom:8px}
+.photo-upload-text{font-size:13px;color:var(--muted);line-height:1.4}
+.photo-upload-text strong{display:block;font-size:12px;color:var(--warm-brown);margin-bottom:3px}
+.photo-upload-input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.photo-remove{
+  position:absolute;top:8px;right:8px;background:rgba(42,31,21,0.6);
+  color:white;border:none;border-radius:50%;width:28px;height:28px;
+  cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s;
+}
+.photo-remove:hover{background:var(--rose)}
+
+/* ── COLOR SWATCHES ──────────────────────────── */
+.color-swatches{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.color-swatch{
+  width:30px;height:30px;border-radius:50%;cursor:pointer;
+  border:3px solid transparent;transition:all 0.15s;
+}
+.color-swatch:hover{transform:scale(1.15)}
+.color-swatch.selected{border-color:var(--ink);transform:scale(1.1)}
+
+/* ── QUOTES PAGE ─────────────────────────────── */
+.quotes-grid{padding:14px 32px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.quote-card{
+  background:white;border-radius:14px;padding:20px;border:1px solid var(--border);
+  transition:all 0.2s;position:relative;overflow:hidden;
+}
+.quote-card::before{
+  content:'❝';position:absolute;top:8px;right:14px;
+  font-size:48px;color:var(--rose-pale);font-family:'Cormorant Garamond',serif;
+  line-height:1;
+}
+.quote-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.quote-card-text{
+  font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;
+  color:var(--ink);line-height:1.75;margin-bottom:14px;position:relative;z-index:1;
+}
+.quote-card-book{font-size:12px;color:var(--rose-deep);font-weight:500}
+.quote-card-author{font-size:11px;color:var(--muted);margin-top:2px}
+.quote-accent{width:32px;height:2px;background:var(--rose-light);margin-bottom:12px;border-radius:2px}
+
+/* ── STATS PAGE ──────────────────────────────── */
+.stats-page{padding:28px 32px 40px}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:24px}
+@media(min-width:700px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+.stat-card{
+  background:white;border-radius:14px;padding:20px;
+  border:1px solid var(--border);text-align:center;
+}
+.stat-number{
+  font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;
+  color:var(--ink);line-height:1;
+}
+.stat-number.rose{color:var(--rose)}
+.stat-number.mint{color:var(--mint-deep)}
+.stat-label{font-size:11px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
+.genre-card{background:white;border-radius:14px;padding:24px;border:1px solid var(--border);margin-bottom:16px}
+.genre-card h3{font-size:20px;font-weight:400;margin-bottom:20px}
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.bar-label{width:140px;font-size:13px;color:var(--ink);text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--rose-light),var(--rose));border-radius:4px;transition:width 0.9s ease}
+.bar-fill.mint{background:linear-gradient(90deg,var(--mint-light),var(--mint))}
+.bar-count{width:22px;font-size:12px;color:var(--muted);text-align:right}
+
+/* ── TOAST ───────────────────────────────────── */
+.toast{
+  position:fixed;bottom:calc(32px + var(--safe-bottom));left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--cream);
+  padding:12px 24px;border-radius:30px;font-size:13px;
+  opacity:0;transition:all 0.3s;z-index:500;pointer-events:none;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.mint-toast{background:var(--mint-deep)}
+.toast.rose-toast{background:var(--rose-deep)}
+
+/* ── EMPTY STATE ─────────────────────────────── */
+.empty-state{text-align:center;padding:80px 32px;grid-column:1/-1}
+.empty-state-icon{font-size:40px;margin-bottom:12px}
+.empty-state p{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--mid-brown);margin-bottom:6px}
+.empty-state small{font-size:13px;color:var(--muted)}
+
+/* ── LOADING ─────────────────────────────────── */
+.loading-state{text-align:center;padding:60px 32px;grid-column:1/-1}
+.loading-state p{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--mid-brown);margin-bottom:4px}
+.loading-state small{font-size:13px;color:var(--muted)}
+.spinner{
+  width:32px;height:32px;border:2px solid var(--border);
+  border-top-color:var(--rose);border-radius:50%;
+  animation:spin 0.8s linear infinite;margin:0 auto 16px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
-<div class="app">
+
+<!-- ── AUTH SCREEN ── -->
+<div class="auth-screen" id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div style="text-align:center">
+        <div class="auth-logo">Biblioteca</div>
+        <div class="auth-tagline">mi diario literario</div>
+      </div>
+    </div>
+    <div class="auth-body">
+      <div class="auth-decoration">📚</div>
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">Entrar</div>
+        <div class="auth-tab" id="tab-register" onclick="switchTab('register')">Crear cuenta</div>
+      </div>
+
+      <!-- Login -->
+      <div id="form-login">
+        <p class="auth-title serif">¡Bienvenida de vuelta!</p>
+        <p class="auth-sub">Ingresa con tu usuario para ver tu biblioteca</p>
+        <div class="auth-error" id="login-error"></div>
+        <div class="auth-field">
+          <label>Nombre de usuario</label>
+          <input type="text" id="login-nick" placeholder="ej. Silvia98" autocomplete="username" autocapitalize="none">
+        </div>
+        <div class="auth-field">
+          <label>Contraseña</label>
+          <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button class="auth-btn" id="btn-login" onclick="doLogin()">Entrar a mi biblioteca</button>
+      </div>
+
+      <!-- Register -->
+      <div id="form-register" style="display:none">
+        <p class="auth-title serif">Crea tu espacio</p>
+        <p class="auth-sub">Elige un nombre de usuario y contraseña. ¡Guárdalos en un lugar seguro! 🤍</p>
+        <div class="auth-error" id="reg-error"></div>
+        <div class="auth-field">
+          <label>Nombre de usuario</label>
+          <input type="text" id="reg-nick" placeholder="ej. Silvia98" autocomplete="username" autocapitalize="none">
+          <p class="auth-hint">Solo letras, números y guiones bajos. Sin espacios.</p>
+        </div>
+        <div class="auth-field">
+          <label>Contraseña</label>
+          <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+        </div>
+        <div class="auth-field">
+          <label>Confirmar contraseña</label>
+          <input type="password" id="reg-pass2" placeholder="Repite tu contraseña" autocomplete="new-password">
+        </div>
+        <button class="auth-btn" id="btn-register" onclick="doRegister()">Crear mi biblioteca</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN APP ── -->
+<div class="app" id="app">
   <aside class="sidebar">
-    <div class="logo">
+    <div class="sidebar-logo">
       <h1>Biblioteca</h1>
       <p>mi diario literario</p>
-      <div class="sync-indicator">
+      <div class="user-chip">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <span class="user-name" id="user-name-display">—</span>
+        <span class="user-logout" onclick="doLogout()" title="Cerrar sesión">✕</span>
+      </div>
+      <div class="sync-row">
         <span class="sync-dot" id="sync-dot"></span>
-        <span class="sync-label" id="sync-label">Conectando...</span>
+        <span class="sync-lbl" id="sync-lbl">Conectando...</span>
       </div>
     </div>
     <nav class="nav">
-      <div class="nav-item active" onclick="showPage('library')" id="nav-library"><span class="nav-icon">📚</span> Mi colección</div>
-      <div class="nav-item" onclick="showPage('quotes')" id="nav-quotes"><span class="nav-icon">✦</span> Citas favoritas</div>
-      <div class="nav-item" onclick="showPage('stats')" id="nav-stats"><span class="nav-icon">◎</span> Estadísticas</div>
+      <div class="nav-section">Mi biblioteca</div>
+      <div class="nav-item active" onclick="showPage('library')" id="nav-library">
+        <span class="nav-icon">📚</span> Mi colección
+      </div>
+      <div class="nav-item" onclick="showPage('quotes')" id="nav-quotes">
+        <span class="nav-icon">✦</span> Citas favoritas
+      </div>
+      <div class="nav-item" onclick="showPage('stats')" id="nav-stats">
+        <span class="nav-icon">◎</span> Estadísticas
+      </div>
     </nav>
     <div class="sidebar-stats">
-      <div class="stat-pill"><span>Leídos</span><span id="sb-read">0</span></div>
-      <div class="stat-pill"><span>Leyendo</span><span id="sb-reading">0</span></div>
-      <div class="stat-pill"><span>Lista</span><span id="sb-wishlist">0</span></div>
+      <div class="stat-pill"><span>Leídos</span><span class="badge" id="sb-read">0</span></div>
+      <div class="stat-pill"><span>Leyendo</span><span class="badge" id="sb-reading">0</span></div>
+      <div class="stat-pill"><span>Lista de deseos</span><span class="badge mint" id="sb-wishlist">0</span></div>
     </div>
   </aside>
 
   <main class="main">
+    <!-- Library -->
     <div id="page-library">
       <div class="page-header">
-        <div><h2 class="serif">Mi Colección</h2><p>Todos los libros que han pasado por tus manos</p></div>
+        <div class="page-header-text">
+          <h2 class="serif">Mi Colección</h2>
+          <p>Todos los libros que han pasado por tus manos</p>
+        </div>
         <button class="btn-primary" onclick="openModal()">+ Añadir libro</button>
       </div>
       <div class="filters">
@@ -189,24 +547,43 @@
           <input type="text" id="search" placeholder="Buscar libro o autor..." oninput="renderBooks()">
         </div>
       </div>
-      <div class="books-grid" id="books-grid"><div class="loading-grid" style="grid-column:1/-1"><p>Cargando tu biblioteca...</p><small>Conectando con la nube</small></div></div>
+      <div class="books-grid" id="books-grid">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Cargando tu biblioteca...</p>
+          <small>Conectando con la nube</small>
+        </div>
+      </div>
     </div>
 
+    <!-- Quotes -->
     <div id="page-quotes" style="display:none">
-      <div class="page-header"><div><h2 class="serif">Citas Favoritas</h2><p>Palabras que te han marcado</p></div></div>
+      <div class="page-header">
+        <div class="page-header-text">
+          <h2 class="serif">Citas Favoritas</h2>
+          <p>Palabras que te han marcado</p>
+        </div>
+      </div>
       <div class="quotes-grid" id="quotes-grid"></div>
     </div>
 
+    <!-- Stats -->
     <div id="page-stats" style="display:none">
       <div class="stats-page">
-        <div style="margin-bottom:24px"><h2 class="serif" style="font-size:34px;font-weight:300">Estadísticas</h2><p style="font-size:14px;color:var(--muted)">Tu historia como lectora</p></div>
+        <div style="margin-bottom:24px">
+          <h2 class="serif" style="font-size:34px;font-weight:300">Estadísticas</h2>
+          <p style="font-size:13px;color:var(--muted)">Tu historia como lectora</p>
+        </div>
         <div class="stats-grid">
           <div class="stat-card"><div class="stat-number" id="st-total">0</div><div class="stat-label">Total libros</div></div>
-          <div class="stat-card"><div class="stat-number" id="st-read">0</div><div class="stat-label">Leídos</div></div>
-          <div class="stat-card"><div class="stat-number" id="st-avg">—</div><div class="stat-label">Puntuación media</div></div>
+          <div class="stat-card"><div class="stat-number rose" id="st-read">0</div><div class="stat-label">Leídos</div></div>
+          <div class="stat-card"><div class="stat-number mint" id="st-avg">—</div><div class="stat-label">Puntuación media</div></div>
           <div class="stat-card"><div class="stat-number" id="st-quotes">0</div><div class="stat-label">Citas guardadas</div></div>
         </div>
-        <div class="genre-bars"><h3 class="serif">Por género</h3><div id="genre-chart"></div></div>
+        <div class="genre-card">
+          <h3 class="serif">Por género</h3>
+          <div id="genre-chart"></div>
+        </div>
       </div>
     </div>
   </main>
@@ -214,33 +591,61 @@
 
 <!-- Detail Panel -->
 <div class="detail-panel" id="detail-panel">
-  <div class="panel-header"><div id="panel-status"></div><button class="panel-close" onclick="closePanel()">✕</button></div>
-  <div class="panel-cover" id="panel-cover"></div>
+  <div class="panel-header">
+    <div id="panel-status"></div>
+    <button class="panel-close" onclick="closePanel()">✕</button>
+  </div>
+  <div class="panel-cover" id="panel-cover">
+    <div class="panel-cover-overlay"></div>
+    <div class="panel-cover-title" id="panel-cover-title"></div>
+  </div>
   <div class="panel-body" id="panel-body"></div>
 </div>
-<div style="position:fixed;inset:0;background:rgba(28,20,16,0.3);z-index:99;display:none" id="panel-overlay" onclick="closePanel()"></div>
+<div style="position:fixed;inset:0;background:rgba(42,31,21,0.3);z-index:99;display:none;backdrop-filter:blur(2px)" id="panel-overlay" onclick="closePanel()"></div>
 
 <!-- Modal -->
 <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <div class="modal-header"><h3 class="serif" id="modal-title">Añadir nuevo libro</h3><button class="panel-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-header">
+      <h3 class="serif" id="modal-title">Añadir nuevo libro</h3>
+      <button class="panel-close" onclick="closeModal()">✕</button>
+    </div>
     <div class="modal-body">
+      <!-- Photo upload -->
+      <div class="form-group">
+        <label>Portada del libro</label>
+        <div class="photo-upload-area" id="photo-area" onclick="triggerPhotoInput()">
+          <input type="file" id="photo-input" class="photo-upload-input" accept="image/*" capture="environment" onchange="handlePhoto(event)" style="display:none">
+          <div id="photo-placeholder">
+            <div class="photo-upload-icon">📷</div>
+            <div class="photo-upload-text">
+              <strong>Añadir foto de portada</strong>
+              Toca para elegir de tu galería o tomar una foto
+            </div>
+          </div>
+          <img id="photo-preview-img" class="photo-preview" style="display:none" alt="Portada">
+          <button class="photo-remove" id="photo-remove-btn" style="display:none" onclick="removePhoto(event)">✕</button>
+        </div>
+      </div>
+
       <div class="form-row" style="margin-bottom:0">
-        <div class="form-group"><label>Título</label><input id="f-title" placeholder="El nombre del libro"></div>
-        <div class="form-group"><label>Autor</label><input id="f-author" placeholder="Nombre del autor"></div>
+        <div class="form-group"><label>Título *</label><input id="f-title" placeholder="El nombre del libro"></div>
+        <div class="form-group"><label>Autor *</label><input id="f-author" placeholder="Nombre del autor"></div>
       </div>
       <div class="form-row" style="margin-bottom:0">
         <div class="form-group"><label>Editorial</label><input id="f-publisher" placeholder="Editorial"></div>
-        <div class="form-group"><label>Año</label><input id="f-year" type="number" placeholder="2024"></div>
+        <div class="form-group"><label>Año</label><input id="f-year" type="number" placeholder="2024" min="1000" max="2099"></div>
       </div>
       <div class="form-row" style="margin-bottom:0">
         <div class="form-group">
           <label>Género</label>
           <select id="f-genre">
             <option value="">Seleccionar...</option>
-            <option>Ficción literaria</option><option>Ciencia ficción</option><option>Romance</option>
-            <option>Misterio/Thriller</option><option>Fantasía</option><option>No ficción</option>
-            <option>Historia</option><option>Ensayo</option><option>Poesía</option><option>Clásico</option><option>Otro</option>
+            <option>Ficción literaria</option><option>Ciencia ficción</option>
+            <option>Romance</option><option>Misterio/Thriller</option>
+            <option>Fantasía</option><option>No ficción</option>
+            <option>Historia</option><option>Ensayo</option>
+            <option>Poesía</option><option>Clásico</option><option>Otro</option>
           </select>
         </div>
         <div class="form-group">
@@ -252,27 +657,36 @@
           </select>
         </div>
       </div>
+
+      <!-- Color fallback (if no photo) -->
+      <div class="form-group" id="color-group">
+        <label>Color de portada <span style="font-size:10px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(si no hay foto)</span></label>
+        <div class="color-swatches">
+          <div class="color-swatch selected" style="background:#8B6F47" onclick="pickColor('#8B6F47',this)"></div>
+          <div class="color-swatch" style="background:#C4788A" onclick="pickColor('#C4788A',this)"></div>
+          <div class="color-swatch" style="background:#7AB5A0" onclick="pickColor('#7AB5A0',this)"></div>
+          <div class="color-swatch" style="background:#2C4A6E" onclick="pickColor('#2C4A6E',this)"></div>
+          <div class="color-swatch" style="background:#7A3F4A" onclick="pickColor('#7A3F4A',this)"></div>
+          <div class="color-swatch" style="background:#4A7A4C" onclick="pickColor('#4A7A4C',this)"></div>
+          <div class="color-swatch" style="background:#5C4A7A" onclick="pickColor('#5C4A7A',this)"></div>
+          <div class="color-swatch" style="background:#7A6A3C" onclick="pickColor('#7A6A3C',this)"></div>
+        </div>
+      </div>
+
       <div class="form-group">
         <label>Mi puntuación</label>
-        <div class="star-rating-input" id="star-input">
+        <div class="star-input" id="star-input">
           <span onclick="setRating(1)">☆</span><span onclick="setRating(2)">☆</span>
           <span onclick="setRating(3)">☆</span><span onclick="setRating(4)">☆</span><span onclick="setRating(5)">☆</span>
         </div>
       </div>
-      <div class="form-group"><label>Mi reseña / diario</label><textarea id="f-review" rows="4" placeholder="¿Qué te pareció? ¿Cómo te hizo sentir? Escribe libremente..."></textarea></div>
-      <div class="form-group"><label>Citas favoritas</label><textarea id="f-quote" rows="3" placeholder="Una cita por línea. Puedes añadir varias separadas por Enter."></textarea></div>
       <div class="form-group">
-        <label>Color de portada</label>
-        <div class="color-swatches">
-          <div class="color-swatch" style="background:#8B5E3C" onclick="pickColor('#8B5E3C',this)"></div>
-          <div class="color-swatch" style="background:#2C4A6E" onclick="pickColor('#2C4A6E',this)"></div>
-          <div class="color-swatch" style="background:#4A7A4C" onclick="pickColor('#4A7A4C',this)"></div>
-          <div class="color-swatch" style="background:#7A3F4A" onclick="pickColor('#7A3F4A',this)"></div>
-          <div class="color-swatch" style="background:#5C4A7A" onclick="pickColor('#5C4A7A',this)"></div>
-          <div class="color-swatch" style="background:#7A6A3C" onclick="pickColor('#7A6A3C',this)"></div>
-          <div class="color-swatch" style="background:#3A6A7A" onclick="pickColor('#3A6A7A',this)"></div>
-          <div class="color-swatch" style="background:#6A3A3A" onclick="pickColor('#6A3A3A',this)"></div>
-        </div>
+        <label>Mi reseña / diario</label>
+        <textarea id="f-review" rows="4" placeholder="¿Qué te pareció? ¿Cómo te hizo sentir? Escribe libremente..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Citas favoritas</label>
+        <textarea id="f-quote" rows="3" placeholder="Una cita por línea. Puedes añadir varias separadas con Enter."></textarea>
       </div>
     </div>
     <div class="modal-footer">
@@ -285,42 +699,190 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ── Supabase config ──────────────────────────────────────
+// ── CONFIG ───────────────────────────────────────────────────
 const SUPA_URL='https://whrfnboqhypusoggvbqv.supabase.co';
 const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndocmZuYm9xaHlwdXNvZ2d2YnF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NDkyODYsImV4cCI6MjA5MTQyNTI4Nn0.Z86mWomiz9ScEPYObvL4eXazwcfVXzuAQLelSZEV98I';
+const FAKE_DOMAIN='@biblioteca.silvia.app';
 
-async function supa(path,method,body){
-  method=method||'GET';
+// ── STATE ────────────────────────────────────────────────────
+let books=[];let currentFilter='all';let selectedRating=0;
+let selectedColor='#8B6F47';let editingId=null;
+let currentUser=null;let currentSession=null;
+let pendingPhotoFile=null;let pendingPhotoUrl=null;
+
+// ── SUPABASE HELPERS ─────────────────────────────────────────
+async function supaFetch(path,method,body,token){
   const url=SUPA_URL+'/rest/v1/'+path;
-  const h={'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'};
-  if(method==='POST'||method==='PATCH') h['Prefer']='return=representation';
-  const opts={method,headers:h};
-  if(body) opts.body=JSON.stringify(body);
+  const h={
+    'apikey':SUPA_KEY,
+    'Authorization':'Bearer '+(token||SUPA_KEY),
+    'Content-Type':'application/json'
+  };
+  if(method==='POST'||method==='PATCH')h['Prefer']='return=representation';
+  const opts={method:method||'GET',headers:h};
+  if(body)opts.body=JSON.stringify(body);
   const r=await fetch(url,opts);
-  if(!r.ok){const t=await r.text();throw new Error(t);}
   if(r.status===204)return null;
   const txt=await r.text();
+  if(!r.ok)throw new Error(txt);
   return txt?JSON.parse(txt):null;
 }
 
-// ── State ────────────────────────────────────────────────
-let books=[];let currentFilter='all';let selectedRating=0;let selectedColor='#8B5E3C';let editingId=null;
+async function supaAuth(endpoint,payload){
+  const r=await fetch(SUPA_URL+'/auth/v1/'+endpoint,{
+    method:'POST',
+    headers:{'apikey':SUPA_KEY,'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  });
+  const data=await r.json();
+  if(!r.ok)throw new Error(data.error_description||data.msg||'Error de autenticación');
+  return data;
+}
 
-// ── Init ─────────────────────────────────────────────────
+async function uploadPhoto(file,userId){
+  const ext=file.name.split('.').pop()||'jpg';
+  const path=userId+'/'+Date.now()+'.'+ext;
+  const r=await fetch(SUPA_URL+'/storage/v1/object/portadas/'+path,{
+    method:'POST',
+    headers:{
+      'apikey':SUPA_KEY,
+      'Authorization':'Bearer '+(currentSession?.access_token||SUPA_KEY),
+      'Content-Type':file.type||'image/jpeg'
+    },
+    body:file
+  });
+  if(!r.ok){const t=await r.text();throw new Error(t);}
+  return SUPA_URL+'/storage/v1/object/public/portadas/'+path;
+}
+
+// ── AUTH ─────────────────────────────────────────────────────
+function switchTab(tab){
+  document.getElementById('tab-login').classList.toggle('active',tab==='login');
+  document.getElementById('tab-register').classList.toggle('active',tab==='register');
+  document.getElementById('form-login').style.display=tab==='login'?'block':'none';
+  document.getElementById('form-register').style.display=tab==='register'?'block':'none';
+}
+
+async function doLogin(){
+  const nick=(document.getElementById('login-nick').value||'').trim().toLowerCase();
+  const pass=document.getElementById('login-pass').value;
+  if(!nick||!pass){showAuthError('login','Por favor completa todos los campos');return}
+  const btn=document.getElementById('btn-login');
+  btn.disabled=true;btn.textContent='Entrando...';
+  clearAuthError('login');
+  try{
+    const data=await supaAuth('token?grant_type=password',{
+      email:nick+FAKE_DOMAIN,password:pass
+    });
+    currentSession=data;
+    currentUser={id:data.user.id,nick};
+    localStorage.setItem('bib_session',JSON.stringify({nick,access_token:data.access_token,refresh_token:data.refresh_token,user_id:data.user.id}));
+    enterApp(nick);
+  }catch(e){
+    showAuthError('login','Usuario o contraseña incorrectos');
+  }
+  btn.disabled=false;btn.textContent='Entrar a mi biblioteca';
+}
+
+async function doRegister(){
+  const nick=(document.getElementById('reg-nick').value||'').trim().toLowerCase();
+  const pass=document.getElementById('reg-pass').value;
+  const pass2=document.getElementById('reg-pass2').value;
+  if(!nick||!pass||!pass2){showAuthError('reg','Por favor completa todos los campos');return}
+  if(!/^[a-z0-9_]+$/.test(nick)){showAuthError('reg','El usuario solo puede tener letras, números y _');return}
+  if(pass.length<6){showAuthError('reg','La contraseña debe tener al menos 6 caracteres');return}
+  if(pass!==pass2){showAuthError('reg','Las contraseñas no coinciden');return}
+  const btn=document.getElementById('btn-register');
+  btn.disabled=true;btn.textContent='Creando tu biblioteca...';
+  clearAuthError('reg');
+  try{
+    const data=await supaAuth('signup',{
+      email:nick+FAKE_DOMAIN,password:pass,
+      data:{nickname:nick}
+    });
+    if(!data.user)throw new Error('No se pudo crear la cuenta');
+    // Auto-login after register
+    const login=await supaAuth('token?grant_type=password',{email:nick+FAKE_DOMAIN,password:pass});
+    currentSession=login;
+    currentUser={id:login.user.id,nick};
+    localStorage.setItem('bib_session',JSON.stringify({nick,access_token:login.access_token,refresh_token:login.refresh_token,user_id:login.user.id}));
+    enterApp(nick);
+  }catch(e){
+    const msg=e.message.includes('already registered')?'Ese usuario ya existe, prueba otro':'Error al crear cuenta: '+e.message;
+    showAuthError('reg',msg);
+  }
+  btn.disabled=false;btn.textContent='Crear mi biblioteca';
+}
+
+function doLogout(){
+  localStorage.removeItem('bib_session');
+  currentUser=null;currentSession=null;books=[];
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('auth-screen').style.display='flex';
+  switchTab('login');
+  document.getElementById('login-nick').value='';
+  document.getElementById('login-pass').value='';
+}
+
+function showAuthError(form,msg){
+  const el=document.getElementById(form+'-error');
+  el.textContent=msg;el.classList.add('show');
+}
+function clearAuthError(form){
+  const el=document.getElementById(form+'-error');
+  el.classList.remove('show');
+}
+
+function enterApp(nick){
+  document.getElementById('auth-screen').style.display='none';
+  const app=document.getElementById('app');
+  app.classList.add('visible');
+  const initial=nick.charAt(0).toUpperCase();
+  document.getElementById('user-avatar').textContent=initial;
+  document.getElementById('user-name-display').textContent=nick;
+  loadBooks();
+}
+
+// ── INIT ─────────────────────────────────────────────────────
 async function init(){
+  const saved=localStorage.getItem('bib_session');
+  if(saved){
+    try{
+      const s=JSON.parse(saved);
+      // Try to refresh
+      const r=await fetch(SUPA_URL+'/auth/v1/token?grant_type=refresh_token',{
+        method:'POST',
+        headers:{'apikey':SUPA_KEY,'Content-Type':'application/json'},
+        body:JSON.stringify({refresh_token:s.refresh_token})
+      });
+      if(r.ok){
+        const data=await r.json();
+        currentSession=data;
+        currentUser={id:data.user.id,nick:s.nick};
+        localStorage.setItem('bib_session',JSON.stringify({nick:s.nick,access_token:data.access_token,refresh_token:data.refresh_token,user_id:data.user.id}));
+        enterApp(s.nick);
+        return;
+      }
+    }catch(e){}
+    localStorage.removeItem('bib_session');
+  }
+  // Show auth
+  document.getElementById('auth-screen').style.display='flex';
+}
+
+// ── BOOKS ─────────────────────────────────────────────────────
+async function loadBooks(){
   setSyncStatus('loading');
   try{
-    const data=await supa('biblioteca?order=author.asc');
-    books=data.map(b=>({...b,quotes:parseQuotes(b.quotes)}));
+    const token=currentSession?.access_token||SUPA_KEY;
+    const data=await supaFetch('biblioteca?user_id=eq.'+currentUser.id+'&order=author.asc',null,null,token);
+    books=(data||[]).map(b=>({...b,quotes:parseQuotes(b.quotes)}));
     setSyncStatus('ok');
-    renderBooks();updateSidebar();
   }catch(e){
     setSyncStatus('err');
-    // fallback a localStorage
-    const saved=localStorage.getItem('biblioteca_fallback');
-    if(saved){books=JSON.parse(saved);renderBooks();updateSidebar();}
-    else{document.getElementById('books-grid').innerHTML='<div class="empty-state" style="grid-column:1/-1"><p>Sin conexión</p><small>Verifica tu internet e intenta de nuevo</small></div>';}
+    books=[];
   }
+  renderBooks();updateSidebar();
 }
 
 function parseQuotes(raw){
@@ -329,17 +891,14 @@ function parseQuotes(raw){
   try{return JSON.parse(raw);}catch{return raw.split('\n').filter(Boolean);}
 }
 
-function serializeQuotes(arr){return JSON.stringify(arr);}
-
 function setSyncStatus(state){
   const dot=document.getElementById('sync-dot');
-  const lbl=document.getElementById('sync-label');
+  const lbl=document.getElementById('sync-lbl');
   if(!dot)return;
   dot.className='sync-dot '+(state==='ok'?'ok':state==='err'?'err':'');
   lbl.textContent=state==='ok'?'Sincronizado':state==='err'?'Sin conexión':'Sincronizando...';
 }
 
-// ── Render books ─────────────────────────────────────────
 function renderBooks(){
   const q=(document.getElementById('search').value||'').toLowerCase();
   let filtered=books.filter(b=>{
@@ -350,20 +909,22 @@ function renderBooks(){
   filtered.sort((a,b)=>a.author.localeCompare(b.author,'es'));
   const grid=document.getElementById('books-grid');
   if(!filtered.length){
-    grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><p>Ningún libro aquí todavía</p><small>Añade tu primer libro con el botón de arriba</small></div>';
+    grid.innerHTML=`<div class="empty-state"><div class="empty-state-icon">📖</div><p>Ningún libro aquí todavía</p><small>Añade tu primer libro con el botón de arriba</small></div>`;
     return;
   }
   grid.innerHTML=filtered.map(b=>`
     <div class="book-card" onclick="openDetail(${b.id})">
-      <div class="book-cover" style="background:${b.color||'#8B5E3C'}">
+      <div class="book-cover" style="background:${b.color||'#8B6F47'}">
+        ${b.cover_url?`<img src="${esc(b.cover_url)}" alt="${esc(b.title)}" loading="lazy">`:''}
+        <div class="book-cover-gradient"></div>
         <div class="cover-title">${esc(b.title)}</div>
       </div>
       <div class="book-info">
         <div class="book-author">por <strong>${esc(b.author)}</strong></div>
         <div class="stars">${renderStars(b.rating||0)}</div>
         <div class="book-tags">
-          <span class="tag"><span class="status-dot status-${b.status}"></span>${statusLabel(b.status)}</span>
-          ${b.genre?`<span class="tag">${esc(b.genre)}</span>`:''}
+          <span class="tag tag-status"><span class="status-dot status-${b.status}"></span>${statusLabel(b.status)}</span>
+          ${b.genre?`<span class="tag tag-genre">${esc(b.genre)}</span>`:''}
         </div>
       </div>
     </div>`).join('');
@@ -376,23 +937,28 @@ function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace
 function filterBooks(f,el){
   currentFilter=f;
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  renderBooks();
+  el.classList.add('active');renderBooks();
 }
 
-// ── Detail panel ─────────────────────────────────────────
+// ── DETAIL PANEL ──────────────────────────────────────────────
 function openDetail(id){
   const b=books.find(x=>x.id===id);if(!b)return;
   const quotes=parseQuotes(b.quotes);
-  document.getElementById('panel-status').innerHTML=`<span class="tag"><span class="status-dot status-${b.status}"></span>${statusLabel(b.status)}</span>`;
-  document.getElementById('panel-cover').innerHTML=`<div style="height:100%;background:${b.color||'#8B5E3C'};display:flex;align-items:flex-end;padding:20px"><div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:rgba(255,255,255,0.95);font-weight:400;line-height:1.2">${esc(b.title)}</div></div>`;
+  document.getElementById('panel-status').innerHTML=`<span class="tag tag-status"><span class="status-dot status-${b.status}"></span>${statusLabel(b.status)}</span>`;
+  const cover=document.getElementById('panel-cover');
+  cover.style.background=b.color||'#8B6F47';
+  const img=cover.querySelector('img');
+  if(b.cover_url){
+    if(!img){const i=document.createElement('img');i.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover';cover.insertBefore(i,cover.firstChild);i.src=b.cover_url;}
+    else{img.src=b.cover_url;img.style.display='block';}
+  }else if(img){img.style.display='none';}
+  document.getElementById('panel-cover-title').textContent=b.title;
   document.getElementById('panel-body').innerHTML=`
-    <p class="panel-title serif">${esc(b.title)}</p>
     <p class="panel-author">${esc(b.author)}</p>
     <div class="panel-meta">
-      ${b.publisher?`<span>${esc(b.publisher)}</span>`:''}
-      ${b.year?`<span>${b.year}</span>`:''}
-      ${b.genre?`<span>${esc(b.genre)}</span>`:''}
+      ${b.publisher?`<span>📖 ${esc(b.publisher)}</span>`:''}
+      ${b.year?`<span>📅 ${b.year}</span>`:''}
+      ${b.genre?`<span class="tag tag-genre" style="font-size:11px">${esc(b.genre)}</span>`:''}
     </div>
     ${b.rating?`<div class="panel-section"><h4>Puntuación</h4><div class="rating-big">${renderStars(b.rating)}</div></div>`:''}
     ${b.review?`<div class="panel-section"><h4>Mi reseña</h4><p class="review-text">${esc(b.review).replace(/\n/g,'<br>')}</p></div>`:''}
@@ -410,10 +976,12 @@ function closePanel(){
   document.getElementById('panel-overlay').style.display='none';
 }
 
-// ── Modal ────────────────────────────────────────────────
+// ── MODAL ─────────────────────────────────────────────────────
 function openModal(editId){
   editingId=editId||null;
+  pendingPhotoFile=null;pendingPhotoUrl=null;
   document.getElementById('modal-title').textContent=editId?'Editar libro':'Añadir nuevo libro';
+  resetPhotoUI();
   if(editId){
     const b=books.find(x=>x.id===editId);
     document.getElementById('f-title').value=b.title||'';
@@ -423,69 +991,113 @@ function openModal(editId){
     document.getElementById('f-genre').value=b.genre||'';
     document.getElementById('f-status').value=b.status||'read';
     document.getElementById('f-review').value=b.review||'';
-    const quotes=parseQuotes(b.quotes);
-    document.getElementById('f-quote').value=quotes.join('\n');
+    document.getElementById('f-quote').value=parseQuotes(b.quotes).join('\n');
     setRating(b.rating||0);
-    pickColor(b.color||'#8B5E3C',null);
+    pickColor(b.color||'#8B6F47',null);
+    if(b.cover_url){showPhotoPreview(b.cover_url);pendingPhotoUrl=b.cover_url;}
   }else{
     ['f-title','f-author','f-publisher','f-year','f-review','f-quote'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('f-genre').value='';
     document.getElementById('f-status').value='read';
-    setRating(0);pickColor('#8B5E3C',null);
+    setRating(0);pickColor('#8B6F47',null);
   }
   document.getElementById('modal').classList.add('open');
 }
-
 function closeModal(){document.getElementById('modal').classList.remove('open')}
 
 function setRating(n){
   selectedRating=n;
-  document.querySelectorAll('#star-input span').forEach((s,i)=>{s.textContent=i<n?'★':'☆';s.style.color=i<n?'#E8A020':'#ccc'});
+  document.querySelectorAll('#star-input span').forEach((s,i)=>{s.textContent=i<n?'★':'☆';s.style.color=i<n?'#D4A853':'#ccc'});
 }
 
 function pickColor(c,el){
   selectedColor=c;
-  document.querySelectorAll('.color-swatch').forEach(d=>d.style.border='3px solid transparent');
-  if(el){el.style.border='3px solid var(--ink)';return;}
-  document.querySelectorAll('.color-swatch').forEach(d=>{if(d.style.background===c)d.style.border='3px solid var(--ink)'});
+  document.querySelectorAll('.color-swatch').forEach(d=>d.classList.remove('selected'));
+  if(el)el.classList.add('selected');
+  else document.querySelectorAll('.color-swatch').forEach(d=>{if(d.style.background===c)d.classList.add('selected')});
 }
 
-// ── Save / Edit / Delete ─────────────────────────────────
+// ── PHOTO HANDLING ─────────────────────────────────────────────
+function triggerPhotoInput(){
+  if(document.getElementById('photo-preview-img').style.display!=='none')return;
+  document.getElementById('photo-input').click();
+}
+
+function handlePhoto(e){
+  const file=e.target.files[0];if(!file)return;
+  pendingPhotoFile=file;
+  const reader=new FileReader();
+  reader.onload=ev=>showPhotoPreview(ev.target.result);
+  reader.readAsDataURL(file);
+}
+
+function showPhotoPreview(url){
+  document.getElementById('photo-placeholder').style.display='none';
+  const img=document.getElementById('photo-preview-img');
+  img.src=url;img.style.display='block';
+  document.getElementById('photo-remove-btn').style.display='flex';
+  document.getElementById('photo-area').classList.add('has-photo');
+}
+
+function resetPhotoUI(){
+  document.getElementById('photo-placeholder').style.display='block';
+  document.getElementById('photo-preview-img').style.display='none';
+  document.getElementById('photo-remove-btn').style.display='none';
+  document.getElementById('photo-area').classList.remove('has-photo');
+  document.getElementById('photo-input').value='';
+}
+
+function removePhoto(e){
+  e.stopPropagation();
+  pendingPhotoFile=null;pendingPhotoUrl=null;
+  resetPhotoUI();
+}
+
+// ── SAVE / EDIT / DELETE ───────────────────────────────────────
 async function saveBook(){
   const title=(document.getElementById('f-title').value||'').trim();
   const author=(document.getElementById('f-author').value||'').trim();
-  if(!title||!author){showToast('Por favor añade título y autor');return}
+  if(!title||!author){showToast('Por favor añade título y autor','rose-toast');return}
   const btn=document.getElementById('btn-save');
   btn.disabled=true;btn.textContent='Guardando...';
-  const quoteRaw=(document.getElementById('f-quote').value||'').trim();
-  const quotesArr=quoteRaw?quoteRaw.split('\n').map(q=>q.trim()).filter(Boolean):[];
-  const payload={
-    title,author,
-    publisher:(document.getElementById('f-publisher').value||'').trim(),
-    year:document.getElementById('f-year').value||null,
-    genre:document.getElementById('f-genre').value||null,
-    status:document.getElementById('f-status').value,
-    rating:selectedRating||null,
-    review:(document.getElementById('f-review').value||'').trim()||null,
-    quotes:serializeQuotes(quotesArr),
-    color:selectedColor
-  };
+  setSyncStatus('loading');
   try{
+    // Upload photo if new file selected
+    let cover_url=pendingPhotoUrl||null;
+    if(pendingPhotoFile){
+      showToast('Subiendo foto...');
+      cover_url=await uploadPhoto(pendingPhotoFile,currentUser.id);
+    }
+    const quoteRaw=(document.getElementById('f-quote').value||'').trim();
+    const quotesArr=quoteRaw?quoteRaw.split('\n').map(q=>q.trim()).filter(Boolean):[];
+    const token=currentSession?.access_token||SUPA_KEY;
+    const payload={
+      title,author,
+      publisher:(document.getElementById('f-publisher').value||'').trim()||null,
+      year:document.getElementById('f-year').value||null,
+      genre:document.getElementById('f-genre').value||null,
+      status:document.getElementById('f-status').value,
+      rating:selectedRating||null,
+      review:(document.getElementById('f-review').value||'').trim()||null,
+      quotes:JSON.stringify(quotesArr),
+      color:selectedColor,
+      cover_url,
+      user_id:currentUser.id
+    };
     if(editingId){
-      const updated=await supa('biblioteca?id=eq.'+editingId,'PATCH',payload);
+      await supaFetch('biblioteca?id=eq.'+editingId,'PATCH',payload,token);
       const idx=books.findIndex(x=>x.id===editingId);
-      if(idx>-1)books[idx]={...books[idx],...payload,quotes:quotesArr,id:editingId};
+      if(idx>-1)books[idx]={...books[idx],...payload,quotes:quotesArr};
     }else{
-      const created=await supa('biblioteca','POST',payload);
-      const newBook=Array.isArray(created)?created[0]:created;
-      books.push({...newBook,quotes:quotesArr});
+      const created=await supaFetch('biblioteca','POST',payload,token);
+      const nb=Array.isArray(created)?created[0]:created;
+      books.push({...nb,quotes:quotesArr});
     }
     setSyncStatus('ok');
-    localStorage.setItem('biblioteca_fallback',JSON.stringify(books));
     renderBooks();updateSidebar();closeModal();closePanel();
-    showToast(editingId?'Libro actualizado ✓':'Libro añadido a tu colección ✓');
+    showToast(editingId?'Libro actualizado ✓':'Añadido a tu colección ✓','mint-toast');
   }catch(e){
-    showToast('Error al guardar — verifica conexión');
+    showToast('Error al guardar — verifica conexión','rose-toast');
     setSyncStatus('err');
   }
   btn.disabled=false;btn.textContent='Guardar libro';
@@ -494,23 +1106,22 @@ async function saveBook(){
 function editBook(id){closePanel();setTimeout(()=>openModal(id),300)}
 
 async function deleteBook(id){
+  const token=currentSession?.access_token||SUPA_KEY;
   try{
-    await supa('biblioteca?id=eq.'+id,'DELETE');
+    await supaFetch('biblioteca?id=eq.'+id,'DELETE',null,token);
     books=books.filter(b=>b.id!==id);
-    localStorage.setItem('biblioteca_fallback',JSON.stringify(books));
     renderBooks();updateSidebar();closePanel();
     showToast('Libro eliminado');
-  }catch(e){showToast('Error al eliminar');}
+  }catch(e){showToast('Error al eliminar','rose-toast');}
 }
 
-// ── Sidebar stats ────────────────────────────────────────
 function updateSidebar(){
   document.getElementById('sb-read').textContent=books.filter(b=>b.status==='read').length;
   document.getElementById('sb-reading').textContent=books.filter(b=>b.status==='reading').length;
   document.getElementById('sb-wishlist').textContent=books.filter(b=>b.status==='wishlist').length;
 }
 
-// ── Pages ────────────────────────────────────────────────
+// ── PAGES ──────────────────────────────────────────────────────
 function showPage(p){
   ['library','quotes','stats'].forEach(x=>{
     document.getElementById('page-'+x).style.display=x===p?'block':'none';
@@ -521,15 +1132,13 @@ function showPage(p){
 }
 
 function renderQuotes(){
-  const all=books.flatMap(b=>{
-    const qs=parseQuotes(b.quotes);
-    return qs.map(q=>({text:q,book:b.title,author:b.author,color:b.color||'#8B5E3C'}));
-  });
+  const all=books.flatMap(b=>parseQuotes(b.quotes).map(q=>({text:q,book:b.title,author:b.author})));
   const g=document.getElementById('quotes-grid');
-  if(!all.length){g.innerHTML='<div class="empty-state" style="grid-column:1/-1"><p>Ninguna cita guardada</p><small>Añade citas al registrar tus libros</small></div>';return}
+  if(!all.length){g.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="empty-state-icon">✦</div><p>Ninguna cita guardada</p><small>Añade citas al registrar tus libros</small></div>';return}
   g.innerHTML=all.map(q=>`
-    <div class="quote-card" style="border-top:3px solid ${q.color}">
-      <p class="quote-card-text">"${esc(q.text)}"</p>
+    <div class="quote-card">
+      <div class="quote-accent"></div>
+      <p class="quote-card-text">${esc(q.text)}</p>
       <p class="quote-card-book">${esc(q.book)}</p>
       <p class="quote-card-author">${esc(q.author)}</p>
     </div>`).join('');
@@ -542,21 +1151,39 @@ function renderStats(){
   document.getElementById('st-total').textContent=books.length;
   document.getElementById('st-read').textContent=read.length;
   document.getElementById('st-avg').textContent=rated.length?avg+'★':'—';
-  const totalQuotes=books.reduce((s,b)=>s+parseQuotes(b.quotes).length,0);
-  document.getElementById('st-quotes').textContent=totalQuotes;
+  document.getElementById('st-quotes').textContent=books.reduce((s,b)=>s+parseQuotes(b.quotes).length,0);
   const genres={};
   books.forEach(b=>{if(b.genre)genres[b.genre]=(genres[b.genre]||0)+1});
   const sorted=Object.entries(genres).sort((a,b)=>b[1]-a[1]).slice(0,7);
   const max=sorted[0]?sorted[0][1]:1;
   document.getElementById('genre-chart').innerHTML=sorted.length
-    ?sorted.map(([g,c])=>`<div class="bar-row"><span class="bar-label">${esc(g)}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/max*100)}%"></div></div><span class="bar-count">${c}</span></div>`).join('')
+    ?sorted.map(([g,c],i)=>`
+      <div class="bar-row">
+        <span class="bar-label">${esc(g)}</span>
+        <div class="bar-track"><div class="bar-fill${i%2===0?'':' mint'}" style="width:${Math.round(c/max*100)}%"></div></div>
+        <span class="bar-count">${c}</span>
+      </div>`).join('')
     :'<p style="color:var(--muted);font-size:14px">Añade libros con género para ver el gráfico</p>';
 }
 
-function showToast(msg){
-  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
+// ── TOAST ──────────────────────────────────────────────────────
+function showToast(msg,cls){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast '+(cls||'');
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.classList.remove('show'),2600);
 }
+
+// ── ENTER KEY SUPPORT ──────────────────────────────────────────
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    if(document.getElementById('form-login').style.display!=='none'&&
+       document.getElementById('auth-screen').style.display!=='none')doLogin();
+    else if(document.getElementById('form-register').style.display!=='none'&&
+            document.getElementById('auth-screen').style.display!=='none')doRegister();
+  }
+});
 
 init();
 </script>
