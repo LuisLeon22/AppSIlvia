@@ -422,7 +422,94 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .empty-state p{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--mid-brown);margin-bottom:6px}
 .empty-state small{font-size:13px;color:var(--muted)}
 
-/* ── LOADING ─────────────────────────────────── */
+/* ── QUOTE POSTIT COLORS ─────────────────────── */
+.postit-swatches{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.postit-swatch{
+  width:26px;height:26px;border-radius:6px;cursor:pointer;
+  border:2.5px solid transparent;transition:all 0.15s;flex-shrink:0;
+}
+.postit-swatch:hover{transform:scale(1.2)}
+.postit-swatch.selected{border-color:var(--ink);transform:scale(1.15)}
+.postit-none{
+  width:26px;height:26px;border-radius:6px;cursor:pointer;
+  border:2px dashed var(--border);background:white;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:var(--muted);transition:all 0.15s;flex-shrink:0;
+}
+.postit-none:hover{border-color:var(--warm-brown);transform:scale(1.1)}
+.postit-none.selected{border-color:var(--ink);border-style:solid}
+
+/* quote card postit highlight */
+.quote-card.postit-yellow{background:#FFFBCC;border-color:#F0E060}
+.quote-card.postit-pink{background:#FFE8F0;border-color:#F0B4CC}
+.quote-card.postit-mint{background:#E0F7F0;border-color:#90D4C0}
+.quote-card.postit-lavender{background:#F0E8FF;border-color:#C8A8F0}
+.quote-card.postit-peach{background:#FFE8D8;border-color:#F0C0A0}
+.quote-card.postit-sky{background:#E0F0FF;border-color:#90C8F0}
+.quote-card.postit-rose{background:#FFE0E8;border-color:#F0A8B8}
+.quote-card.postit-sage{background:#E8F0E0;border-color:#B0CC90}
+
+/* inline postit marker in detail panel */
+.quote-block.postit-yellow{background:#FFFBCC;border-left-color:#D4B800}
+.quote-block.postit-pink{background:#FFE8F0;border-left-color:var(--rose)}
+.quote-block.postit-mint{background:#E0F7F0;border-left-color:var(--mint)}
+.quote-block.postit-lavender{background:#F0E8FF;border-left-color:#9B6FD4}
+.quote-block.postit-peach{background:#FFE8D8;border-left-color:#E08060}
+.quote-block.postit-sky{background:#E0F0FF;border-left-color:#5090D4}
+.quote-block.postit-rose{background:#FFE0E8;border-left-color:#D46080}
+.quote-block.postit-sage{background:#E8F0E0;border-left-color:#6A9040}
+
+/* ── DEDICATORIA ─────────────────────────────── */
+.dedicatoria-btn{
+  margin:16px 20px 0;
+  display:flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--rose-pale),var(--mint-pale));
+  border:1.5px solid var(--rose-light);border-radius:12px;
+  padding:12px 14px;cursor:pointer;transition:all 0.2s;
+  animation:pulse-soft 3s ease-in-out infinite;
+}
+.dedicatoria-btn:hover{transform:scale(1.02);box-shadow:0 4px 16px rgba(196,120,138,0.25)}
+@keyframes pulse-soft{
+  0%,100%{box-shadow:0 0 0 0 rgba(196,120,138,0)}
+  50%{box-shadow:0 0 0 6px rgba(196,120,138,0.12)}
+}
+.dedicatoria-icon{font-size:20px}
+.dedicatoria-label{flex:1}
+.dedicatoria-label strong{display:block;font-size:12px;color:var(--rose-deep);font-weight:600}
+.dedicatoria-label span{font-size:10px;color:var(--muted);font-style:italic}
+.dedicatoria-arrow{font-size:14px;color:var(--rose-light)}
+
+.dedicatoria-overlay{
+  position:fixed;inset:0;background:rgba(42,31,21,0.6);
+  z-index:500;display:none;align-items:center;justify-content:center;
+  padding:24px;backdrop-filter:blur(6px);
+}
+.dedicatoria-overlay.open{display:flex}
+.dedicatoria-card{
+  background:var(--cream);border-radius:24px;
+  width:100%;max-width:480px;overflow:hidden;
+  box-shadow:var(--shadow-lg);animation:card-in 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes card-in{from{transform:scale(0.8) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.dedicatoria-card-header{
+  background:var(--ink);padding:32px 32px 24px;text-align:center;position:relative;
+}
+.dedicatoria-card-header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:20px;background:var(--cream);border-radius:20px 20px 0 0}
+.dedicatoria-card-title{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--mid-brown);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+.dedicatoria-card-name{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:#FAF7F2;letter-spacing:1px}
+.dedicatoria-card-body{padding:28px 32px 32px}
+.dedicatoria-text{
+  font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;
+  line-height:2;color:var(--ink);white-space:pre-wrap;margin-bottom:24px;
+}
+.dedicatoria-firma{font-size:14px;color:var(--rose-deep);font-weight:500;text-align:right;margin-top:8px}
+.dedicatoria-close{
+  width:100%;padding:13px;background:var(--ink);color:var(--cream);
+  border:none;border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;
+  cursor:pointer;font-weight:500;transition:opacity 0.2s;
+}
+.dedicatoria-close:hover{opacity:0.85}
+.dedicatoria-flowers{font-size:28px;letter-spacing:8px;display:block;margin-bottom:16px;text-align:center}
 .loading-state{text-align:center;padding:60px 32px;grid-column:1/-1}
 .loading-state p{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--mid-brown);margin-bottom:4px}
 .loading-state small{font-size:13px;color:var(--muted)}
@@ -524,6 +611,15 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
         <span class="nav-icon">◎</span> Estadísticas
       </div>
     </nav>
+    <!-- Dedicatoria button -->
+    <div class="dedicatoria-btn" onclick="openDedicatoria()">
+      <span class="dedicatoria-icon">💌</span>
+      <div class="dedicatoria-label">
+        <strong>Para Silvia — abrir</strong>
+        <span>Un mensaje especial</span>
+      </div>
+      <span class="dedicatoria-arrow">›</span>
+    </div>
     <div class="sidebar-stats">
       <div class="stat-pill"><span>Leídos</span><span class="badge" id="sb-read">0</span></div>
       <div class="stat-pill"><span>Leyendo</span><span class="badge" id="sb-reading">0</span></div>
@@ -702,6 +798,28 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
     <div class="modal-footer">
       <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
       <button class="btn-primary" id="btn-save" onclick="saveBook()">Guardar libro</button>
+    </div>
+  </div>
+</div>
+
+<!-- Dedicatoria Modal -->
+<div class="dedicatoria-overlay" id="dedicatoria-overlay" onclick="if(event.target===this)closeDedicatoria()">
+  <div class="dedicatoria-card">
+    <div class="dedicatoria-card-header">
+      <div class="dedicatoria-card-title">un mensaje para</div>
+      <div class="dedicatoria-card-name">Silvia</div>
+    </div>
+    <div class="dedicatoria-card-body">
+      <span class="dedicatoria-flowers">🌸 🌿 🌸</span>
+      <p class="dedicatoria-text">Aquí va tu dedicatoria.
+Puedes escribir lo que quieras,
+con todo el espacio que necesites.
+
+Este es tu lugar, hecho con cariño
+para ti y tus libros.</p>
+      <p class="dedicatoria-firma">— Con amor, Luis 🤍</p>
+      <div style="height:20px"></div>
+      <button class="dedicatoria-close" onclick="closeDedicatoria()">Cerrar</button>
     </div>
   </div>
 </div>
@@ -897,8 +1015,12 @@ async function loadBooks(){
 
 function parseQuotes(raw){
   if(!raw)return[];
-  if(Array.isArray(raw))return raw;
-  try{return JSON.parse(raw);}catch{return raw.split('\n').filter(Boolean);}
+  if(Array.isArray(raw))return raw.map(q=>typeof q==='string'?{text:q,color:'none'}:q);
+  try{
+    const parsed=JSON.parse(raw);
+    if(Array.isArray(parsed))return parsed.map(q=>typeof q==='string'?{text:q,color:'none'}:q);
+  }catch{}
+  return raw.split('\n').filter(Boolean).map(t=>({text:t,color:'none'}));
 }
 
 function setSyncStatus(state){
@@ -972,7 +1094,7 @@ function openDetail(id){
     </div>
     ${b.rating?`<div class="panel-section"><h4>Puntuación</h4><div class="rating-big">${renderStars(b.rating)}</div></div>`:''}
     ${b.review?`<div class="panel-section"><h4>Mi reseña</h4><p class="review-text">${esc(b.review).replace(/\n/g,'<br>')}</p></div>`:''}
-    ${quotes.length?`<div class="panel-section"><h4>Citas favoritas</h4>${quotes.map(q=>`<div class="quote-block"><p class="quote-text">"${esc(q)}"</p><p class="quote-context">— ${esc(b.title)}, ${esc(b.author)}</p></div>`).join('')}</div>`:''}
+    ${quotes.length?`<div class="panel-section"><h4>Citas favoritas</h4>${quotes.map(q=>`<div class="quote-block postit-${q.color&&q.color!=='none'?q.color:''}"><p class="quote-text">"${esc(q.text)}"</p><p class="quote-context">— ${esc(b.title)}, ${esc(b.author)}</p></div>`).join('')}</div>`:''}
     <div class="panel-actions">
       <button class="btn-primary" onclick="editBook(${b.id})">Editar</button>
       <button class="btn-secondary" onclick="if(confirm('¿Eliminar este libro?'))deleteBook(${b.id})">Eliminar</button>
@@ -1092,28 +1214,72 @@ function removePhoto(e){
   resetPhotoUI();
 }
 
+// ── POSTIT COLORS ───────────────────────────────────────────────
+const POSTIT_COLORS=[
+  {id:'yellow',bg:'#FFFBCC',label:'Amarillo'},
+  {id:'pink',bg:'#FFD6E8',label:'Rosa'},
+  {id:'mint',bg:'#C8F0E4',label:'Menta'},
+  {id:'lavender',bg:'#E8D8FF',label:'Lavanda'},
+  {id:'peach',bg:'#FFD8BC',label:'Durazno'},
+  {id:'sky',bg:'#C8E8FF',label:'Celeste'},
+  {id:'rose',bg:'#FFCCD8',label:'Rosa oscuro'},
+  {id:'sage',bg:'#D8ECC8',label:'Salvia'},
+];
+
 // ── QUOTES INPUT ───────────────────────────────────────────────
-function addQuoteInput(value){
+function addQuoteInput(value, color){
   const list=document.getElementById('quotes-list');
-  const idx=list.children.length;
   const div=document.createElement('div');
-  div.style.cssText='display:flex;gap:8px;align-items:flex-start';
+  div.style.cssText='background:white;border:1.5px solid var(--border);border-radius:12px;padding:12px;margin-bottom:2px;transition:background 0.2s';
+  if(color){
+    const pc=POSTIT_COLORS.find(c=>c.id===color);
+    if(pc)div.style.background=pc.bg;
+  }
+  const selectedColor=color||'none';
+  const swatchesHtml=`
+    <div class="postit-swatches">
+      <div class="postit-none ${selectedColor==='none'?'selected':''}" onclick="selectPostitColor(this,'none')" title="Sin color"></div>
+      ${POSTIT_COLORS.map(c=>`<div class="postit-swatch ${selectedColor===c.id?'selected':''}" style="background:${c.bg}" onclick="selectPostitColor(this,'${c.id}')" title="${c.label}" data-color="${c.id}"></div>`).join('')}
+    </div>`;
   div.innerHTML=`
-    <textarea class="quote-input" rows="2" placeholder="Escribe la cita aquí..." style="flex:1;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Cormorant Garamond',serif;font-style:italic;outline:none;resize:none;background:var(--cream);transition:all 0.2s;line-height:1.5">${esc(value||'')}</textarea>
-    <button type="button" onclick="this.parentElement.remove()" style="background:var(--rose-pale);color:var(--rose-deep);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;flex-shrink:0;margin-top:4px;transition:background 0.2s">✕</button>`;
-  div.querySelector('textarea').addEventListener('focus',e=>{e.target.style.borderColor='var(--rose-light)';e.target.style.background='white'});
-  div.querySelector('textarea').addEventListener('blur',e=>{e.target.style.borderColor='var(--border)';e.target.style.background='var(--cream)'});
+    <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px">
+      <textarea class="quote-input" rows="2" placeholder="Escribe la cita aquí..." data-color="${selectedColor}" style="flex:1;padding:8px 10px;border:none;border-radius:8px;font-size:14px;font-family:'Cormorant Garamond',serif;font-style:italic;outline:none;resize:none;background:transparent;line-height:1.6;color:var(--ink)">${esc(value||'')}</textarea>
+      <button type="button" onclick="this.closest('div[style]').remove()" style="background:rgba(42,31,21,0.08);color:var(--muted);border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:12px;flex-shrink:0;margin-top:2px;transition:background 0.2s">✕</button>
+    </div>
+    <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:500">Color de post-it</div>
+    ${swatchesHtml}`;
   list.appendChild(div);
+}
+
+function selectPostitColor(el, colorId){
+  const card=el.closest('div[style]');
+  // Remove selected from all swatches in this card
+  card.querySelectorAll('.postit-swatch,.postit-none').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
+  // Update card background
+  if(colorId==='none'){
+    card.style.background='white';
+  }else{
+    const pc=POSTIT_COLORS.find(c=>c.id===colorId);
+    if(pc)card.style.background=pc.bg;
+  }
+  // Update textarea data-color
+  const ta=card.querySelector('.quote-input');
+  if(ta)ta.dataset.color=colorId;
 }
 
 function getQuotes(){
   return Array.from(document.querySelectorAll('.quote-input'))
-    .map(t=>t.value.trim()).filter(Boolean);
+    .map(t=>({text:t.value.trim(),color:t.dataset.color||'none'}))
+    .filter(q=>q.text);
 }
 
 function setQuotes(arr){
   document.getElementById('quotes-list').innerHTML='';
-  (arr||[]).forEach(q=>addQuoteInput(q));
+  (arr||[]).forEach(q=>{
+    if(typeof q==='string')addQuoteInput(q,'none');
+    else addQuoteInput(q.text,q.color||'none');
+  });
 }
 
 // ── SAVE / EDIT / DELETE ───────────────────────────────────────
@@ -1194,16 +1360,20 @@ function showPage(p){
 }
 
 function renderQuotes(){
-  const all=books.flatMap(b=>parseQuotes(b.quotes).map(q=>({text:q,book:b.title,author:b.author})));
+  const all=books.flatMap(b=>parseQuotes(b.quotes).map(q=>({...q,book:b.title,author:b.author})));
   const g=document.getElementById('quotes-grid');
   if(!all.length){g.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="empty-state-icon">✦</div><p>Ninguna cita guardada</p><small>Añade citas al registrar tus libros</small></div>';return}
-  g.innerHTML=all.map(q=>`
-    <div class="quote-card">
+  g.innerHTML=all.map(q=>{
+    const pc=POSTIT_COLORS.find(c=>c.id===q.color);
+    const bgStyle=pc?`background:${pc.bg};border-color:${pc.bg}`:'';
+    const cls=q.color&&q.color!=='none'?`postit-${q.color}`:'';
+    return`<div class="quote-card ${cls}" style="${bgStyle}">
       <div class="quote-accent"></div>
       <p class="quote-card-text">${esc(q.text)}</p>
       <p class="quote-card-book">${esc(q.book)}</p>
       <p class="quote-card-author">${esc(q.author)}</p>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function renderStats(){
@@ -1235,6 +1405,14 @@ function showToast(msg,cls){
   t.classList.add('show');
   clearTimeout(t._timer);
   t._timer=setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+// ── DEDICATORIA ────────────────────────────────────────────────
+function openDedicatoria(){
+  document.getElementById('dedicatoria-overlay').classList.add('open');
+}
+function closeDedicatoria(){
+  document.getElementById('dedicatoria-overlay').classList.remove('open');
 }
 
 // ── ENTER KEY SUPPORT ──────────────────────────────────────────
