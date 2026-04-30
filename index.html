@@ -6,8 +6,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mi Biblioteca">
-<link rel="apple-touch-icon" sizes="180x180" href="LOGO APP.png">
-<link rel="apple-touch-icon" href="icon.png">
 <title>Mi Biblioteca</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
@@ -620,13 +618,18 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       <!-- Photo upload -->
       <div class="form-group">
         <label>Portada del libro</label>
-        <div class="photo-upload-area" id="photo-area" onclick="triggerPhotoInput()">
-          <input type="file" id="photo-input" class="photo-upload-input" accept="image/*" capture="environment" onchange="handlePhoto(event)" style="display:none">
+        <!-- Hidden inputs: one for gallery, one for camera -->
+        <input type="file" id="photo-input-gallery" accept="image/*" onchange="handlePhoto(event)" style="display:none">
+        <input type="file" id="photo-input-camera" accept="image/*" capture="environment" onchange="handlePhoto(event)" style="display:none">
+        <div class="photo-upload-area" id="photo-area">
           <div id="photo-placeholder">
-            <div class="photo-upload-icon">📷</div>
-            <div class="photo-upload-text">
+            <div class="photo-upload-icon">🖼️</div>
+            <div class="photo-upload-text" style="margin-bottom:14px">
               <strong>Añadir foto de portada</strong>
-              Toca para elegir de tu galería o tomar una foto
+            </div>
+            <div style="display:flex;gap:10px;justify-content:center">
+              <button type="button" onclick="document.getElementById('photo-input-gallery').click()" style="background:var(--rose-pale);color:var(--rose-deep);border:1.5px solid var(--rose-light);padding:8px 16px;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500">📂 Galería</button>
+              <button type="button" onclick="document.getElementById('photo-input-camera').click()" style="background:var(--mint-pale);color:var(--mint-deep);border:1.5px solid var(--mint-light);padding:8px 16px;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500">📷 Cámara</button>
             </div>
           </div>
           <img id="photo-preview-img" class="photo-preview" style="display:none" alt="Portada">
@@ -692,7 +695,8 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       </div>
       <div class="form-group">
         <label>Citas favoritas</label>
-        <textarea id="f-quote" rows="3" placeholder="Una cita por línea. Puedes añadir varias separadas con Enter."></textarea>
+        <div id="quotes-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px"></div>
+        <button type="button" onclick="addQuoteInput()" style="background:var(--rose-pale);color:var(--rose-deep);border:1.5px dashed var(--rose-light);padding:9px 16px;border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;width:100%;transition:all 0.2s">✦ Añadir cita</button>
       </div>
     </div>
     <div class="modal-footer">
@@ -744,18 +748,24 @@ async function supaAuth(endpoint,payload){
 }
 
 async function uploadPhoto(file,userId){
-  const ext=file.name.split('.').pop()||'jpg';
+  const ext=(file.name.split('.').pop()||'jpg').toLowerCase();
   const path=userId+'/'+Date.now()+'.'+ext;
+  const token=currentSession?.access_token||SUPA_KEY;
   const r=await fetch(SUPA_URL+'/storage/v1/object/portadas/'+path,{
     method:'POST',
     headers:{
       'apikey':SUPA_KEY,
-      'Authorization':'Bearer '+(currentSession?.access_token||SUPA_KEY),
-      'Content-Type':file.type||'image/jpeg'
+      'Authorization':'Bearer '+token,
+      'Content-Type':file.type||'image/jpeg',
+      'x-upsert':'true'
     },
     body:file
   });
-  if(!r.ok){const t=await r.text();throw new Error(t);}
+  if(!r.ok){
+    const t=await r.text();
+    console.error('Storage error:',t);
+    throw new Error('No se pudo subir la foto: '+t);
+  }
   return SUPA_URL+'/storage/v1/object/public/portadas/'+path;
 }
 
@@ -991,14 +1001,15 @@ function openModal(editId){
     document.getElementById('f-genre').value=b.genre||'';
     document.getElementById('f-status').value=b.status||'read';
     document.getElementById('f-review').value=b.review||'';
-    document.getElementById('f-quote').value=parseQuotes(b.quotes).join('\n');
+    setQuotes(parseQuotes(b.quotes));
     setRating(b.rating||0);
     pickColor(b.color||'#8B6F47',null);
     if(b.cover_url){showPhotoPreview(b.cover_url);pendingPhotoUrl=b.cover_url;}
   }else{
-    ['f-title','f-author','f-publisher','f-year','f-review','f-quote'].forEach(id=>document.getElementById(id).value='');
+    ['f-title','f-author','f-publisher','f-year','f-review'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('f-genre').value='';
     document.getElementById('f-status').value='read';
+    setQuotes([]);
     setRating(0);pickColor('#8B6F47',null);
   }
   document.getElementById('modal').classList.add('open');
@@ -1020,15 +1031,42 @@ function pickColor(c,el){
 // ── PHOTO HANDLING ─────────────────────────────────────────────
 function triggerPhotoInput(){
   if(document.getElementById('photo-preview-img').style.display!=='none')return;
-  document.getElementById('photo-input').click();
+  document.getElementById('photo-input-gallery').click();
 }
 
 function handlePhoto(e){
   const file=e.target.files[0];if(!file)return;
-  pendingPhotoFile=file;
-  const reader=new FileReader();
-  reader.onload=ev=>showPhotoPreview(ev.target.result);
-  reader.readAsDataURL(file);
+  // Compress if too large (> 2MB)
+  if(file.size>2*1024*1024){
+    compressImage(file,0.8,blob=>{
+      pendingPhotoFile=new File([blob],file.name,{type:'image/jpeg'});
+      const reader=new FileReader();
+      reader.onload=ev=>showPhotoPreview(ev.target.result);
+      reader.readAsDataURL(pendingPhotoFile);
+    });
+  }else{
+    pendingPhotoFile=file;
+    const reader=new FileReader();
+    reader.onload=ev=>showPhotoPreview(ev.target.result);
+    reader.readAsDataURL(file);
+  }
+}
+
+function compressImage(file,quality,callback){
+  const img=new Image();
+  const url=URL.createObjectURL(file);
+  img.onload=()=>{
+    const canvas=document.createElement('canvas');
+    let w=img.width,h=img.height;
+    const max=1200;
+    if(w>max){h=Math.round(h*max/w);w=max;}
+    if(h>max){w=Math.round(w*max/h);h=max;}
+    canvas.width=w;canvas.height=h;
+    canvas.getContext('2d').drawImage(img,0,0,w,h);
+    canvas.toBlob(callback,'image/jpeg',quality);
+    URL.revokeObjectURL(url);
+  };
+  img.src=url;
 }
 
 function showPhotoPreview(url){
@@ -1044,13 +1082,38 @@ function resetPhotoUI(){
   document.getElementById('photo-preview-img').style.display='none';
   document.getElementById('photo-remove-btn').style.display='none';
   document.getElementById('photo-area').classList.remove('has-photo');
-  document.getElementById('photo-input').value='';
+  document.getElementById('photo-input-gallery').value='';
+  document.getElementById('photo-input-camera').value='';
 }
 
 function removePhoto(e){
   e.stopPropagation();
   pendingPhotoFile=null;pendingPhotoUrl=null;
   resetPhotoUI();
+}
+
+// ── QUOTES INPUT ───────────────────────────────────────────────
+function addQuoteInput(value){
+  const list=document.getElementById('quotes-list');
+  const idx=list.children.length;
+  const div=document.createElement('div');
+  div.style.cssText='display:flex;gap:8px;align-items:flex-start';
+  div.innerHTML=`
+    <textarea class="quote-input" rows="2" placeholder="Escribe la cita aquí..." style="flex:1;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Cormorant Garamond',serif;font-style:italic;outline:none;resize:none;background:var(--cream);transition:all 0.2s;line-height:1.5">${esc(value||'')}</textarea>
+    <button type="button" onclick="this.parentElement.remove()" style="background:var(--rose-pale);color:var(--rose-deep);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;flex-shrink:0;margin-top:4px;transition:background 0.2s">✕</button>`;
+  div.querySelector('textarea').addEventListener('focus',e=>{e.target.style.borderColor='var(--rose-light)';e.target.style.background='white'});
+  div.querySelector('textarea').addEventListener('blur',e=>{e.target.style.borderColor='var(--border)';e.target.style.background='var(--cream)'});
+  list.appendChild(div);
+}
+
+function getQuotes(){
+  return Array.from(document.querySelectorAll('.quote-input'))
+    .map(t=>t.value.trim()).filter(Boolean);
+}
+
+function setQuotes(arr){
+  document.getElementById('quotes-list').innerHTML='';
+  (arr||[]).forEach(q=>addQuoteInput(q));
 }
 
 // ── SAVE / EDIT / DELETE ───────────────────────────────────────
@@ -1068,8 +1131,7 @@ async function saveBook(){
       showToast('Subiendo foto...');
       cover_url=await uploadPhoto(pendingPhotoFile,currentUser.id);
     }
-    const quoteRaw=(document.getElementById('f-quote').value||'').trim();
-    const quotesArr=quoteRaw?quoteRaw.split('\n').map(q=>q.trim()).filter(Boolean):[];
+    const quotesArr=getQuotes();
     const token=currentSession?.access_token||SUPA_KEY;
     const payload={
       title,author,
