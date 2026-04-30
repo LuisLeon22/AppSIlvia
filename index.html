@@ -455,11 +455,11 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       <!-- Login -->
       <div id="form-login">
         <p class="auth-title serif">¡Bienvenida de vuelta!</p>
-        <p class="auth-sub">Ingresa con tu usuario para ver tu biblioteca</p>
+        <p class="auth-sub">Ingresa con tu correo para ver tu biblioteca</p>
         <div class="auth-error" id="login-error"></div>
         <div class="auth-field">
-          <label>Nombre de usuario</label>
-          <input type="text" id="login-nick" placeholder="ej. Silvia98" autocomplete="username" autocapitalize="none">
+          <label>Correo electrónico</label>
+          <input type="email" id="login-nick" placeholder="tu@correo.com" autocomplete="email" autocapitalize="none">
         </div>
         <div class="auth-field">
           <label>Contraseña</label>
@@ -471,12 +471,16 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       <!-- Register -->
       <div id="form-register" style="display:none">
         <p class="auth-title serif">Crea tu espacio</p>
-        <p class="auth-sub">Elige un nombre de usuario y contraseña. ¡Guárdalos en un lugar seguro! 🤍</p>
+        <p class="auth-sub">Regístrate con tu correo y elige una contraseña. Si la olvidas puedes recuperarla por email 🤍</p>
         <div class="auth-error" id="reg-error"></div>
         <div class="auth-field">
-          <label>Nombre de usuario</label>
-          <input type="text" id="reg-nick" placeholder="ej. Silvia98" autocomplete="username" autocapitalize="none">
-          <p class="auth-hint">Solo letras, números y guiones bajos. Sin espacios.</p>
+          <label>Tu nombre</label>
+          <input type="text" id="reg-nick" placeholder="ej. Silvia" autocomplete="given-name" autocapitalize="words">
+          <p class="auth-hint">Así te saludaremos dentro de la app</p>
+        </div>
+        <div class="auth-field">
+          <label>Correo electrónico</label>
+          <input type="email" id="reg-email" placeholder="tu@correo.com" autocomplete="email" autocapitalize="none">
         </div>
         <div class="auth-field">
           <label>Contraseña</label>
@@ -702,8 +706,6 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 // ── CONFIG ───────────────────────────────────────────────────
 const SUPA_URL='https://whrfnboqhypusoggvbqv.supabase.co';
 const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndocmZuYm9xaHlwdXNvZ2d2YnF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NDkyODYsImV4cCI6MjA5MTQyNTI4Nn0.Z86mWomiz9ScEPYObvL4eXazwcfVXzuAQLelSZEV98I';
-const FAKE_DOMAIN='@biblioteca.silvia.app';
-
 // ── STATE ────────────────────────────────────────────────────
 let books=[];let currentFilter='all';let selectedRating=0;
 let selectedColor='#8B6F47';let editingId=null;
@@ -764,51 +766,48 @@ function switchTab(tab){
 }
 
 async function doLogin(){
-  const nick=(document.getElementById('login-nick').value||'').trim().toLowerCase();
+  const email=(document.getElementById('login-nick').value||'').trim().toLowerCase();
   const pass=document.getElementById('login-pass').value;
-  if(!nick||!pass){showAuthError('login','Por favor completa todos los campos');return}
+  if(!email||!pass){showAuthError('login','Por favor completa todos los campos');return}
   const btn=document.getElementById('btn-login');
   btn.disabled=true;btn.textContent='Entrando...';
   clearAuthError('login');
   try{
-    const data=await supaAuth('token?grant_type=password',{
-      email:nick+FAKE_DOMAIN,password:pass
-    });
+    const data=await supaAuth('token?grant_type=password',{email,password:pass});
     currentSession=data;
+    const nick=data.user.user_metadata?.nickname||email.split('@')[0];
     currentUser={id:data.user.id,nick};
-    localStorage.setItem('bib_session',JSON.stringify({nick,access_token:data.access_token,refresh_token:data.refresh_token,user_id:data.user.id}));
+    localStorage.setItem('bib_session',JSON.stringify({nick,email,access_token:data.access_token,refresh_token:data.refresh_token,user_id:data.user.id}));
     enterApp(nick);
   }catch(e){
-    showAuthError('login','Usuario o contraseña incorrectos');
+    showAuthError('login','Correo o contraseña incorrectos');
   }
   btn.disabled=false;btn.textContent='Entrar a mi biblioteca';
 }
 
 async function doRegister(){
-  const nick=(document.getElementById('reg-nick').value||'').trim().toLowerCase();
+  const nick=(document.getElementById('reg-nick').value||'').trim();
+  const email=(document.getElementById('reg-email').value||'').trim().toLowerCase();
   const pass=document.getElementById('reg-pass').value;
   const pass2=document.getElementById('reg-pass2').value;
-  if(!nick||!pass||!pass2){showAuthError('reg','Por favor completa todos los campos');return}
-  if(!/^[a-z0-9_]+$/.test(nick)){showAuthError('reg','El usuario solo puede tener letras, números y _');return}
+  if(!nick||!email||!pass||!pass2){showAuthError('reg','Por favor completa todos los campos');return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showAuthError('reg','Por favor ingresa un correo válido');return}
   if(pass.length<6){showAuthError('reg','La contraseña debe tener al menos 6 caracteres');return}
   if(pass!==pass2){showAuthError('reg','Las contraseñas no coinciden');return}
   const btn=document.getElementById('btn-register');
   btn.disabled=true;btn.textContent='Creando tu biblioteca...';
   clearAuthError('reg');
   try{
-    const data=await supaAuth('signup',{
-      email:nick+FAKE_DOMAIN,password:pass,
-      data:{nickname:nick}
-    });
+    const data=await supaAuth('signup',{email,password:pass,data:{nickname:nick}});
     if(!data.user)throw new Error('No se pudo crear la cuenta');
-    // Auto-login after register
-    const login=await supaAuth('token?grant_type=password',{email:nick+FAKE_DOMAIN,password:pass});
+    // Auto-login
+    const login=await supaAuth('token?grant_type=password',{email,password:pass});
     currentSession=login;
     currentUser={id:login.user.id,nick};
-    localStorage.setItem('bib_session',JSON.stringify({nick,access_token:login.access_token,refresh_token:login.refresh_token,user_id:login.user.id}));
+    localStorage.setItem('bib_session',JSON.stringify({nick,email,access_token:login.access_token,refresh_token:login.refresh_token,user_id:login.user.id}));
     enterApp(nick);
   }catch(e){
-    const msg=e.message.includes('already registered')?'Ese usuario ya existe, prueba otro':'Error al crear cuenta: '+e.message;
+    const msg=e.message.includes('already registered')?'Ese correo ya tiene una cuenta':'Error al crear cuenta: '+e.message;
     showAuthError('reg',msg);
   }
   btn.disabled=false;btn.textContent='Crear mi biblioteca';
@@ -849,7 +848,6 @@ async function init(){
   if(saved){
     try{
       const s=JSON.parse(saved);
-      // Try to refresh
       const r=await fetch(SUPA_URL+'/auth/v1/token?grant_type=refresh_token',{
         method:'POST',
         headers:{'apikey':SUPA_KEY,'Content-Type':'application/json'},
@@ -858,15 +856,15 @@ async function init(){
       if(r.ok){
         const data=await r.json();
         currentSession=data;
-        currentUser={id:data.user.id,nick:s.nick};
-        localStorage.setItem('bib_session',JSON.stringify({nick:s.nick,access_token:data.access_token,refresh_token:data.refresh_token,user_id:data.user.id}));
-        enterApp(s.nick);
+        const nick=data.user.user_metadata?.nickname||s.nick||s.email?.split('@')[0]||'Lectora';
+        currentUser={id:data.user.id,nick};
+        localStorage.setItem('bib_session',JSON.stringify({nick,email:s.email,access_token:data.access_token,refresh_token:data.refresh_token,user_id:data.user.id}));
+        enterApp(nick);
         return;
       }
     }catch(e){}
     localStorage.removeItem('bib_session');
   }
-  // Show auth
   document.getElementById('auth-screen').style.display='flex';
 }
 
