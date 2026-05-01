@@ -574,7 +574,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
         <button class="filter-btn" onclick="filterBooks('wishlist',this)">♡ Lista</button>
         <div class="search-box">
           <span class="search-icon">⌕</span>
-          <input type="text" id="search" placeholder="Buscar libro o autor..." oninput="renderBooks()">
+          <input type="text" id="search" placeholder="Buscar libro o autora o autores..." oninput="renderBooks()">
         </div>
       </div>
       <div class="books-grid" id="books-grid">
@@ -605,7 +605,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
     <!-- Authors -->
     <div id="page-authors" style="display:none">
       <div class="authors-page">
-        <div style="margin-bottom:24px"><h2 class="serif" style="font-size:34px;font-weight:300">Autores</h2><p style="font-size:13px;color:var(--muted)">Los escritores que han vivido en tus manos y tanto te han hecho sentir ♥</p></div>
+        <div style="margin-bottom:24px"><h2 class="serif" style="font-size:34px;font-weight:300">Autoras y autores</h2><p style="font-size:13px;color:var(--muted)">Las escritoras y escritores que han vivido en tus manos y tanto te han hecho sentir ♥</p></div>
         <div id="authors-list"></div>
       </div>
     </div>
@@ -613,7 +613,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
     <!-- Notas -->
     <div id="page-notas" style="display:none">
       <div class="notas-page">
-        <div style="margin-bottom:20px"><h2 class="serif" style="font-size:34px;font-weight:300">Mis Notas</h2><p style="font-size:13px;color:var(--muted)">Aqui eres libre de escribir todo lo que quieras, pienses, ideas, mas citas, pensamientos libres, reflexiones, lo que quieras mi amor.</p></div>
+        <div style="margin-bottom:20px"><h2 class="serif" style="font-size:34px;font-weight:300">Mis Notas</h2><p style="font-size:13px;color:var(--muted)">Aqui eres libre de escribir todo lo que quieras, ideas, mas citas, pensamientos libres, reflexiones, lo que quieras mi amor.</p></div>
         <div class="nota-composer"><textarea id="nota-input" placeholder="Escribe lo que sientes, lo que tu corazoncito te diga ..."></textarea><div class="nota-composer-footer"><button class="btn-primary" onclick="saveNota()" style="padding:8px 18px;font-size:12px">Guardar nota</button></div></div>
         <div id="notas-list"></div>
       </div>
@@ -625,7 +625,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 <div class="bottom-nav" id="bottom-nav">
   <div class="bottom-nav-item active" onclick="showPage('library')" id="bnav-library"><span class="bnav-icon">📚</span><span class="bnav-label">Colección</span></div>
   <div class="bottom-nav-item" onclick="showPage('quotes')" id="bnav-quotes"><span class="bnav-icon">✦</span><span class="bnav-label">Citas</span></div>
-  <div class="bottom-nav-item" onclick="showPage('authors')" id="bnav-authors"><span class="bnav-icon">✍️</span><span class="bnav-label">Autores</span></div>
+  <div class="bottom-nav-item" onclick="showPage('authors')" id="bnav-authors"><span class="bnav-icon">✍️</span><span class="bnav-label">Autoras y autores</span></div>
   <div class="bottom-nav-item" onclick="showPage('notas')" id="bnav-notas"><span class="bnav-icon">🖊</span><span class="bnav-label">Notas</span></div>
   <div class="bottom-nav-item" onclick="showPage('stats')" id="bnav-stats"><span class="bnav-icon">◎</span><span class="bnav-label">Stats</span></div>
 </div>
@@ -1185,7 +1185,7 @@ function renderAuthors(){
   const authorMap={};books.forEach(b=>{if(!authorMap[b.author])authorMap[b.author]=[];authorMap[b.author].push(b)});
   const sorted=Object.entries(authorMap).sort((a,b)=>b[1].length-a[1].length);
   const list=document.getElementById('authors-list');
-  if(!sorted.length){list.innerHTML='<div class="empty-state"><div class="empty-state-icon">✍️</div><p>Ningún autor todavía</p><small>Añade libros para ver a tus autores aquí</small></div>';return;}
+  if(!sorted.length){list.innerHTML='<div class="empty-state"><div class="empty-state-icon">✍️</div><p>Ningún autor todavía</p><small>Añade libros para ver a tus autoras y autores aquí</small></div>';return;}
   list.innerHTML=sorted.map(([author,abooks])=>{
     const rated=abooks.filter(b=>b.rating>0);
     const avg=rated.length?(rated.reduce((s,b)=>s+b.rating,0)/rated.length).toFixed(1):null;
