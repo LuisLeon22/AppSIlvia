@@ -6,8 +6,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mi Biblioteca">
-<link rel="apple-touch-icon" href="LOGO APP.png">
-<link rel="apple-touch-icon" sizes="180x180" href="LOGO APP.png">
 <title>Mi Biblioteca</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
@@ -512,8 +510,82 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
   cursor:pointer;font-weight:500;transition:opacity 0.2s;
 }
 .dedicatoria-close:hover{opacity:0.85}
-.dedicatoria-flowers{font-size:28px;letter-spacing:8px;display:block;margin-bottom:16px;text-align:center}
-.loading-state{text-align:center;padding:60px 32px;grid-column:1/-1}
+/* ── QUOTE OF DAY SPLASH ─────────────────────── */
+.qod-splash{position:fixed;inset:0;background:var(--ink);z-index:900;display:flex;align-items:center;justify-content:center;padding:40px;opacity:0;animation:qod-in 0.6s ease 0.2s forwards}
+@keyframes qod-in{to{opacity:1}}
+.qod-card{max-width:520px;text-align:center}
+.qod-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:28px}
+.qod-text{font-family:'Cormorant Garamond',serif;font-size:26px;font-style:italic;color:#FAF7F2;line-height:1.7;margin-bottom:20px}
+.qod-book{font-size:13px;color:var(--mid-brown);margin-bottom:40px}
+.qod-btn{background:transparent;border:1.5px solid rgba(250,247,242,0.2);color:rgba(250,247,242,0.6);padding:12px 32px;border-radius:30px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+.qod-btn:hover{border-color:var(--rose-light);color:var(--rose-light)}
+.qod-flowers{font-size:24px;letter-spacing:6px;display:block;margin-bottom:24px;opacity:0.6}
+
+/* ── CURRENTLY READING ───────────────────────── */
+.reading-now-section{padding:24px 32px 0}
+.reading-now-card{background:white;border-radius:16px;border:1px solid var(--border);overflow:hidden;display:flex;margin-bottom:4px;box-shadow:0 4px 20px rgba(42,31,21,0.08)}
+.reading-now-cover{width:90px;flex-shrink:0;position:relative;background:var(--light-brown)}
+.reading-now-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.reading-now-body{flex:1;padding:16px 18px}
+.reading-now-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mint-deep);font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.reading-pulse{width:6px;height:6px;border-radius:50%;background:var(--mint);animation:reading-blink 1.5s ease-in-out infinite}
+@keyframes reading-blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.reading-now-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:var(--ink);margin-bottom:2px;line-height:1.2}
+.reading-now-author{font-size:12px;color:var(--muted);margin-bottom:12px}
+.progress-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.progress-label{font-size:11px;color:var(--muted)}
+.progress-pct{font-size:11px;color:var(--mint-deep);font-weight:600}
+.progress-bar-track{height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--mint-light),var(--mint));border-radius:3px;transition:width 0.6s ease}
+.progress-inputs{display:flex;gap:8px;margin-top:10px;align-items:center}
+.progress-inputs input{width:68px;padding:6px 8px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;text-align:center;background:var(--cream)}
+.progress-inputs input:focus{border-color:var(--mint);background:white}
+.progress-inputs span{font-size:12px;color:var(--muted)}
+.progress-inputs button{padding:6px 12px;background:var(--mint);color:white;border:none;border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500}
+
+/* ── FEELINGS ────────────────────────────────── */
+.feelings-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.feeling-btn{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:13px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;color:var(--muted)}
+.feeling-btn:hover{transform:scale(1.05)}
+.feeling-btn.selected{border-color:transparent;color:white;font-weight:500}
+.feeling-btn[data-f="lloré"].selected{background:#5B8FD4}
+.feeling-btn[data-f="me inspiró"].selected{background:#D4A020}
+.feeling-btn[data-f="me enojó"].selected{background:#C04040}
+.feeling-btn[data-f="me cambió"].selected{background:#7A50B0}
+.feeling-btn[data-f="me reconfortó"].selected{background:#5BAA78}
+.feeling-btn[data-f="me inquietó"].selected{background:#B07040}
+.feeling-btn[data-f="me enamoré"].selected{background:var(--rose)}
+.feeling-btn[data-f="me maravilló"].selected{background:#4090C0}
+
+/* ── AUTHORS PAGE ────────────────────────────── */
+.authors-page{padding:28px 32px 40px}
+.author-card{background:white;border-radius:14px;padding:20px 24px;border:1px solid var(--border);margin-bottom:14px;display:flex;align-items:center;gap:20px;transition:all 0.2s}
+.author-card:hover{transform:translateX(4px);box-shadow:var(--shadow)}
+.author-avatar{width:52px;height:52px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--rose-pale),var(--mint-pale));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--rose-deep);border:2px solid var(--rose-light)}
+.author-info{flex:1}
+.author-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:4px}
+.author-meta{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap}
+.author-books-mini{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.author-book-chip{background:var(--rose-pale);color:var(--rose-deep);font-size:10px;padding:3px 10px;border-radius:10px;font-weight:500}
+.author-rating-avg{text-align:center;flex-shrink:0}
+.author-big-num{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--ink);line-height:1}
+.author-small-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+
+/* ── NOTAS ───────────────────────────────────── */
+.notas-page{padding:28px 32px 40px}
+.nota-card{background:white;border-radius:14px;padding:20px;border:1px solid var(--border);margin-bottom:14px;transition:all 0.2s}
+.nota-card:hover{box-shadow:var(--shadow)}
+.nota-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.nota-date{font-size:11px;color:var(--muted);letter-spacing:0.5px}
+.nota-delete{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 6px;border-radius:4px;transition:all 0.2s}
+.nota-delete:hover{background:var(--rose-pale);color:var(--rose-deep)}
+.nota-text{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--ink);line-height:1.75;white-space:pre-wrap}
+.nota-composer{background:white;border-radius:14px;border:1.5px solid var(--border);padding:16px;margin-bottom:20px}
+.nota-composer:focus-within{border-color:var(--rose-light);box-shadow:0 0 0 3px var(--rose-pale)}
+.nota-composer textarea{width:100%;border:none;outline:none;font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--ink);resize:none;min-height:80px;line-height:1.75;background:transparent;padding:0}
+.nota-composer-footer{display:flex;justify-content:flex-end;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+
+/* ── LOADING ─────────────────────────────────── */
 .loading-state p{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--mid-brown);margin-bottom:4px}
 .loading-state small{font-size:13px;color:var(--muted)}
 .spinner{
@@ -610,16 +682,24 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       <div class="nav-item" onclick="showPage('quotes')" id="nav-quotes">
         <span class="nav-icon">✦</span> Citas favoritas
       </div>
+      <div class="nav-section">Descubrir</div>
+      <div class="nav-item" onclick="showPage('authors')" id="nav-authors">
+        <span class="nav-icon">✍️</span> Autores
+      </div>
       <div class="nav-item" onclick="showPage('stats')" id="nav-stats">
         <span class="nav-icon">◎</span> Estadísticas
+      </div>
+      <div class="nav-section">Personal</div>
+      <div class="nav-item" onclick="showPage('notas')" id="nav-notas">
+        <span class="nav-icon">🖊</span> Mis notas
       </div>
     </nav>
     <!-- Dedicatoria button -->
     <div class="dedicatoria-btn" onclick="openDedicatoria()">
       <span class="dedicatoria-icon">💌</span>
       <div class="dedicatoria-label">
-        <strong>Para Silvia</strong>
-        <span>Con mucho cariño, Luis</span>
+        <strong>Para Silvia — abrir</strong>
+        <span>Un mensaje especial</span>
       </div>
       <span class="dedicatoria-arrow">›</span>
     </div>
@@ -633,7 +713,12 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
   <main class="main">
     <!-- Library -->
     <div id="page-library">
-      <div class="page-header">
+      <!-- Currently Reading -->
+      <div class="reading-now-section" id="reading-now-section" style="display:none">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mint-deep);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px"><span class="reading-pulse"></span> Leyendo ahora</div>
+        <div class="reading-now-card" id="reading-now-card"></div>
+      </div>
+      <div class="page-header" style="margin-top:20px">
         <div class="page-header-text">
           <h2 class="serif">Mi Colección</h2>
           <p>Todos los libros que han pasado por tus manos</p>
@@ -687,6 +772,33 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
           <h3 class="serif">Por género</h3>
           <div id="genre-chart"></div>
         </div>
+      </div>
+    </div>
+    <!-- Authors -->
+    <div id="page-authors" style="display:none">
+      <div class="authors-page">
+        <div style="margin-bottom:24px">
+          <h2 class="serif" style="font-size:34px;font-weight:300">Autores</h2>
+          <p style="font-size:13px;color:var(--muted)">Los escritores que han vivido en tus manos</p>
+        </div>
+        <div id="authors-list"></div>
+      </div>
+    </div>
+
+    <!-- Notas -->
+    <div id="page-notas" style="display:none">
+      <div class="notas-page">
+        <div style="margin-bottom:20px">
+          <h2 class="serif" style="font-size:34px;font-weight:300">Mis Notas</h2>
+          <p style="font-size:13px;color:var(--muted)">Pensamientos libres, ideas literarias, reflexiones</p>
+        </div>
+        <div class="nota-composer">
+          <textarea id="nota-input" placeholder="Escribe lo que sientes, lo que piensas, lo que imaginas..."></textarea>
+          <div class="nota-composer-footer">
+            <button class="btn-primary" onclick="saveNota()" style="padding:8px 18px;font-size:12px">Guardar nota</button>
+          </div>
+        </div>
+        <div id="notas-list"></div>
       </div>
     </div>
   </main>
@@ -797,6 +909,19 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
         <div id="quotes-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px"></div>
         <button type="button" onclick="addQuoteInput()" style="background:var(--rose-pale);color:var(--rose-deep);border:1.5px dashed var(--rose-light);padding:9px 16px;border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;width:100%;transition:all 0.2s">✦ Añadir cita</button>
       </div>
+      <div class="form-group" id="feeling-group">
+        <label>Este libro me hizo sentir...</label>
+        <div class="feelings-grid">
+          <button type="button" class="feeling-btn" data-f="lloré" onclick="selectFeeling(this)">😢 lloré</button>
+          <button type="button" class="feeling-btn" data-f="me inspiró" onclick="selectFeeling(this)">✨ me inspiró</button>
+          <button type="button" class="feeling-btn" data-f="me enojó" onclick="selectFeeling(this)">😤 me enojó</button>
+          <button type="button" class="feeling-btn" data-f="me cambió" onclick="selectFeeling(this)">🌀 me cambió</button>
+          <button type="button" class="feeling-btn" data-f="me reconfortó" onclick="selectFeeling(this)">🤗 me reconfortó</button>
+          <button type="button" class="feeling-btn" data-f="me inquietó" onclick="selectFeeling(this)">😶 me inquietó</button>
+          <button type="button" class="feeling-btn" data-f="me enamoré" onclick="selectFeeling(this)">🩷 me enamoré</button>
+          <button type="button" class="feeling-btn" data-f="me maravilló" onclick="selectFeeling(this)">🌟 me maravilló</button>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
@@ -824,6 +949,17 @@ para ti y tus libros.</p>
       <div style="height:20px"></div>
       <button class="dedicatoria-close" onclick="closeDedicatoria()">Cerrar</button>
     </div>
+  </div>
+</div>
+
+<!-- Quote of the Day Splash -->
+<div class="qod-splash" id="qod-splash" style="display:none">
+  <div class="qod-card">
+    <span class="qod-flowers">🌸 🌿 🌸</span>
+    <div class="qod-label">Cita del día</div>
+    <p class="qod-text" id="qod-text"></p>
+    <p class="qod-book" id="qod-book"></p>
+    <button class="qod-btn" onclick="closeQod()">Entrar a mi biblioteca →</button>
   </div>
 </div>
 
@@ -972,7 +1108,7 @@ function enterApp(nick){
   const initial=nick.charAt(0).toUpperCase();
   document.getElementById('user-avatar').textContent=initial;
   document.getElementById('user-name-display').textContent=nick;
-  loadBooks();
+  loadBooks().then(()=>showQuoteOfDay());
 }
 
 // ── INIT ─────────────────────────────────────────────────────
@@ -1013,17 +1149,17 @@ async function loadBooks(){
     setSyncStatus('err');
     books=[];
   }
-  renderBooks();updateSidebar();
+  renderBooks();updateSidebar();renderReadingNow();
 }
 
 function parseQuotes(raw){
   if(!raw)return[];
-  if(Array.isArray(raw))return raw.map(q=>typeof q==='string'?{text:q,color:'none'}:q);
+  if(Array.isArray(raw))return raw.map(q=>typeof q==='string'?{text:q,color:'none',page:null}:q);
   try{
     const parsed=JSON.parse(raw);
-    if(Array.isArray(parsed))return parsed.map(q=>typeof q==='string'?{text:q,color:'none'}:q);
+    if(Array.isArray(parsed))return parsed.map(q=>typeof q==='string'?{text:q,color:'none',page:null}:q);
   }catch{}
-  return raw.split('\n').filter(Boolean).map(t=>({text:t,color:'none'}));
+  return raw.split('\n').filter(Boolean).map(t=>({text:t,color:'none',page:null}));
 }
 
 function setSyncStatus(state){
@@ -1095,9 +1231,10 @@ function openDetail(id){
       ${b.year?`<span>📅 ${b.year}</span>`:''}
       ${b.genre?`<span class="tag tag-genre" style="font-size:11px">${esc(b.genre)}</span>`:''}
     </div>
+    ${b.feeling?`<div class="panel-section"><h4>Me hizo sentir</h4><span style="display:inline-flex;align-items:center;gap:6px;background:${FEELING_COLORS[b.feeling]||'var(--rose)'};color:white;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500">${b.feeling}</span></div>`:''}
     ${b.rating?`<div class="panel-section"><h4>Puntuación</h4><div class="rating-big">${renderStars(b.rating)}</div></div>`:''}
     ${b.review?`<div class="panel-section"><h4>Mi reseña</h4><p class="review-text">${esc(b.review).replace(/\n/g,'<br>')}</p></div>`:''}
-    ${quotes.length?`<div class="panel-section"><h4>Citas favoritas</h4>${quotes.map(q=>`<div class="quote-block postit-${q.color&&q.color!=='none'?q.color:''}"><p class="quote-text">"${esc(q.text)}"</p><p class="quote-context">— ${esc(b.title)}, ${esc(b.author)}</p></div>`).join('')}</div>`:''}
+    ${quotes.length?`<div class="panel-section"><h4>Citas favoritas</h4>${quotes.map(q=>`<div class="quote-block postit-${q.color&&q.color!=='none'?q.color:''}"><p class="quote-text">"${esc(q.text)}"</p><p class="quote-context">— ${esc(b.title)}, ${esc(b.author)}${q.page?` · pág. ${q.page}`:''}</p></div>`).join('')}</div>`:''}
     <div class="panel-actions">
       <button class="btn-primary" onclick="editBook(${b.id})">Editar</button>
       <button class="btn-secondary" onclick="if(confirm('¿Eliminar este libro?'))deleteBook(${b.id})">Eliminar</button>
@@ -1129,12 +1266,13 @@ function openModal(editId){
     setQuotes(parseQuotes(b.quotes));
     setRating(b.rating||0);
     pickColor(b.color||'#8B6F47',null);
+    setFeeling(b.feeling||'');
     if(b.cover_url){showPhotoPreview(b.cover_url);pendingPhotoUrl=b.cover_url;}
   }else{
     ['f-title','f-author','f-publisher','f-year','f-review'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('f-genre').value='';
     document.getElementById('f-status').value='read';
-    setQuotes([]);
+    setQuotes([]);setFeeling('');
     setRating(0);pickColor('#8B6F47',null);
   }
   document.getElementById('modal').classList.add('open');
@@ -1231,7 +1369,7 @@ const POSTIT_COLORS=[
 
 // ── QUOTES INPUT ───────────────────────────────────────────────
 let quoteCounter=0;
-function addQuoteInput(value, color){
+function addQuoteInput(value, color, page){
   const list=document.getElementById('quotes-list');
   const uid='qcard-'+(++quoteCounter);
   const div=document.createElement('div');
@@ -1250,6 +1388,10 @@ function addQuoteInput(value, color){
       <textarea class="quote-input" rows="2" placeholder="Escribe la cita aquí..." data-color="${selectedColor}" data-card="${uid}" style="flex:1;padding:8px 10px;border:none;border-radius:8px;font-size:14px;font-family:'Cormorant Garamond',serif;font-style:italic;outline:none;resize:none;background:transparent;line-height:1.6;color:var(--ink)">${esc(value||'')}</textarea>
       <button type="button" onclick="document.getElementById('${uid}').remove()" style="background:rgba(42,31,21,0.08);color:var(--muted);border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:12px;flex-shrink:0;margin-top:2px">✕</button>
     </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:500;white-space:nowrap">📄 Página</label>
+      <input class="quote-page" type="number" min="1" placeholder="ej. 142" value="${page||''}" style="width:80px;padding:5px 8px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;background:transparent;color:var(--ink)" onfocus="this.style.borderColor='var(--rose-light)'" onblur="this.style.borderColor='var(--border)'">
+    </div>
     <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:500">Color de post-it</div>
     ${swatchesHtml}`;
   list.appendChild(div);
@@ -1267,16 +1409,22 @@ function selectPostitColor(uid, colorId){
 }
 
 function getQuotes(){
-  return Array.from(document.querySelectorAll('.quote-input'))
-    .map(t=>({text:t.value.trim(),color:t.dataset.color||'none'}))
-    .filter(q=>q.text);
+  return Array.from(document.querySelectorAll('#quotes-list > div')).map(card=>{
+    const ta=card.querySelector('.quote-input');
+    const pg=card.querySelector('.quote-page');
+    return{
+      text:(ta?.value||'').trim(),
+      color:ta?.dataset.color||'none',
+      page:pg?.value?parseInt(pg.value):null
+    };
+  }).filter(q=>q.text);
 }
 
 function setQuotes(arr){
   document.getElementById('quotes-list').innerHTML='';
   (arr||[]).forEach(q=>{
-    if(typeof q==='string')addQuoteInput(q,'none');
-    else addQuoteInput(q.text,q.color||'none');
+    if(typeof q==='string')addQuoteInput(q,'none',null);
+    else addQuoteInput(q.text,q.color||'none',q.page||null);
   });
 }
 
@@ -1307,20 +1455,21 @@ async function saveBook(){
       review:(document.getElementById('f-review').value||'').trim()||null,
       quotes:JSON.stringify(quotesArr),
       color:selectedColor,
+      feeling:selectedFeeling||null,
       cover_url,
       user_id:currentUser.id
     };
     if(editingId){
       await supaFetch('biblioteca?id=eq.'+editingId,'PATCH',payload,token);
       const idx=books.findIndex(x=>x.id===editingId);
-      if(idx>-1)books[idx]={...books[idx],...payload,quotes:quotesArr};
+      if(idx>-1)books[idx]={...books[idx],...payload,quotes:quotesArr,feeling:selectedFeeling||null};
     }else{
       const created=await supaFetch('biblioteca','POST',payload,token);
       const nb=Array.isArray(created)?created[0]:created;
       books.push({...nb,quotes:quotesArr});
     }
     setSyncStatus('ok');
-    renderBooks();updateSidebar();closeModal();closePanel();
+    renderBooks();updateSidebar();renderReadingNow();closeModal();closePanel();
     showToast(editingId?'Libro actualizado ✓':'Añadido a tu colección ✓','mint-toast');
   }catch(e){
     showToast('Error al guardar — verifica conexión','rose-toast');
@@ -1348,13 +1497,18 @@ function updateSidebar(){
 }
 
 // ── PAGES ──────────────────────────────────────────────────────
+const ALL_PAGES=['library','quotes','stats','authors','notas'];
 function showPage(p){
-  ['library','quotes','stats'].forEach(x=>{
+  ALL_PAGES.forEach(x=>{
     document.getElementById('page-'+x).style.display=x===p?'block':'none';
-    document.getElementById('nav-'+x).classList.toggle('active',x===p);
+    const nav=document.getElementById('nav-'+x);
+    if(nav)nav.classList.toggle('active',x===p);
   });
   if(p==='quotes')renderQuotes();
   if(p==='stats')renderStats();
+  if(p==='authors')renderAuthors();
+  if(p==='notas')renderNotas();
+  if(p==='library')renderReadingNow();
 }
 
 function renderQuotes(){
@@ -1369,7 +1523,7 @@ function renderQuotes(){
       <div class="quote-accent"></div>
       <p class="quote-card-text">${esc(q.text)}</p>
       <p class="quote-card-book">${esc(q.book)}</p>
-      <p class="quote-card-author">${esc(q.author)}</p>
+      <p class="quote-card-author">${esc(q.author)}${q.page?`<span style="margin-left:8px;background:rgba(42,31,21,0.07);padding:1px 7px;border-radius:8px;font-size:10px">pág. ${q.page}</span>`:''}</p>
     </div>`;
   }).join('');
 }
@@ -1405,13 +1559,173 @@ function showToast(msg,cls){
   t._timer=setTimeout(()=>t.classList.remove('show'),2600);
 }
 
+// ── FEELINGS ──────────────────────────────────────────────────
+let selectedFeeling='';
+function selectFeeling(el){
+  document.querySelectorAll('.feeling-btn').forEach(b=>b.classList.remove('selected'));
+  if(selectedFeeling===el.dataset.f){selectedFeeling='';return;}
+  el.classList.add('selected');
+  selectedFeeling=el.dataset.f;
+}
+function setFeeling(f){
+  selectedFeeling=f||'';
+  document.querySelectorAll('.feeling-btn').forEach(b=>{
+    b.classList.toggle('selected',b.dataset.f===f);
+  });
+}
+const FEELING_COLORS={
+  'lloré':'#5B8FD4','me inspiró':'#D4A020','me enojó':'#C04040',
+  'me cambió':'#7A50B0','me reconfortó':'#5BAA78','me inquietó':'#B07040',
+  'me enamoré':'var(--rose)','me maravilló':'#4090C0'
+};
+
+// ── READING NOW ────────────────────────────────────────────────
+function renderReadingNow(){
+  const reading=books.filter(b=>b.status==='reading');
+  const sec=document.getElementById('reading-now-section');
+  const card=document.getElementById('reading-now-card');
+  if(!reading.length){sec.style.display='none';return;}
+  sec.style.display='block';
+  const b=reading[0];
+  const prog=b.progress_pages&&b.total_pages?Math.round(b.progress_pages/b.total_pages*100):0;
+  card.innerHTML=`
+    <div class="reading-now-cover" style="background:${b.color||'#8B6F47'}">
+      ${b.cover_url?`<img src="${esc(b.cover_url)}" alt="">`:''}
+    </div>
+    <div class="reading-now-body">
+      <div class="reading-now-label"><span class="reading-pulse"></span> En progreso</div>
+      <div class="reading-now-title">${esc(b.title)}</div>
+      <div class="reading-now-author">${esc(b.author)}</div>
+      ${b.total_pages?`
+        <div class="progress-row">
+          <span class="progress-label">Progreso</span>
+          <span class="progress-pct">${prog}%</span>
+        </div>
+        <div class="progress-bar-track"><div class="progress-bar-fill" style="width:${prog}%"></div></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">${b.progress_pages||0} de ${b.total_pages} páginas</div>
+      `:''}
+      <div class="progress-inputs">
+        <input type="number" id="prog-current" placeholder="Pág." value="${b.progress_pages||''}" min="0" max="${b.total_pages||9999}">
+        <span>de</span>
+        <input type="number" id="prog-total" placeholder="Total" value="${b.total_pages||''}" min="1">
+        <button onclick="saveProgress(${b.id})">Actualizar</button>
+      </div>
+    </div>`;
+}
+
+async function saveProgress(id){
+  const cur=parseInt(document.getElementById('prog-current').value)||0;
+  const tot=parseInt(document.getElementById('prog-total').value)||0;
+  if(!tot){showToast('Añade el total de páginas','rose-toast');return;}
+  const token=currentSession?.access_token||SUPA_KEY;
+  try{
+    await supaFetch('biblioteca?id=eq.'+id,'PATCH',{progress_pages:cur,total_pages:tot},token);
+    const b=books.find(x=>x.id===id);
+    if(b){b.progress_pages=cur;b.total_pages=tot;}
+    renderReadingNow();
+    showToast('Progreso guardado ✓','mint-toast');
+  }catch(e){showToast('Error al guardar progreso','rose-toast');}
+}
+
+// ── AUTHORS ────────────────────────────────────────────────────
+function renderAuthors(){
+  const authorMap={};
+  books.forEach(b=>{
+    if(!authorMap[b.author])authorMap[b.author]=[];
+    authorMap[b.author].push(b);
+  });
+  const sorted=Object.entries(authorMap).sort((a,b)=>b[1].length-a[1].length);
+  const list=document.getElementById('authors-list');
+  if(!sorted.length){
+    list.innerHTML='<div class="empty-state"><div class="empty-state-icon">✍️</div><p>Ningún autor todavía</p><small>Añade libros para ver a tus autores aquí</small></div>';
+    return;
+  }
+  list.innerHTML=sorted.map(([author,abooks])=>{
+    const rated=abooks.filter(b=>b.rating>0);
+    const avg=rated.length?(rated.reduce((s,b)=>s+b.rating,0)/rated.length).toFixed(1):null;
+    const initial=author.trim().charAt(0).toUpperCase();
+    const read=abooks.filter(b=>b.status==='read').length;
+    return`<div class="author-card">
+      <div class="author-avatar">${initial}</div>
+      <div class="author-info">
+        <div class="author-name">${esc(author)}</div>
+        <div class="author-meta">
+          <span>📚 ${abooks.length} libro${abooks.length!==1?'s':''}</span>
+          ${read?`<span>✓ ${read} leído${read!==1?'s':''}</span>`:''}
+          ${avg?`<span>★ ${avg} promedio</span>`:''}
+        </div>
+        <div class="author-books-mini">
+          ${abooks.slice(0,4).map(b=>`<span class="author-book-chip">${esc(b.title.length>20?b.title.slice(0,20)+'…':b.title)}</span>`).join('')}
+          ${abooks.length>4?`<span class="author-book-chip">+${abooks.length-4} más</span>`:''}
+        </div>
+      </div>
+      ${avg?`<div class="author-rating-avg"><div class="author-big-num">${avg}</div><div class="author-small-lbl">★ media</div></div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ── NOTAS ──────────────────────────────────────────────────────
+function renderNotas(){
+  const notas=JSON.parse(localStorage.getItem('bib_notas_'+currentUser?.id)||'[]');
+  const list=document.getElementById('notas-list');
+  if(!notas.length){
+    list.innerHTML='<div class="empty-state"><div class="empty-state-icon">🖊</div><p>Ninguna nota todavía</p><small>Escribe lo que sientes, lo que imaginas</small></div>';
+    return;
+  }
+  list.innerHTML=notas.slice().reverse().map((n,i)=>`
+    <div class="nota-card">
+      <div class="nota-header">
+        <span class="nota-date">${n.date}</span>
+        <button class="nota-delete" onclick="deleteNota(${notas.length-1-i})">✕</button>
+      </div>
+      <p class="nota-text">${esc(n.text)}</p>
+    </div>`).join('');
+}
+
+function saveNota(){
+  const text=(document.getElementById('nota-input').value||'').trim();
+  if(!text){showToast('Escribe algo primero','rose-toast');return;}
+  const notas=JSON.parse(localStorage.getItem('bib_notas_'+currentUser?.id)||'[]');
+  notas.push({text,date:new Date().toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'})});
+  localStorage.setItem('bib_notas_'+currentUser?.id,JSON.stringify(notas));
+  document.getElementById('nota-input').value='';
+  renderNotas();
+  showToast('Nota guardada ✓','mint-toast');
+}
+
+function deleteNota(idx){
+  if(!confirm('¿Eliminar esta nota?'))return;
+  const notas=JSON.parse(localStorage.getItem('bib_notas_'+currentUser?.id)||'[]');
+  notas.splice(idx,1);
+  localStorage.setItem('bib_notas_'+currentUser?.id,JSON.stringify(notas));
+  renderNotas();
+}
+
+// ── QUOTE OF DAY ───────────────────────────────────────────────
+function showQuoteOfDay(){
+  const allQuotes=books.flatMap(b=>parseQuotes(b.quotes).map(q=>({...q,book:b.title,author:b.author})));
+  if(!allQuotes.length)return;
+  const today=new Date().toDateString();
+  const lastShown=localStorage.getItem('bib_qod_date_'+currentUser?.id);
+  if(lastShown===today)return;
+  const q=allQuotes[Math.floor(Math.random()*allQuotes.length)];
+  document.getElementById('qod-text').textContent='"'+q.text+'"';
+  document.getElementById('qod-book').textContent='— '+q.book+', '+q.author;
+  const splash=document.getElementById('qod-splash');
+  splash.style.display='flex';
+  localStorage.setItem('bib_qod_date_'+currentUser?.id,today);
+}
+
+function closeQod(){
+  const splash=document.getElementById('qod-splash');
+  splash.style.opacity='0';
+  splash.style.transition='opacity 0.4s';
+  setTimeout(()=>splash.style.display='none',400);
+}
+
 // ── DEDICATORIA ────────────────────────────────────────────────
-function openDedicatoria(){
-  document.getElementById('dedicatoria-overlay').classList.add('open');
-}
-function closeDedicatoria(){
-  document.getElementById('dedicatoria-overlay').classList.remove('open');
-}
+function openDedicatoria(){document.getElementById('dedicatoria-overlay').classList.add('open')}
+function closeDedicatoria(){document.getElementById('dedicatoria-overlay').classList.remove('open')}
 
 // ── ENTER KEY SUPPORT ──────────────────────────────────────────
 document.addEventListener('keydown',e=>{
