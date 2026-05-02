@@ -24,6 +24,33 @@
 html{height:-webkit-fill-available}
 html,body{height:100%;overflow:hidden}
 body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+/* Standalone mode (app guardada en escritorio) - safe areas reales */
+@media all and (display-mode: standalone){
+  :root{
+    --safe-top:env(safe-area-inset-top);
+    --safe-bottom:env(safe-area-inset-bottom);
+  }
+  /* iPad standalone: sidebar llena hasta el fondo real */
+  .sidebar{
+    padding-bottom:calc(20px + env(safe-area-inset-bottom)) !important;
+  }
+  /* iPhone standalone: main respeta barra de inicio real */
+  .main{
+    padding-bottom:calc(60px + env(safe-area-inset-bottom)) !important;
+  }
+  /* Bottom nav sobre la barra de inicio */
+  .bottom-nav{
+    padding-bottom:calc(4px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* Safari normal: safe-area-inset-bottom = 0 porque la barra de Safari lo compensa */
+@media not all and (display-mode: standalone){
+  :root{
+    --safe-bottom:0px;
+  }
+}
 h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 
 /* ── AUTH ── */
@@ -59,15 +86,13 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 /* ── SIDEBAR (tablet/desktop) ── */
 .sidebar{
   width:240px;background:var(--ink);
-  padding-top:calc(24px + var(--safe-top));
-  padding-left:calc(0px + var(--safe-left));
+  padding-top:calc(24px + env(safe-area-inset-top));
+  padding-left:env(safe-area-inset-left);
   display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;
-  padding-bottom:calc(16px + var(--safe-bottom));
+  padding-bottom:calc(16px + env(safe-area-inset-bottom));
 }
-.sidebar-inner{
-  display:flex;flex-direction:column;flex:1;
-}
-.main{flex:1;overflow-y:auto;background:var(--cream);padding-top:var(--safe-top)}
+.sidebar-inner{display:flex;flex-direction:column;flex:1;}
+.main{flex:1;overflow-y:auto;background:var(--cream);padding-top:env(safe-area-inset-top)}
 
 /* ── BOTTOM NAV (iPhone) ── */
 .bottom-nav{display:none}
@@ -81,7 +106,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
   .mobile-topbar{
     display:flex;align-items:center;justify-content:space-between;
     background:var(--ink);padding:12px 20px;
-    padding-top:calc(12px + var(--safe-top));
+    padding-top:calc(12px + env(safe-area-inset-top));
     position:fixed;top:0;left:0;right:0;z-index:50;
   }
   .mobile-topbar h1{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:#FAF7F2}
@@ -92,15 +117,15 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
   .mobile-logout{font-size:11px;color:rgba(250,247,242,0.4);cursor:pointer;padding:4px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.1)}
   /* main: below fixed topbar, above fixed bottom nav */
   .main{
-    padding-top:calc(56px + var(--safe-top));
-    padding-bottom:calc(60px + var(--safe-bottom));
+    padding-top:calc(56px + env(safe-area-inset-top));
+    padding-bottom:calc(60px + env(safe-area-inset-bottom));
     overflow-y:auto;flex:1;
   }
   /* bottom nav */
   .bottom-nav{
     display:flex;position:fixed;bottom:0;left:0;right:0;
     background:var(--ink);z-index:150;
-    padding-bottom:var(--safe-bottom);
+    padding-bottom:env(safe-area-inset-bottom);
     border-top:1px solid rgba(255,255,255,0.08);
   }
   .bottom-nav-item{
