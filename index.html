@@ -62,30 +62,41 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
   padding-top:calc(24px + var(--safe-top));
   padding-left:calc(0px + var(--safe-left));
   display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;
-  /* Fix iPad fullscreen gap */
-  padding-bottom:0;
-  position:relative;
-}
-/* Extend sidebar color to bottom edge */
-.sidebar::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;
-  height:calc(var(--safe-bottom) + 80px);
-  background:var(--ink);pointer-events:none;z-index:0;
+  padding-bottom:calc(16px + var(--safe-bottom));
 }
 .sidebar-inner{
   display:flex;flex-direction:column;flex:1;
-  padding-bottom:calc(16px + var(--safe-bottom));
-  position:relative;z-index:1;
 }
 .main{flex:1;overflow-y:auto;background:var(--cream);padding-top:var(--safe-top)}
 
 /* ── BOTTOM NAV (iPhone) ── */
 .bottom-nav{display:none}
+.mobile-topbar{display:none}
 
 /* ── MOBILE: hide sidebar, show bottom nav ── */
 @media(max-width:680px){
   .sidebar{display:none}
-  .main{padding-top:calc(var(--safe-top));padding-bottom:0}
+  .app{flex-direction:column}
+  /* Mobile top bar */
+  .mobile-topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--ink);padding:12px 20px;
+    padding-top:calc(12px + var(--safe-top));
+    position:fixed;top:0;left:0;right:0;z-index:50;
+  }
+  .mobile-topbar h1{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:#FAF7F2}
+  .mobile-topbar-right{display:flex;align-items:center;gap:10px}
+  .mobile-user{display:flex;align-items:center;gap:6px}
+  .mobile-user-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--rose-light));display:flex;align-items:center;justify-content:center;font-size:12px;color:white;font-weight:600}
+  .mobile-user-name{font-size:12px;color:rgba(250,247,242,0.7)}
+  .mobile-logout{font-size:11px;color:rgba(250,247,242,0.4);cursor:pointer;padding:4px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.1)}
+  /* main: below fixed topbar, above fixed bottom nav */
+  .main{
+    padding-top:calc(56px + var(--safe-top));
+    padding-bottom:calc(60px + var(--safe-bottom));
+    overflow-y:auto;flex:1;
+  }
+  /* bottom nav */
   .bottom-nav{
     display:flex;position:fixed;bottom:0;left:0;right:0;
     background:var(--ink);z-index:150;
@@ -100,37 +111,20 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
   .bottom-nav-item.active{color:var(--rose)}
   .bottom-nav-item .bnav-icon{font-size:20px}
   .bottom-nav-item .bnav-label{font-size:9px;letter-spacing:0.3px}
-  .app{flex-direction:column}
-  /* Mobile top bar */
-  .mobile-topbar{
-    display:flex;align-items:center;justify-content:space-between;
-    background:var(--ink);padding:12px 20px;
-    padding-top:calc(12px + var(--safe-top));
-    position:sticky;top:0;z-index:50;
-  }
-  .mobile-topbar h1{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:#FAF7F2}
-  .mobile-topbar-right{display:flex;align-items:center;gap:10px}
-  .mobile-user{display:flex;align-items:center;gap:6px}
-  .mobile-user-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--rose-light));display:flex;align-items:center;justify-content:center;font-size:12px;color:white;font-weight:600}
-  .mobile-user-name{font-size:12px;color:rgba(250,247,242,0.7)}
-  .mobile-logout{font-size:11px;color:rgba(250,247,242,0.4);cursor:pointer;padding:4px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.1)}
-  /* adjust main for bottom nav */
-  .main{padding-bottom:calc(60px + var(--safe-bottom))}
   /* Mobile pages padding */
   .page-header{padding:20px 16px 0}
-  .filters{padding:12px 16px}
+  .filters{padding:12px 16px;flex-wrap:wrap}
   .books-grid{padding:12px 16px 32px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
   .quotes-grid{padding:12px 16px 32px;grid-template-columns:1fr}
   .stats-page,.authors-page,.notas-page{padding:20px 16px 32px}
   .reading-now-section{padding:16px 16px 0}
-  /* Mobile modal full screen */
+  /* Mobile modal */
   .modal{border-radius:20px 20px 0 0;max-height:95vh}
   /* Mobile detail panel full width */
   .detail-panel{width:100%;max-width:100%}
   /* search full width on mobile */
   .search-box{margin-left:0;width:100%}
   .search-box input{width:100%}
-  .filters{flex-wrap:wrap}
   .filter-btn{font-size:11px;padding:6px 12px}
 }
 
@@ -543,7 +537,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 
   <main class="main" id="main-content">
     <!-- Mobile topbar -->
-    <div class="mobile-topbar" id="mobile-topbar" style="display:none">
+    <div class="mobile-topbar" id="mobile-topbar">
       <h1>Biblioteca</h1>
       <div class="mobile-topbar-right">
         <div class="mobile-user">
@@ -574,7 +568,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
         <button class="filter-btn" onclick="filterBooks('wishlist',this)">♡ Lista</button>
         <div class="search-box">
           <span class="search-icon">⌕</span>
-          <input type="text" id="search" placeholder="Buscar libro o autora o autores..." oninput="renderBooks()">
+          <input type="text" id="search" placeholder="Buscar libro o autor..." oninput="renderBooks()">
         </div>
       </div>
       <div class="books-grid" id="books-grid">
@@ -605,7 +599,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
     <!-- Authors -->
     <div id="page-authors" style="display:none">
       <div class="authors-page">
-        <div style="margin-bottom:24px"><h2 class="serif" style="font-size:34px;font-weight:300">Autoras y autores</h2><p style="font-size:13px;color:var(--muted)">Las escritoras y escritores que han vivido en tus manos y tanto te han hecho sentir ♥</p></div>
+        <div style="margin-bottom:24px"><h2 class="serif" style="font-size:34px;font-weight:300">Autores</h2><p style="font-size:13px;color:var(--muted)">Los escritores que han vivido en tus manos y tanto te han hecho sentir ♥</p></div>
         <div id="authors-list"></div>
       </div>
     </div>
@@ -613,7 +607,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
     <!-- Notas -->
     <div id="page-notas" style="display:none">
       <div class="notas-page">
-        <div style="margin-bottom:20px"><h2 class="serif" style="font-size:34px;font-weight:300">Mis Notas</h2><p style="font-size:13px;color:var(--muted)">Aqui eres libre de escribir todo lo que quieras, ideas, mas citas, pensamientos libres, reflexiones, lo que quieras mi amor.</p></div>
+        <div style="margin-bottom:20px"><h2 class="serif" style="font-size:34px;font-weight:300">Mis Notas</h2><p style="font-size:13px;color:var(--muted)">Aqui eres libre de escribir todo lo que quieras, pienses, ideas, mas citas, pensamientos libres, reflexiones, lo que quieras mi amor.</p></div>
         <div class="nota-composer"><textarea id="nota-input" placeholder="Escribe lo que sientes, lo que tu corazoncito te diga ..."></textarea><div class="nota-composer-footer"><button class="btn-primary" onclick="saveNota()" style="padding:8px 18px;font-size:12px">Guardar nota</button></div></div>
         <div id="notas-list"></div>
       </div>
@@ -625,7 +619,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 <div class="bottom-nav" id="bottom-nav">
   <div class="bottom-nav-item active" onclick="showPage('library')" id="bnav-library"><span class="bnav-icon">📚</span><span class="bnav-label">Colección</span></div>
   <div class="bottom-nav-item" onclick="showPage('quotes')" id="bnav-quotes"><span class="bnav-icon">✦</span><span class="bnav-label">Citas</span></div>
-  <div class="bottom-nav-item" onclick="showPage('authors')" id="bnav-authors"><span class="bnav-icon">✍️</span><span class="bnav-label">Autoras y autores</span></div>
+  <div class="bottom-nav-item" onclick="showPage('authors')" id="bnav-authors"><span class="bnav-icon">✍️</span><span class="bnav-label">Autores</span></div>
   <div class="bottom-nav-item" onclick="showPage('notas')" id="bnav-notas"><span class="bnav-icon">🖊</span><span class="bnav-label">Notas</span></div>
   <div class="bottom-nav-item" onclick="showPage('stats')" id="bnav-stats"><span class="bnav-icon">◎</span><span class="bnav-label">Stats</span></div>
 </div>
@@ -783,9 +777,8 @@ let pendingPhotoFile=null,pendingPhotoUrl=null,selectedFeeling='';
 // ── RESPONSIVE ──────────────────────────────────────────────
 const isMobile=()=>window.innerWidth<=680;
 function applyLayout(){
-  const mobile=isMobile();
-  document.getElementById('mobile-topbar').style.display=mobile?'flex':'none';
-  document.getElementById('bottom-nav').style.display=mobile?'flex':'none';
+  // CSS media queries handle sidebar/bottomnav visibility
+  // Just sync mobile user info if needed
 }
 window.addEventListener('resize',applyLayout);
 
@@ -1185,7 +1178,7 @@ function renderAuthors(){
   const authorMap={};books.forEach(b=>{if(!authorMap[b.author])authorMap[b.author]=[];authorMap[b.author].push(b)});
   const sorted=Object.entries(authorMap).sort((a,b)=>b[1].length-a[1].length);
   const list=document.getElementById('authors-list');
-  if(!sorted.length){list.innerHTML='<div class="empty-state"><div class="empty-state-icon">✍️</div><p>Ningún autor todavía</p><small>Añade libros para ver a tus autoras y autores aquí</small></div>';return;}
+  if(!sorted.length){list.innerHTML='<div class="empty-state"><div class="empty-state-icon">✍️</div><p>Ningún autor todavía</p><small>Añade libros para ver a tus autores aquí</small></div>';return;}
   list.innerHTML=sorted.map(([author,abooks])=>{
     const rated=abooks.filter(b=>b.rating>0);
     const avg=rated.length?(rated.reduce((s,b)=>s+b.rating,0)/rated.length).toFixed(1):null;
