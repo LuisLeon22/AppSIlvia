@@ -6,127 +6,140 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mi Biblioteca">
+<link rel="apple-touch-icon" sizes="180x180" href="LOGO APP.png">
 <title>Mi Biblioteca</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  /* Browns - base */
-  --cream:#FAF7F2;
-  --cream-dark:#F2EBE0;
-  --ink:#2A1F15;
-  --warm-brown:#8B6F47;
-  --mid-brown:#C4A882;
-  --light-brown:#E8D8C0;
-  /* Rose - primary accent */
-  --rose:#C4788A;
-  --rose-light:#E8B4C0;
-  --rose-pale:#F7E8EC;
-  --rose-deep:#A85A6E;
-  /* Mint - secondary accent */
-  --mint:#7AB5A0;
-  --mint-light:#B4D9CE;
-  --mint-pale:#E8F5F1;
-  --mint-deep:#4A9080;
-  /* UI */
-  --muted:#9B8B7A;
-  --border:#E8DDD0;
-  --star:#D4A853;
-  --shadow:0 4px 24px rgba(42,31,21,0.10);
-  --shadow-lg:0 12px 48px rgba(42,31,21,0.18);
-  --safe-top:env(safe-area-inset-top);
-  --safe-bottom:env(safe-area-inset-bottom);
+  --cream:#FAF7F2;--cream-dark:#F2EBE0;--ink:#2A1F15;
+  --warm-brown:#8B6F47;--mid-brown:#C4A882;--light-brown:#E8D8C0;
+  --rose:#C4788A;--rose-light:#E8B4C0;--rose-pale:#F7E8EC;--rose-deep:#A85A6E;
+  --mint:#7AB5A0;--mint-light:#B4D9CE;--mint-pale:#E8F5F1;--mint-deep:#4A9080;
+  --muted:#9B8B7A;--border:#E8DDD0;--star:#D4A853;
+  --shadow:0 4px 24px rgba(42,31,21,0.10);--shadow-lg:0 12px 48px rgba(42,31,21,0.18);
+  --safe-top:env(safe-area-inset-top);--safe-bottom:env(safe-area-inset-bottom);
+  --safe-left:env(safe-area-inset-left);--safe-right:env(safe-area-inset-right);
 }
+html{height:-webkit-fill-available}
 html,body{height:100%;overflow:hidden}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--ink);-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 
-/* ── AUTH SCREEN ─────────────────────────────── */
-.auth-screen{
-  position:fixed;inset:0;background:var(--cream);z-index:1000;
-  display:flex;align-items:center;justify-content:center;
-  padding:24px;
-}
-.auth-card{
-  width:100%;max-width:400px;
-  background:white;border-radius:24px;
-  box-shadow:var(--shadow-lg);
-  overflow:hidden;
-}
-.auth-header{
-  background:var(--ink);padding:36px 32px 28px;text-align:center;
-  position:relative;
-}
-.auth-header::after{
-  content:'';position:absolute;bottom:-1px;left:0;right:0;height:24px;
-  background:white;border-radius:24px 24px 0 0;
-}
-.auth-logo{
-  font-family:'Cormorant Garamond',serif;
-  font-size:32px;font-weight:300;color:#FAF7F2;letter-spacing:1px;
-  margin-bottom:4px;
-}
+/* ── AUTH ── */
+.auth-screen{position:fixed;inset:0;background:var(--cream);z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;padding-top:calc(24px + var(--safe-top));padding-bottom:calc(24px + var(--safe-bottom))}
+.auth-card{width:100%;max-width:400px;background:white;border-radius:24px;box-shadow:var(--shadow-lg);overflow:hidden}
+.auth-header{background:var(--ink);padding:36px 32px 28px;text-align:center;position:relative}
+.auth-header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:24px;background:white;border-radius:24px 24px 0 0}
+.auth-logo{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:#FAF7F2;letter-spacing:1px;margin-bottom:4px}
 .auth-tagline{font-size:11px;color:var(--mid-brown);letter-spacing:2px;text-transform:uppercase}
 .auth-body{padding:28px 32px 32px}
 .auth-title{font-size:22px;font-weight:400;color:var(--ink);margin-bottom:6px}
 .auth-sub{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.5}
 .auth-tabs{display:flex;background:var(--cream-dark);border-radius:10px;padding:3px;margin-bottom:24px}
-.auth-tab{
-  flex:1;text-align:center;padding:8px;border-radius:8px;font-size:13px;
-  cursor:pointer;transition:all 0.2s;color:var(--muted);font-weight:500;
-}
+.auth-tab{flex:1;text-align:center;padding:8px;border-radius:8px;font-size:13px;cursor:pointer;transition:all 0.2s;color:var(--muted);font-weight:500}
 .auth-tab.active{background:white;color:var(--ink);box-shadow:0 1px 4px rgba(42,31,21,0.1)}
 .auth-field{margin-bottom:16px}
 .auth-field label{display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-.auth-field input{
-  width:100%;padding:12px 14px;border:1.5px solid var(--border);
-  border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;
-  outline:none;background:var(--cream);transition:all 0.2s;
-}
+.auth-field input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;background:var(--cream);transition:all 0.2s}
 .auth-field input:focus{border-color:var(--rose);background:white;box-shadow:0 0 0 3px var(--rose-pale)}
 .auth-hint{font-size:11px;color:var(--muted);margin-top:5px}
-.auth-btn{
-  width:100%;padding:13px;background:var(--rose);color:white;border:none;
-  border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;
-  font-weight:500;cursor:pointer;transition:all 0.2s;margin-top:4px;
-}
+.auth-btn{width:100%;padding:13px;background:var(--rose);color:white;border:none;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:all 0.2s;margin-top:4px}
 .auth-btn:hover{background:var(--rose-deep)}
 .auth-btn:active{transform:scale(0.98)}
 .auth-btn:disabled{opacity:0.6;cursor:not-allowed}
 .auth-error{background:var(--rose-pale);color:var(--rose-deep);font-size:12px;padding:10px 14px;border-radius:8px;margin-bottom:12px;display:none}
 .auth-error.show{display:block}
-.auth-decoration{
-  width:60px;height:60px;border-radius:50%;
-  background:linear-gradient(135deg,var(--rose-pale),var(--mint-pale));
-  margin:0 auto 20px;display:flex;align-items:center;justify-content:center;
-  font-size:26px;
-}
+.auth-decoration{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--rose-pale),var(--mint-pale));margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:26px}
 
-/* ── APP LAYOUT ──────────────────────────────── */
-.app{display:flex;height:100vh;height:100dvh;opacity:0;transition:opacity 0.4s}
+/* ── APP LAYOUT ── */
+.app{display:flex;height:100vh;height:100dvh;min-height:-webkit-fill-available;opacity:0;transition:opacity 0.4s}
 .app.visible{opacity:1}
+
+/* ── SIDEBAR (tablet/desktop) ── */
 .sidebar{
   width:240px;background:var(--ink);
   padding-top:calc(24px + var(--safe-top));
-  padding-bottom:calc(16px + var(--safe-bottom));
+  padding-left:calc(0px + var(--safe-left));
   display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;
+  /* Fix iPad fullscreen gap */
+  padding-bottom:0;
+  position:relative;
+}
+/* Extend sidebar color to bottom edge */
+.sidebar::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:calc(var(--safe-bottom) + 80px);
+  background:var(--ink);pointer-events:none;z-index:0;
+}
+.sidebar-inner{
+  display:flex;flex-direction:column;flex:1;
+  padding-bottom:calc(16px + var(--safe-bottom));
+  position:relative;z-index:1;
 }
 .main{flex:1;overflow-y:auto;background:var(--cream);padding-top:var(--safe-top)}
 
-/* ── SIDEBAR ─────────────────────────────────── */
+/* ── BOTTOM NAV (iPhone) ── */
+.bottom-nav{display:none}
+
+/* ── MOBILE: hide sidebar, show bottom nav ── */
+@media(max-width:680px){
+  .sidebar{display:none}
+  .main{padding-top:calc(var(--safe-top));padding-bottom:0}
+  .bottom-nav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;
+    background:var(--ink);z-index:150;
+    padding-bottom:var(--safe-bottom);
+    border-top:1px solid rgba(255,255,255,0.08);
+  }
+  .bottom-nav-item{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    padding:10px 4px 8px;cursor:pointer;transition:all 0.2s;
+    color:rgba(250,247,242,0.4);font-size:10px;gap:3px;
+  }
+  .bottom-nav-item.active{color:var(--rose)}
+  .bottom-nav-item .bnav-icon{font-size:20px}
+  .bottom-nav-item .bnav-label{font-size:9px;letter-spacing:0.3px}
+  .app{flex-direction:column}
+  /* Mobile top bar */
+  .mobile-topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--ink);padding:12px 20px;
+    padding-top:calc(12px + var(--safe-top));
+    position:sticky;top:0;z-index:50;
+  }
+  .mobile-topbar h1{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:#FAF7F2}
+  .mobile-topbar-right{display:flex;align-items:center;gap:10px}
+  .mobile-user{display:flex;align-items:center;gap:6px}
+  .mobile-user-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--rose-light));display:flex;align-items:center;justify-content:center;font-size:12px;color:white;font-weight:600}
+  .mobile-user-name{font-size:12px;color:rgba(250,247,242,0.7)}
+  .mobile-logout{font-size:11px;color:rgba(250,247,242,0.4);cursor:pointer;padding:4px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.1)}
+  /* adjust main for bottom nav */
+  .main{padding-bottom:calc(60px + var(--safe-bottom))}
+  /* Mobile pages padding */
+  .page-header{padding:20px 16px 0}
+  .filters{padding:12px 16px}
+  .books-grid{padding:12px 16px 32px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+  .quotes-grid{padding:12px 16px 32px;grid-template-columns:1fr}
+  .stats-page,.authors-page,.notas-page{padding:20px 16px 32px}
+  .reading-now-section{padding:16px 16px 0}
+  /* Mobile modal full screen */
+  .modal{border-radius:20px 20px 0 0;max-height:95vh}
+  /* Mobile detail panel full width */
+  .detail-panel{width:100%;max-width:100%}
+  /* search full width on mobile */
+  .search-box{margin-left:0;width:100%}
+  .search-box input{width:100%}
+  .filters{flex-wrap:wrap}
+  .filter-btn{font-size:11px;padding:6px 12px}
+}
+
+/* ── SIDEBAR CONTENTS ── */
 .sidebar-logo{padding:0 20px 24px;border-bottom:1px solid rgba(255,255,255,0.08)}
 .sidebar-logo h1{font-size:26px;color:#FAF7F2;font-weight:300;letter-spacing:0.5px}
 .sidebar-logo p{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:2px;text-transform:uppercase}
-.user-chip{
-  display:flex;align-items:center;gap:8px;margin-top:12px;
-  background:rgba(255,255,255,0.06);border-radius:8px;padding:7px 10px;
-}
-.user-avatar{
-  width:24px;height:24px;border-radius:50%;
-  background:linear-gradient(135deg,var(--rose),var(--rose-light));
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;color:white;font-weight:600;flex-shrink:0;
-}
+.user-chip{display:flex;align-items:center;gap:8px;margin-top:12px;background:rgba(255,255,255,0.06);border-radius:8px;padding:7px 10px}
+.user-avatar{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--rose-light));display:flex;align-items:center;justify-content:center;font-size:11px;color:white;font-weight:600;flex-shrink:0}
 .user-name{font-size:12px;color:rgba(250,247,242,0.7);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .user-logout{font-size:10px;color:var(--muted);cursor:pointer;padding:2px 4px;border-radius:4px;transition:color 0.2s}
 .user-logout:hover{color:var(--rose-light)}
@@ -134,94 +147,59 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .sync-dot{width:5px;height:5px;border-radius:50%;background:var(--star);flex-shrink:0;transition:background 0.3s}
 .sync-dot.ok{background:#7AB580}.sync-dot.err{background:var(--rose)}
 .sync-lbl{font-size:10px;color:rgba(250,247,242,0.3);letter-spacing:0.3px}
-
 .nav{padding:16px 0}
 .nav-section{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,247,242,0.25);padding:0 20px;margin-bottom:6px;margin-top:12px}
-.nav-item{
-  display:flex;align-items:center;gap:10px;padding:11px 20px;
-  cursor:pointer;transition:all 0.2s;border-left:3px solid transparent;
-  font-size:13px;color:rgba(250,247,242,0.55);
-}
+.nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;cursor:pointer;transition:all 0.2s;border-left:3px solid transparent;font-size:13px;color:rgba(250,247,242,0.55)}
 .nav-item:hover{background:rgba(255,255,255,0.05);color:#FAF7F2}
 .nav-item.active{background:rgba(196,120,138,0.15);color:#FAF7F2;border-left-color:var(--rose)}
 .nav-icon{font-size:15px;width:18px;text-align:center}
-
-.sidebar-stats{margin-top:auto;padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08)}
+.sidebar-stats{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08)}
 .stat-pill{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .stat-pill span:first-child{font-size:11px;color:rgba(250,247,242,0.4)}
-.stat-pill span:last-child{font-size:13px;font-weight:500;color:#FAF7F2}
-.stat-pill .badge{
-  background:var(--rose);color:white;font-size:10px;
-  padding:1px 7px;border-radius:10px;font-weight:600;
-}
-.stat-pill .badge.mint{background:var(--mint-deep)}
+.badge{background:var(--rose);color:white;font-size:10px;padding:1px 7px;border-radius:10px;font-weight:600}
+.badge.mint{background:var(--mint-deep)}
 
-/* ── PAGE HEADER ─────────────────────────────── */
+/* ── DEDICATORIA BTN ── */
+.dedicatoria-btn{margin:16px 20px 0;display:flex;align-items:center;gap:10px;background:rgba(196,120,138,0.12);border:1px solid rgba(196,120,138,0.25);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all 0.2s;animation:pulse-soft 3s ease-in-out infinite}
+.dedicatoria-btn:hover{background:rgba(196,120,138,0.22);transform:scale(1.02)}
+@keyframes pulse-soft{0%,100%{box-shadow:0 0 0 0 rgba(196,120,138,0)}50%{box-shadow:0 0 0 6px rgba(196,120,138,0.10)}}
+.dedicatoria-icon{font-size:20px}
+.dedicatoria-label{flex:1}
+.dedicatoria-label strong{display:block;font-size:12px;color:var(--rose-light);font-weight:600}
+.dedicatoria-label span{font-size:10px;color:rgba(250,247,242,0.35);font-style:italic}
+.dedicatoria-arrow{font-size:14px;color:rgba(196,120,138,0.5)}
+
+/* ── PAGE HEADER ── */
 .page-header{padding:28px 32px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
 .page-header-text h2{font-size:34px;font-weight:300;letter-spacing:-0.5px}
 .page-header-text p{font-size:13px;color:var(--muted);margin-top:3px}
 
-/* ── BUTTONS ─────────────────────────────────── */
-.btn-primary{
-  background:var(--rose);color:white;border:none;
-  padding:11px 22px;border-radius:10px;font-size:13px;
-  font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;
-  transition:all 0.2s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;
-}
-.btn-primary:hover{background:var(--rose-deep);transform:translateY(-1px);box-shadow:0 4px 12px rgba(196,120,138,0.35)}
+/* ── BUTTONS ── */
+.btn-primary{background:var(--rose);color:white;border:none;padding:11px 22px;border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:all 0.2s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.btn-primary:hover{background:var(--rose-deep)}
 .btn-primary:active{transform:scale(0.97)}
-.btn-secondary{
-  background:transparent;border:1.5px solid var(--border);color:var(--ink);
-  padding:11px 20px;border-radius:10px;font-size:13px;
-  font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:all 0.2s;
-}
+.btn-secondary{background:transparent;border:1.5px solid var(--border);color:var(--ink);padding:11px 20px;border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:all 0.2s}
 .btn-secondary:hover{border-color:var(--mid-brown);background:var(--cream-dark)}
-.btn-mint{
-  background:var(--mint);color:white;border:none;
-  padding:11px 22px;border-radius:10px;font-size:13px;
-  font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:all 0.2s;
-}
-.btn-mint:hover{background:var(--mint-deep)}
 
-/* ── FILTERS ─────────────────────────────────── */
+/* ── FILTERS ── */
 .filters{padding:14px 32px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.filter-btn{
-  padding:7px 16px;border-radius:20px;border:1.5px solid var(--border);
-  background:transparent;font-size:12px;font-family:'DM Sans',sans-serif;
-  cursor:pointer;color:var(--muted);transition:all 0.2s;
-}
+.filter-btn{padding:7px 16px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s}
 .filter-btn:hover{border-color:var(--rose-light);color:var(--rose-deep);background:var(--rose-pale)}
 .filter-btn.active{background:var(--rose);color:white;border-color:var(--rose)}
 .search-box{margin-left:auto;position:relative}
-.search-box input{
-  padding:8px 12px 8px 34px;border:1.5px solid var(--border);
-  border-radius:20px;background:white;font-size:13px;
-  font-family:'DM Sans',sans-serif;outline:none;width:200px;transition:all 0.2s;
-}
+.search-box input{padding:8px 12px 8px 34px;border:1.5px solid var(--border);border-radius:20px;background:white;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;width:200px;transition:all 0.2s}
 .search-box input:focus{border-color:var(--rose-light);box-shadow:0 0 0 3px var(--rose-pale)}
 .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted)}
 
-/* ── BOOKS GRID ──────────────────────────────── */
+/* ── BOOKS GRID ── */
 .books-grid{padding:12px 32px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:20px}
-
-/* ── BOOK CARD ───────────────────────────────── */
-.book-card{
-  background:white;border-radius:16px;overflow:hidden;cursor:pointer;
-  transition:all 0.25s;border:1px solid var(--border);
-}
+.book-card{background:white;border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.25s;border:1px solid var(--border)}
 .book-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(42,31,21,0.14)}
 .book-card:active{transform:scale(0.98)}
-.book-cover{
-  height:210px;display:flex;align-items:flex-end;padding:14px;
-  position:relative;overflow:hidden;background:var(--light-brown);
-}
+.book-cover{height:210px;display:flex;align-items:flex-end;padding:14px;position:relative;overflow:hidden;background:var(--light-brown)}
 .book-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .book-cover-gradient{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(42,31,21,0.65))}
-.cover-title{
-  position:relative;z-index:1;font-family:'Cormorant Garamond',serif;
-  font-size:16px;font-weight:500;color:white;line-height:1.2;
-  text-shadow:0 1px 6px rgba(0,0,0,0.5);
-}
+.cover-title{position:relative;z-index:1;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:500;color:white;line-height:1.2;text-shadow:0 1px 6px rgba(0,0,0,0.5)}
 .book-info{padding:13px 14px 14px}
 .book-author{font-size:11px;color:var(--muted);margin-bottom:7px}
 .book-author strong{color:var(--warm-brown);font-weight:500}
@@ -229,217 +207,90 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .star{color:var(--border);font-size:12px}
 .star.filled{color:var(--star)}
 .book-tags{display:flex;gap:4px;flex-wrap:wrap}
-.tag{
-  font-size:10px;padding:3px 8px;border-radius:10px;font-weight:500;
-  display:inline-flex;align-items:center;gap:3px;
-}
+.tag{font-size:10px;padding:3px 8px;border-radius:10px;font-weight:500;display:inline-flex;align-items:center;gap:3px}
 .tag-status{background:var(--rose-pale);color:var(--rose-deep)}
 .tag-genre{background:var(--mint-pale);color:var(--mint-deep)}
 .status-dot{width:5px;height:5px;border-radius:50%;display:inline-block;flex-shrink:0}
-.status-read{background:#7AB580}
-.status-reading{background:var(--rose)}
-.status-wishlist{background:var(--mid-brown)}
+.status-read{background:#7AB580}.status-reading{background:var(--rose)}.status-wishlist{background:var(--mid-brown)}
 
-/* ── DETAIL PANEL ────────────────────────────── */
-.detail-panel{
-  position:fixed;top:0;right:-500px;width:460px;max-width:92vw;
-  height:100vh;background:white;
-  box-shadow:-4px 0 40px rgba(42,31,21,0.15);
-  z-index:100;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);
-  overflow-y:auto;
-  padding-top:var(--safe-top);padding-bottom:var(--safe-bottom);
-}
+/* ── DETAIL PANEL ── */
+.detail-panel{position:fixed;top:0;right:-500px;width:460px;max-width:92vw;height:100vh;background:white;box-shadow:-4px 0 40px rgba(42,31,21,0.15);z-index:100;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;padding-top:var(--safe-top);padding-bottom:var(--safe-bottom)}
 .detail-panel.open{right:0}
-.panel-header{
-  padding:18px 24px;position:sticky;top:0;background:white;z-index:10;
-  border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;
-}
-.panel-close{
-  background:var(--cream-dark);border:none;width:32px;height:32px;
-  border-radius:50%;cursor:pointer;color:var(--muted);font-size:14px;
-  display:flex;align-items:center;justify-content:center;transition:all 0.2s;
-}
+.panel-header{padding:18px 24px;position:sticky;top:0;background:white;z-index:10;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.panel-close{background:var(--cream-dark);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;color:var(--muted);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
 .panel-close:hover{background:var(--rose-pale);color:var(--rose-deep)}
 .panel-cover{height:240px;position:relative;overflow:hidden;background:var(--light-brown)}
 .panel-cover img{width:100%;height:100%;object-fit:cover}
 .panel-cover-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(42,31,21,0.7))}
-.panel-cover-title{
-  position:absolute;bottom:20px;left:24px;right:24px;
-  font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;
-  color:white;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,0.4);
-}
+.panel-cover-title{position:absolute;bottom:20px;left:24px;right:24px;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:white;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,0.4)}
 .panel-body{padding:20px 24px 32px}
 .panel-author{color:var(--rose);font-size:15px;font-weight:500;margin-bottom:10px}
 .panel-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;font-size:12px;color:var(--muted)}
-.panel-meta span{display:flex;align-items:center;gap:4px}
 .panel-section{margin-bottom:22px}
-.panel-section h4{
-  font-size:10px;text-transform:uppercase;letter-spacing:2px;
-  color:var(--mint-deep);margin-bottom:10px;font-weight:500;font-family:'DM Sans',sans-serif;
-}
-.review-text{
-  font-size:15px;line-height:1.9;color:#4A3F35;
-  font-family:'Cormorant Garamond',serif;font-style:italic;
-}
-.quote-block{
-  border-left:3px solid var(--rose-light);padding:12px 16px;
-  background:var(--rose-pale);border-radius:0 10px 10px 0;margin-bottom:10px;
-}
+.panel-section h4{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--mint-deep);margin-bottom:10px;font-weight:500;font-family:'DM Sans',sans-serif}
+.review-text{font-size:15px;line-height:1.9;color:#4A3F35;font-family:'Cormorant Garamond',serif;font-style:italic}
+.quote-block{border-left:3px solid var(--rose-light);padding:12px 16px;background:var(--rose-pale);border-radius:0 10px 10px 0;margin-bottom:10px}
 .quote-text{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--ink);line-height:1.7}
 .quote-context{font-size:11px;color:var(--muted);margin-top:5px}
 .rating-big{display:flex;gap:4px}
 .rating-big .star{font-size:22px}
 .panel-actions{display:flex;gap:10px;margin-top:24px;padding-top:20px;border-top:1px solid var(--border)}
 
-/* ── MODAL ───────────────────────────────────── */
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(42,31,21,0.5);
-  z-index:200;display:none;align-items:flex-end;justify-content:center;
-  padding-bottom:var(--safe-bottom);backdrop-filter:blur(4px);
-}
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(42,31,21,0.5);z-index:200;display:none;align-items:flex-end;justify-content:center;padding-bottom:var(--safe-bottom);backdrop-filter:blur(4px)}
 .modal-overlay.open{display:flex}
 @media(min-width:600px){.modal-overlay{align-items:center;padding:24px}}
-.modal{
-  background:white;border-radius:24px 24px 0 0;width:100%;
-  max-width:640px;max-height:93vh;overflow-y:auto;
-}
+.modal{background:white;border-radius:24px 24px 0 0;width:100%;max-width:640px;max-height:93vh;overflow-y:auto}
 @media(min-width:600px){.modal{border-radius:20px;max-height:90vh}}
-.modal-header{
-  padding:20px 24px;display:flex;justify-content:space-between;align-items:center;
-  border-bottom:1px solid var(--border);position:sticky;top:0;background:white;z-index:5;
-}
+.modal-header{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);position:sticky;top:0;background:white;z-index:5}
 .modal-header h3{font-size:22px;font-weight:400}
 .modal-body{padding:22px 24px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:480px){.form-row{grid-template-columns:1fr}}
 .form-group{margin-bottom:16px}
-.form-group label{
-  display:block;font-size:10px;font-weight:500;color:var(--muted);
-  text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;
-}
-.form-group input,.form-group select,.form-group textarea{
-  width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;
-  font-size:14px;font-family:'DM Sans',sans-serif;outline:none;
-  transition:all 0.2s;background:var(--cream);-webkit-appearance:none;
-}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
-  border-color:var(--rose-light);background:white;box-shadow:0 0 0 3px var(--rose-pale);
-}
+.form-group label{display:block;font-size:10px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:all 0.2s;background:var(--cream);-webkit-appearance:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--rose-light);background:white;box-shadow:0 0 0 3px var(--rose-pale)}
 .form-group textarea{resize:vertical;min-height:88px;line-height:1.6}
 .star-input{display:flex;gap:8px;margin-top:4px}
 .star-input span{font-size:28px;cursor:pointer;transition:transform 0.15s;user-select:none;-webkit-user-select:none}
 .star-input span:active{transform:scale(1.3)}
 .modal-footer{padding:0 24px 24px;display:flex;gap:10px;justify-content:flex-end}
 
-/* ── PHOTO UPLOAD ────────────────────────────── */
-.photo-upload-area{
-  border:2px dashed var(--border);border-radius:12px;
-  padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;
-  background:var(--cream);position:relative;overflow:hidden;
-}
-.photo-upload-area:hover{border-color:var(--rose-light);background:var(--rose-pale)}
+/* ── PHOTO UPLOAD ── */
+.photo-upload-area{border:2px dashed var(--border);border-radius:12px;padding:20px;text-align:center;transition:all 0.2s;background:var(--cream);position:relative;overflow:hidden}
 .photo-upload-area.has-photo{border-style:solid;border-color:var(--mint-light);padding:0}
 .photo-preview{width:100%;height:160px;object-fit:cover;border-radius:10px;display:block}
 .photo-upload-icon{font-size:28px;margin-bottom:8px}
 .photo-upload-text{font-size:13px;color:var(--muted);line-height:1.4}
 .photo-upload-text strong{display:block;font-size:12px;color:var(--warm-brown);margin-bottom:3px}
-.photo-upload-input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.photo-remove{
-  position:absolute;top:8px;right:8px;background:rgba(42,31,21,0.6);
-  color:white;border:none;border-radius:50%;width:28px;height:28px;
-  cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;
-  transition:background 0.2s;
-}
+.photo-remove{position:absolute;top:8px;right:8px;background:rgba(42,31,21,0.6);color:white;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
 .photo-remove:hover{background:var(--rose)}
 
-/* ── COLOR SWATCHES ──────────────────────────── */
+/* ── COLOR SWATCHES ── */
 .color-swatches{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-.color-swatch{
-  width:30px;height:30px;border-radius:50%;cursor:pointer;
-  border:3px solid transparent;transition:all 0.15s;
-}
+.color-swatch{width:30px;height:30px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all 0.15s}
 .color-swatch:hover{transform:scale(1.15)}
 .color-swatch.selected{border-color:var(--ink);transform:scale(1.1)}
 
-/* ── QUOTES PAGE ─────────────────────────────── */
+/* ── QUOTES PAGE ── */
 .quotes-grid{padding:14px 32px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.quote-card{
-  background:white;border-radius:14px;padding:20px;border:1px solid var(--border);
-  transition:all 0.2s;position:relative;overflow:hidden;
-}
-.quote-card::before{
-  content:'❝';position:absolute;top:8px;right:14px;
-  font-size:48px;color:var(--rose-pale);font-family:'Cormorant Garamond',serif;
-  line-height:1;
-}
+.quote-card{background:white;border-radius:14px;padding:20px;border:1px solid var(--border);transition:all 0.2s;position:relative;overflow:hidden}
+.quote-card::before{content:'❝';position:absolute;top:8px;right:14px;font-size:48px;color:var(--rose-pale);font-family:'Cormorant Garamond',serif;line-height:1}
 .quote-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-.quote-card-text{
-  font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;
-  color:var(--ink);line-height:1.75;margin-bottom:14px;position:relative;z-index:1;
-}
+.quote-card-text{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--ink);line-height:1.75;margin-bottom:14px;position:relative;z-index:1}
 .quote-card-book{font-size:12px;color:var(--rose-deep);font-weight:500}
 .quote-card-author{font-size:11px;color:var(--muted);margin-top:2px}
 .quote-accent{width:32px;height:2px;background:var(--rose-light);margin-bottom:12px;border-radius:2px}
 
-/* ── STATS PAGE ──────────────────────────────── */
-.stats-page{padding:28px 32px 40px}
-.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:24px}
-@media(min-width:700px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
-.stat-card{
-  background:white;border-radius:14px;padding:20px;
-  border:1px solid var(--border);text-align:center;
-}
-.stat-number{
-  font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;
-  color:var(--ink);line-height:1;
-}
-.stat-number.rose{color:var(--rose)}
-.stat-number.mint{color:var(--mint-deep)}
-.stat-label{font-size:11px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
-.genre-card{background:white;border-radius:14px;padding:24px;border:1px solid var(--border);margin-bottom:16px}
-.genre-card h3{font-size:20px;font-weight:400;margin-bottom:20px}
-.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.bar-label{width:140px;font-size:13px;color:var(--ink);text-align:right;flex-shrink:0}
-.bar-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
-.bar-fill{height:100%;background:linear-gradient(90deg,var(--rose-light),var(--rose));border-radius:4px;transition:width 0.9s ease}
-.bar-fill.mint{background:linear-gradient(90deg,var(--mint-light),var(--mint))}
-.bar-count{width:22px;font-size:12px;color:var(--muted);text-align:right}
-
-/* ── TOAST ───────────────────────────────────── */
-.toast{
-  position:fixed;bottom:calc(32px + var(--safe-bottom));left:50%;
-  transform:translateX(-50%) translateY(20px);
-  background:var(--ink);color:var(--cream);
-  padding:12px 24px;border-radius:30px;font-size:13px;
-  opacity:0;transition:all 0.3s;z-index:500;pointer-events:none;white-space:nowrap;
-}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.toast.mint-toast{background:var(--mint-deep)}
-.toast.rose-toast{background:var(--rose-deep)}
-
-/* ── EMPTY STATE ─────────────────────────────── */
-.empty-state{text-align:center;padding:80px 32px;grid-column:1/-1}
-.empty-state-icon{font-size:40px;margin-bottom:12px}
-.empty-state p{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--mid-brown);margin-bottom:6px}
-.empty-state small{font-size:13px;color:var(--muted)}
-
-/* ── QUOTE POSTIT COLORS ─────────────────────── */
+/* ── POSTIT ── */
 .postit-swatches{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px;align-items:center}
-.postit-swatch{
-  width:26px;height:26px;border-radius:6px;cursor:pointer;
-  border:2.5px solid transparent;transition:all 0.15s;flex-shrink:0;
-}
+.postit-swatch{width:26px;height:26px;border-radius:6px;cursor:pointer;border:2.5px solid transparent;transition:all 0.15s;flex-shrink:0}
 .postit-swatch:hover{transform:scale(1.2)}
 .postit-swatch.selected{border-color:var(--ink);transform:scale(1.15)}
-.postit-none{
-  width:26px;height:26px;border-radius:6px;cursor:pointer;
-  border:2px dashed var(--border);background:white;
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;color:var(--muted);transition:all 0.15s;flex-shrink:0;
-}
+.postit-none{width:26px;height:26px;border-radius:6px;cursor:pointer;border:2px dashed var(--border);background:white;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);transition:all 0.15s;flex-shrink:0}
 .postit-none:hover{border-color:var(--warm-brown);transform:scale(1.1)}
 .postit-none.selected{border-color:var(--ink);border-style:solid}
-
-/* quote card postit highlight */
 .quote-card.postit-yellow{background:#FFFBCC;border-color:#F0E060}
 .quote-card.postit-pink{background:#FFE8F0;border-color:#F0B4CC}
 .quote-card.postit-mint{background:#E0F7F0;border-color:#90D4C0}
@@ -448,8 +299,6 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .quote-card.postit-sky{background:#E0F0FF;border-color:#90C8F0}
 .quote-card.postit-rose{background:#FFE0E8;border-color:#F0A8B8}
 .quote-card.postit-sage{background:#E8F0E0;border-color:#B0CC90}
-
-/* inline postit marker in detail panel */
 .quote-block.postit-yellow{background:#FFFBCC;border-left-color:#D4B800}
 .quote-block.postit-pink{background:#FFE8F0;border-left-color:var(--rose)}
 .quote-block.postit-mint{background:#E0F7F0;border-left-color:var(--mint)}
@@ -459,69 +308,25 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .quote-block.postit-rose{background:#FFE0E8;border-left-color:#D46080}
 .quote-block.postit-sage{background:#E8F0E0;border-left-color:#6A9040}
 
-/* ── DEDICATORIA ─────────────────────────────── */
-.dedicatoria-btn{
-  margin:16px 20px 0;
-  display:flex;align-items:center;gap:10px;
-  background:rgba(196,120,138,0.12);
-  border:1px solid rgba(196,120,138,0.25);
-  border-radius:12px;
-  padding:12px 14px;cursor:pointer;transition:all 0.2s;
-  animation:pulse-soft 3s ease-in-out infinite;
-}
-.dedicatoria-btn:hover{background:rgba(196,120,138,0.22);transform:scale(1.02)}
-@keyframes pulse-soft{
-  0%,100%{box-shadow:0 0 0 0 rgba(196,120,138,0)}
-  50%{box-shadow:0 0 0 6px rgba(196,120,138,0.10)}
-}
-.dedicatoria-icon{font-size:20px}
-.dedicatoria-label{flex:1}
-.dedicatoria-label strong{display:block;font-size:12px;color:var(--rose-light);font-weight:600}
-.dedicatoria-label span{font-size:10px;color:rgba(250,247,242,0.35);font-style:italic}
-.dedicatoria-arrow{font-size:14px;color:rgba(196,120,138,0.5)}
+/* ── STATS ── */
+.stats-page{padding:28px 32px 40px}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:24px}
+@media(min-width:700px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+.stat-card{background:white;border-radius:14px;padding:20px;border:1px solid var(--border);text-align:center}
+.stat-number{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:var(--ink);line-height:1}
+.stat-number.rose{color:var(--rose)}.stat-number.mint{color:var(--mint-deep)}
+.stat-label{font-size:11px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
+.genre-card{background:white;border-radius:14px;padding:24px;border:1px solid var(--border);margin-bottom:16px}
+.genre-card h3{font-size:20px;font-weight:400;margin-bottom:20px}
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.bar-label{width:120px;font-size:13px;color:var(--ink);text-align:right;flex-shrink:0}
+@media(max-width:680px){.bar-label{width:80px;font-size:11px}}
+.bar-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--rose-light),var(--rose));border-radius:4px;transition:width 0.9s ease}
+.bar-fill.mint{background:linear-gradient(90deg,var(--mint-light),var(--mint))}
+.bar-count{width:22px;font-size:12px;color:var(--muted);text-align:right}
 
-.dedicatoria-overlay{
-  position:fixed;inset:0;background:rgba(42,31,21,0.6);
-  z-index:500;display:none;align-items:center;justify-content:center;
-  padding:24px;backdrop-filter:blur(6px);
-}
-.dedicatoria-overlay.open{display:flex}
-.dedicatoria-card{
-  background:var(--cream);border-radius:24px;
-  width:100%;max-width:480px;overflow:hidden;
-  box-shadow:var(--shadow-lg);animation:card-in 0.4s cubic-bezier(0.34,1.56,0.64,1);
-}
-@keyframes card-in{from{transform:scale(0.8) translateY(20px);opacity:0}to{transform:none;opacity:1}}
-.dedicatoria-card-header{
-  background:var(--ink);padding:32px 32px 24px;text-align:center;position:relative;
-}
-.dedicatoria-card-header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:20px;background:var(--cream);border-radius:20px 20px 0 0}
-.dedicatoria-card-title{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--mid-brown);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
-.dedicatoria-card-name{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:#FAF7F2;letter-spacing:1px}
-.dedicatoria-card-body{padding:28px 32px 32px}
-.dedicatoria-text{
-  font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;
-  line-height:2;color:var(--ink);white-space:pre-wrap;margin-bottom:24px;
-}
-.dedicatoria-firma{font-size:14px;color:var(--rose-deep);font-weight:500;text-align:right;margin-top:8px}
-.dedicatoria-close{
-  width:100%;padding:13px;background:var(--ink);color:var(--cream);
-  border:none;border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;
-  cursor:pointer;font-weight:500;transition:opacity 0.2s;
-}
-.dedicatoria-close:hover{opacity:0.85}
-/* ── QUOTE OF DAY SPLASH ─────────────────────── */
-.qod-splash{position:fixed;inset:0;background:var(--ink);z-index:900;display:flex;align-items:center;justify-content:center;padding:40px;opacity:0;animation:qod-in 0.6s ease 0.2s forwards}
-@keyframes qod-in{to{opacity:1}}
-.qod-card{max-width:520px;text-align:center}
-.qod-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:28px}
-.qod-text{font-family:'Cormorant Garamond',serif;font-size:26px;font-style:italic;color:#FAF7F2;line-height:1.7;margin-bottom:20px}
-.qod-book{font-size:13px;color:var(--mid-brown);margin-bottom:40px}
-.qod-btn{background:transparent;border:1.5px solid rgba(250,247,242,0.2);color:rgba(250,247,242,0.6);padding:12px 32px;border-radius:30px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
-.qod-btn:hover{border-color:var(--rose-light);color:var(--rose-light)}
-.qod-flowers{font-size:24px;letter-spacing:6px;display:block;margin-bottom:24px;opacity:0.6}
-
-/* ── CURRENTLY READING ───────────────────────── */
+/* ── CURRENTLY READING ── */
 .reading-now-section{padding:24px 32px 0}
 .reading-now-card{background:white;border-radius:16px;border:1px solid var(--border);overflow:hidden;display:flex;margin-bottom:4px;box-shadow:0 4px 20px rgba(42,31,21,0.08)}
 .reading-now-cover{width:90px;flex-shrink:0;position:relative;background:var(--light-brown)}
@@ -537,13 +342,13 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .progress-pct{font-size:11px;color:var(--mint-deep);font-weight:600}
 .progress-bar-track{height:5px;background:var(--border);border-radius:3px;overflow:hidden}
 .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--mint-light),var(--mint));border-radius:3px;transition:width 0.6s ease}
-.progress-inputs{display:flex;gap:8px;margin-top:10px;align-items:center}
+.progress-inputs{display:flex;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap}
 .progress-inputs input{width:68px;padding:6px 8px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;text-align:center;background:var(--cream)}
 .progress-inputs input:focus{border-color:var(--mint);background:white}
 .progress-inputs span{font-size:12px;color:var(--muted)}
 .progress-inputs button{padding:6px 12px;background:var(--mint);color:white;border:none;border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500}
 
-/* ── FEELINGS ────────────────────────────────── */
+/* ── FEELINGS ── */
 .feelings-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .feeling-btn{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:13px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;color:var(--muted)}
 .feeling-btn:hover{transform:scale(1.05)}
@@ -556,13 +361,15 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .feeling-btn[data-f="me inquietó"].selected{background:#B07040}
 .feeling-btn[data-f="me enamoré"].selected{background:var(--rose)}
 .feeling-btn[data-f="me maravilló"].selected{background:#4090C0}
+.feeling-btn[data-f="mehh"].selected{background:#888}
+.feeling-btn[data-f="me decepcionó"].selected{background:#B05050}
 
-/* ── AUTHORS PAGE ────────────────────────────── */
+/* ── AUTHORS ── */
 .authors-page{padding:28px 32px 40px}
 .author-card{background:white;border-radius:14px;padding:20px 24px;border:1px solid var(--border);margin-bottom:14px;display:flex;align-items:center;gap:20px;transition:all 0.2s}
 .author-card:hover{transform:translateX(4px);box-shadow:var(--shadow)}
 .author-avatar{width:52px;height:52px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--rose-pale),var(--mint-pale));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--rose-deep);border:2px solid var(--rose-light)}
-.author-info{flex:1}
+.author-info{flex:1;min-width:0}
 .author-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:4px}
 .author-meta{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap}
 .author-books-mini{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
@@ -571,7 +378,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .author-big-num{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--ink);line-height:1}
 .author-small-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
 
-/* ── NOTAS ───────────────────────────────────── */
+/* ── NOTAS ── */
 .notas-page{padding:28px 32px 40px}
 .nota-card{background:white;border-radius:14px;padding:20px;border:1px solid var(--border);margin-bottom:14px;transition:all 0.2s}
 .nota-card:hover{box-shadow:var(--shadow)}
@@ -585,25 +392,61 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .nota-composer textarea{width:100%;border:none;outline:none;font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--ink);resize:none;min-height:80px;line-height:1.75;background:transparent;padding:0}
 .nota-composer-footer{display:flex;justify-content:flex-end;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
 
-/* ── LOADING ─────────────────────────────────── */
+/* ── DEDICATORIA MODAL ── */
+.dedicatoria-overlay{position:fixed;inset:0;background:rgba(42,31,21,0.6);z-index:500;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)}
+.dedicatoria-overlay.open{display:flex}
+.dedicatoria-card{background:var(--cream);border-radius:24px;width:100%;max-width:480px;overflow:hidden;box-shadow:var(--shadow-lg);animation:card-in 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes card-in{from{transform:scale(0.8) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.dedicatoria-card-header{background:var(--ink);padding:32px 32px 24px;text-align:center;position:relative}
+.dedicatoria-card-header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:20px;background:var(--cream);border-radius:20px 20px 0 0}
+.dedicatoria-card-title{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--mid-brown);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+.dedicatoria-card-name{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:#FAF7F2;letter-spacing:1px}
+.dedicatoria-card-body{padding:28px 32px 32px}
+.dedicatoria-text{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;line-height:2;color:var(--ink);white-space:pre-wrap;margin-bottom:24px}
+.dedicatoria-firma{font-size:14px;color:var(--rose-deep);font-weight:500;text-align:right;margin-top:8px}
+.dedicatoria-close{width:100%;padding:13px;background:var(--ink);color:var(--cream);border:none;border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:opacity 0.2s}
+.dedicatoria-close:hover{opacity:0.85}
+.dedicatoria-flowers{font-size:28px;letter-spacing:8px;display:block;margin-bottom:16px;text-align:center}
+
+/* ── QUOTE OF DAY ── */
+.qod-splash{position:fixed;inset:0;background:var(--ink);z-index:900;display:flex;align-items:center;justify-content:center;padding:40px;opacity:0;animation:qod-in 0.6s ease 0.2s forwards}
+@keyframes qod-in{to{opacity:1}}
+.qod-card{max-width:520px;text-align:center}
+.qod-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:28px}
+.qod-text{font-family:'Cormorant Garamond',serif;font-size:26px;font-style:italic;color:#FAF7F2;line-height:1.7;margin-bottom:20px}
+@media(max-width:680px){.qod-text{font-size:20px}}
+.qod-book{font-size:13px;color:var(--mid-brown);margin-bottom:40px}
+.qod-btn{background:transparent;border:1.5px solid rgba(250,247,242,0.2);color:rgba(250,247,242,0.6);padding:12px 32px;border-radius:30px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+.qod-btn:hover{border-color:var(--rose-light);color:var(--rose-light)}
+.qod-flowers{font-size:24px;letter-spacing:6px;display:block;margin-bottom:24px;opacity:0.6}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:calc(32px + var(--safe-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--cream);padding:12px 24px;border-radius:30px;font-size:13px;opacity:0;transition:all 0.3s;z-index:600;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.mint-toast{background:var(--mint-deep)}
+.toast.rose-toast{background:var(--rose-deep)}
+@media(max-width:680px){.toast{bottom:calc(80px + var(--safe-bottom))}}
+
+/* ── EMPTY / LOADING ── */
+.empty-state{text-align:center;padding:80px 32px;grid-column:1/-1}
+.empty-state-icon{font-size:40px;margin-bottom:12px}
+.empty-state p{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--mid-brown);margin-bottom:6px}
+.empty-state small{font-size:13px;color:var(--muted)}
+.loading-state{text-align:center;padding:60px 32px;grid-column:1/-1}
 .loading-state p{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--mid-brown);margin-bottom:4px}
 .loading-state small{font-size:13px;color:var(--muted)}
-.spinner{
-  width:32px;height:32px;border:2px solid var(--border);
-  border-top-color:var(--rose);border-radius:50%;
-  animation:spin 0.8s linear infinite;margin:0 auto 16px;
-}
+.spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--rose);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
-<!-- ── AUTH SCREEN ── -->
+<!-- AUTH -->
 <div class="auth-screen" id="auth-screen">
   <div class="auth-card">
     <div class="auth-header">
       <div style="text-align:center">
-        <div class="auth-logo">Biblioteca</div>
+        <div class="auth-logo">♥ Biblioteca silvita ♥</div>
         <div class="auth-tagline">mi diario literario</div>
       </div>
     </div>
@@ -613,107 +456,106 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
         <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">Entrar</div>
         <div class="auth-tab" id="tab-register" onclick="switchTab('register')">Crear cuenta</div>
       </div>
-
-      <!-- Login -->
       <div id="form-login">
-        <p class="auth-title serif">¡Bienvenida de vuelta!</p>
-        <p class="auth-sub">Ingresa con tu correo para ver tu biblioteca</p>
+        <p class="auth-title serif">¡Bienvenida mi amorcito!</p>
+        <p class="auth-sub">Pon aqui tu correo para ver tu biblioteca</p>
         <div class="auth-error" id="login-error"></div>
         <div class="auth-field">
           <label>Correo electrónico</label>
-          <input type="email" id="login-nick" placeholder="tu@correo.com" autocomplete="email" autocapitalize="none">
+          <input type="email" id="login-nick" placeholder="ejemplo@jotomail.com" autocomplete="email" autocapitalize="none">
         </div>
         <div class="auth-field">
           <label>Contraseña</label>
-          <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
+          <input type="password" id="login-pass" placeholder="Contraseña123" autocomplete="current-password">
         </div>
         <button class="auth-btn" id="btn-login" onclick="doLogin()">Entrar a mi biblioteca</button>
       </div>
-
-      <!-- Register -->
       <div id="form-register" style="display:none">
-        <p class="auth-title serif">Crea tu espacio</p>
-        <p class="auth-sub">Regístrate con tu correo y elige una contraseña. Si la olvidas puedes recuperarla por email 🤍</p>
+        <p class="auth-title serif">Crea tu espacio, mi amor</p>
+        <p class="auth-sub">Regístrate con tu correo y pon una contraseña. y no la olvides porfi 🤍</p>
         <div class="auth-error" id="reg-error"></div>
         <div class="auth-field">
-          <label>Tu nombre</label>
-          <input type="text" id="reg-nick" placeholder="ej. Silvia" autocomplete="given-name" autocapitalize="words">
-          <p class="auth-hint">Así te saludaremos dentro de la app</p>
+          <label>Tu nombrecito</label>
+          <input type="text" id="reg-nick" placeholder="for exempo. Silvita" autocomplete="given-name" autocapitalize="words">
+          <p class="auth-hint">Para que la app te llame asi siempre</p>
         </div>
         <div class="auth-field">
-          <label>Correo electrónico</label>
-          <input type="email" id="reg-email" placeholder="tu@correo.com" autocomplete="email" autocapitalize="none">
+          <label>Tu correo</label>
+          <input type="email" id="reg-email" placeholder="ejemplo@jotomail.com" autocomplete="email" autocapitalize="none">
         </div>
         <div class="auth-field">
           <label>Contraseña</label>
-          <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+          <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres, parito" autocomplete="new-password">
         </div>
         <div class="auth-field">
           <label>Confirmar contraseña</label>
-          <input type="password" id="reg-pass2" placeholder="Repite tu contraseña" autocomplete="new-password">
+          <input type="password" id="reg-pass2" placeholder="Repite tu contraseña, parito x2" autocomplete="new-password">
         </div>
-        <button class="auth-btn" id="btn-register" onclick="doRegister()">Crear mi biblioteca</button>
+        <button class="auth-btn" id="btn-register" onclick="doRegister()">Crear mi biblioteca, ¡Yei!</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── MAIN APP ── -->
+<!-- APP -->
 <div class="app" id="app">
+  <!-- Sidebar (tablet/desktop) -->
   <aside class="sidebar">
-    <div class="sidebar-logo">
-      <h1>Biblioteca</h1>
-      <p>mi diario literario</p>
-      <div class="user-chip">
-        <div class="user-avatar" id="user-avatar">?</div>
-        <span class="user-name" id="user-name-display">—</span>
-        <span class="user-logout" onclick="doLogout()" title="Cerrar sesión">✕</span>
+    <div class="sidebar-inner">
+      <div class="sidebar-logo">
+        <h1>Biblioteca</h1>
+        <p>mi diario literario</p>
+        <div class="user-chip">
+          <div class="user-avatar" id="user-avatar">?</div>
+          <span class="user-name" id="user-name-display">—</span>
+          <span class="user-logout" onclick="doLogout()" title="Cerrar sesión">✕</span>
+        </div>
+        <div class="sync-row">
+          <span class="sync-dot" id="sync-dot"></span>
+          <span class="sync-lbl" id="sync-lbl">Conectando...</span>
+        </div>
       </div>
-      <div class="sync-row">
-        <span class="sync-dot" id="sync-dot"></span>
-        <span class="sync-lbl" id="sync-lbl">Conectando...</span>
+      <nav class="nav">
+        <div class="nav-section">Mi biblioteca</div>
+        <div class="nav-item active" onclick="showPage('library')" id="nav-library"><span class="nav-icon">📚</span> Mi colección de lecturas</div>
+        <div class="nav-item" onclick="showPage('quotes')" id="nav-quotes"><span class="nav-icon">✦</span> Mis citas favoritas</div>
+        <div class="nav-section">Descubrir</div>
+        <div class="nav-item" onclick="showPage('authors')" id="nav-authors"><span class="nav-icon">✍️</span> Autoras y autores</div>
+        <div class="nav-item" onclick="showPage('stats')" id="nav-stats"><span class="nav-icon">◎</span> Estadísticas ñoñitas</div>
+        <div class="nav-section">Personal</div>
+        <div class="nav-item" onclick="showPage('notas')" id="nav-notas"><span class="nav-icon">🖊</span> Mis notitas</div>
+      </nav>
+      <div class="dedicatoria-btn" onclick="openDedicatoria()">
+        <span class="dedicatoria-icon">💌</span>
+        <div class="dedicatoria-label">
+          <strong>Para mi amorcito Silvia</strong>
+          <span>Picale aqui jeje</span>
+        </div>
+        <span class="dedicatoria-arrow">›</span>
       </div>
-    </div>
-    <nav class="nav">
-      <div class="nav-section">Mi biblioteca</div>
-      <div class="nav-item active" onclick="showPage('library')" id="nav-library">
-        <span class="nav-icon">📚</span> Mi colección
+      <div class="sidebar-stats">
+        <div class="stat-pill"><span>Leídos</span><span class="badge" id="sb-read">0</span></div>
+        <div class="stat-pill"><span>Leyendo</span><span class="badge" id="sb-reading">0</span></div>
+        <div class="stat-pill"><span>Lista de deseos</span><span class="badge mint" id="sb-wishlist">0</span></div>
       </div>
-      <div class="nav-item" onclick="showPage('quotes')" id="nav-quotes">
-        <span class="nav-icon">✦</span> Citas favoritas
-      </div>
-      <div class="nav-section">Descubrir</div>
-      <div class="nav-item" onclick="showPage('authors')" id="nav-authors">
-        <span class="nav-icon">✍️</span> Autores
-      </div>
-      <div class="nav-item" onclick="showPage('stats')" id="nav-stats">
-        <span class="nav-icon">◎</span> Estadísticas
-      </div>
-      <div class="nav-section">Personal</div>
-      <div class="nav-item" onclick="showPage('notas')" id="nav-notas">
-        <span class="nav-icon">🖊</span> Mis notas
-      </div>
-    </nav>
-    <!-- Dedicatoria button -->
-    <div class="dedicatoria-btn" onclick="openDedicatoria()">
-      <span class="dedicatoria-icon">💌</span>
-      <div class="dedicatoria-label">
-        <strong>Para Silvia — abrir</strong>
-        <span>Un mensaje especial</span>
-      </div>
-      <span class="dedicatoria-arrow">›</span>
-    </div>
-    <div class="sidebar-stats">
-      <div class="stat-pill"><span>Leídos</span><span class="badge" id="sb-read">0</span></div>
-      <div class="stat-pill"><span>Leyendo</span><span class="badge" id="sb-reading">0</span></div>
-      <div class="stat-pill"><span>Lista de deseos</span><span class="badge mint" id="sb-wishlist">0</span></div>
     </div>
   </aside>
 
-  <main class="main">
+  <main class="main" id="main-content">
+    <!-- Mobile topbar -->
+    <div class="mobile-topbar" id="mobile-topbar" style="display:none">
+      <h1>Biblioteca</h1>
+      <div class="mobile-topbar-right">
+        <div class="mobile-user">
+          <div class="mobile-user-avatar" id="mobile-avatar">?</div>
+          <span class="mobile-user-name" id="mobile-name">—</span>
+        </div>
+        <span class="mobile-logout" onclick="doLogout()">Salir</span>
+      </div>
+    </div>
+
     <!-- Library -->
     <div id="page-library">
-      <!-- Currently Reading -->
       <div class="reading-now-section" id="reading-now-section" style="display:none">
         <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mint-deep);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px"><span class="reading-pulse"></span> Leyendo ahora</div>
         <div class="reading-now-card" id="reading-now-card"></div>
@@ -721,9 +563,9 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       <div class="page-header" style="margin-top:20px">
         <div class="page-header-text">
           <h2 class="serif">Mi Colección</h2>
-          <p>Todos los libros que han pasado por tus manos</p>
+          <p>Todos los libros que han pasado por tus manitas</p>
         </div>
-        <button class="btn-primary" onclick="openModal()">+ Añadir libro</button>
+        <button class="btn-primary" onclick="openModal()">+ Añadir</button>
       </div>
       <div class="filters">
         <button class="filter-btn active" onclick="filterBooks('all',this)">Todos</button>
@@ -736,51 +578,34 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
         </div>
       </div>
       <div class="books-grid" id="books-grid">
-        <div class="loading-state">
-          <div class="spinner"></div>
-          <p>Cargando tu biblioteca...</p>
-          <small>Conectando con la nube</small>
-        </div>
+        <div class="loading-state"><div class="spinner"></div><p>Cargando tu biblioteca...</p><small>Conectando con la nube</small></div>
       </div>
     </div>
 
     <!-- Quotes -->
     <div id="page-quotes" style="display:none">
-      <div class="page-header">
-        <div class="page-header-text">
-          <h2 class="serif">Citas Favoritas</h2>
-          <p>Palabras que te han marcado</p>
-        </div>
-      </div>
+      <div class="page-header"><div class="page-header-text"><h2 class="serif">Citas Favoritas</h2><p>Se lo mucho que te encanta poner Post Its para tus citas en tus libros</p></div></div>
       <div class="quotes-grid" id="quotes-grid"></div>
     </div>
 
     <!-- Stats -->
     <div id="page-stats" style="display:none">
       <div class="stats-page">
-        <div style="margin-bottom:24px">
-          <h2 class="serif" style="font-size:34px;font-weight:300">Estadísticas</h2>
-          <p style="font-size:13px;color:var(--muted)">Tu historia como lectora</p>
-        </div>
+        <div style="margin-bottom:24px"><h2 class="serif" style="font-size:34px;font-weight:300">Estadísticas</h2><p style="font-size:13px;color:var(--muted)">Tu historia como lectora, por si te ayuda de algo ver estadisticas jaja</p></div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-number" id="st-total">0</div><div class="stat-label">Total libros</div></div>
+          <div class="stat-card"><div class="stat-number" id="st-total">0</div><div class="stat-label">Total de libros</div></div>
           <div class="stat-card"><div class="stat-number rose" id="st-read">0</div><div class="stat-label">Leídos</div></div>
           <div class="stat-card"><div class="stat-number mint" id="st-avg">—</div><div class="stat-label">Puntuación media</div></div>
           <div class="stat-card"><div class="stat-number" id="st-quotes">0</div><div class="stat-label">Citas guardadas</div></div>
         </div>
-        <div class="genre-card">
-          <h3 class="serif">Por género</h3>
-          <div id="genre-chart"></div>
-        </div>
+        <div class="genre-card"><h3 class="serif">Por género</h3><div id="genre-chart"></div></div>
       </div>
     </div>
+
     <!-- Authors -->
     <div id="page-authors" style="display:none">
       <div class="authors-page">
-        <div style="margin-bottom:24px">
-          <h2 class="serif" style="font-size:34px;font-weight:300">Autores</h2>
-          <p style="font-size:13px;color:var(--muted)">Los escritores que han vivido en tus manos</p>
-        </div>
+        <div style="margin-bottom:24px"><h2 class="serif" style="font-size:34px;font-weight:300">Autores</h2><p style="font-size:13px;color:var(--muted)">Los escritores que han vivido en tus manos y tanto te han hecho sentir ♥</p></div>
         <div id="authors-list"></div>
       </div>
     </div>
@@ -788,32 +613,27 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
     <!-- Notas -->
     <div id="page-notas" style="display:none">
       <div class="notas-page">
-        <div style="margin-bottom:20px">
-          <h2 class="serif" style="font-size:34px;font-weight:300">Mis Notas</h2>
-          <p style="font-size:13px;color:var(--muted)">Pensamientos libres, ideas literarias, reflexiones</p>
-        </div>
-        <div class="nota-composer">
-          <textarea id="nota-input" placeholder="Escribe lo que sientes, lo que piensas, lo que imaginas..."></textarea>
-          <div class="nota-composer-footer">
-            <button class="btn-primary" onclick="saveNota()" style="padding:8px 18px;font-size:12px">Guardar nota</button>
-          </div>
-        </div>
+        <div style="margin-bottom:20px"><h2 class="serif" style="font-size:34px;font-weight:300">Mis Notas</h2><p style="font-size:13px;color:var(--muted)">Aqui eres libre de escribir todo lo que quieras, pienses, ideas, mas citas, pensamientos libres, reflexiones, lo que quieras mi amor.</p></div>
+        <div class="nota-composer"><textarea id="nota-input" placeholder="Escribe lo que sientes, lo que tu corazoncito te diga ..."></textarea><div class="nota-composer-footer"><button class="btn-primary" onclick="saveNota()" style="padding:8px 18px;font-size:12px">Guardar nota</button></div></div>
         <div id="notas-list"></div>
       </div>
     </div>
   </main>
 </div>
 
+<!-- Bottom nav (iPhone) -->
+<div class="bottom-nav" id="bottom-nav">
+  <div class="bottom-nav-item active" onclick="showPage('library')" id="bnav-library"><span class="bnav-icon">📚</span><span class="bnav-label">Colección</span></div>
+  <div class="bottom-nav-item" onclick="showPage('quotes')" id="bnav-quotes"><span class="bnav-icon">✦</span><span class="bnav-label">Citas</span></div>
+  <div class="bottom-nav-item" onclick="showPage('authors')" id="bnav-authors"><span class="bnav-icon">✍️</span><span class="bnav-label">Autores</span></div>
+  <div class="bottom-nav-item" onclick="showPage('notas')" id="bnav-notas"><span class="bnav-icon">🖊</span><span class="bnav-label">Notas</span></div>
+  <div class="bottom-nav-item" onclick="showPage('stats')" id="bnav-stats"><span class="bnav-icon">◎</span><span class="bnav-label">Stats</span></div>
+</div>
+
 <!-- Detail Panel -->
 <div class="detail-panel" id="detail-panel">
-  <div class="panel-header">
-    <div id="panel-status"></div>
-    <button class="panel-close" onclick="closePanel()">✕</button>
-  </div>
-  <div class="panel-cover" id="panel-cover">
-    <div class="panel-cover-overlay"></div>
-    <div class="panel-cover-title" id="panel-cover-title"></div>
-  </div>
+  <div class="panel-header"><div id="panel-status"></div><button class="panel-close" onclick="closePanel()">✕</button></div>
+  <div class="panel-cover" id="panel-cover"><div class="panel-cover-overlay"></div><div class="panel-cover-title" id="panel-cover-title"></div></div>
   <div class="panel-body" id="panel-body"></div>
 </div>
 <div style="position:fixed;inset:0;background:rgba(42,31,21,0.3);z-index:99;display:none;backdrop-filter:blur(2px)" id="panel-overlay" onclick="closePanel()"></div>
@@ -821,23 +641,16 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 <!-- Modal -->
 <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <div class="modal-header">
-      <h3 class="serif" id="modal-title">Añadir nuevo libro</h3>
-      <button class="panel-close" onclick="closeModal()">✕</button>
-    </div>
+    <div class="modal-header"><h3 class="serif" id="modal-title">Añadir nuevo libro</h3><button class="panel-close" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
-      <!-- Photo upload -->
       <div class="form-group">
         <label>Portada del libro</label>
-        <!-- Hidden inputs: one for gallery, one for camera -->
         <input type="file" id="photo-input-gallery" accept="image/*" onchange="handlePhoto(event)" style="display:none">
         <input type="file" id="photo-input-camera" accept="image/*" capture="environment" onchange="handlePhoto(event)" style="display:none">
         <div class="photo-upload-area" id="photo-area">
           <div id="photo-placeholder">
             <div class="photo-upload-icon">🖼️</div>
-            <div class="photo-upload-text" style="margin-bottom:14px">
-              <strong>Añadir foto de portada</strong>
-            </div>
+            <div class="photo-upload-text" style="margin-bottom:14px"><strong>Añadir foto de portada a tu libro</strong></div>
             <div style="display:flex;gap:10px;justify-content:center">
               <button type="button" onclick="document.getElementById('photo-input-gallery').click()" style="background:var(--rose-pale);color:var(--rose-deep);border:1.5px solid var(--rose-light);padding:8px 16px;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500">📂 Galería</button>
               <button type="button" onclick="document.getElementById('photo-input-camera').click()" style="background:var(--mint-pale);color:var(--mint-deep);border:1.5px solid var(--mint-light);padding:8px 16px;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500">📷 Cámara</button>
@@ -847,25 +660,23 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
           <button class="photo-remove" id="photo-remove-btn" style="display:none" onclick="removePhoto(event)">✕</button>
         </div>
       </div>
-
       <div class="form-row" style="margin-bottom:0">
-        <div class="form-group"><label>Título *</label><input id="f-title" placeholder="El nombre del libro"></div>
-        <div class="form-group"><label>Autor *</label><input id="f-author" placeholder="Nombre del autor"></div>
+        <div class="form-group"><label>Titulo del libro *</label><input id="f-title" placeholder="El nombre del libro"></div>
+        <div class="form-group"><label>Autora o autor *</label><input id="f-author" placeholder="Nombre de la autora o autor"></div>
       </div>
       <div class="form-row" style="margin-bottom:0">
         <div class="form-group"><label>Editorial</label><input id="f-publisher" placeholder="Editorial"></div>
-        <div class="form-group"><label>Año</label><input id="f-year" type="number" placeholder="2024" min="1000" max="2099"></div>
+        <div class="form-group"><label>Año de publicación</label><input id="f-year" type="number" placeholder="ej.1521" min="1000" max="2099"></div>
       </div>
       <div class="form-row" style="margin-bottom:0">
         <div class="form-group">
           <label>Género</label>
           <select id="f-genre">
             <option value="">Seleccionar...</option>
-            <option>Ficción literaria</option><option>Ciencia ficción</option>
-            <option>Romance</option><option>Misterio/Thriller</option>
-            <option>Fantasía</option><option>No ficción</option>
-            <option>Historia</option><option>Ensayo</option>
-            <option>Poesía</option><option>Clásico</option><option>Otro</option>
+            <option>Ficción literaria</option><option>Novela</option><option>Romance</option>
+            <option>Misterio/Thriller</option><option>Fantasía</option><option>Filosofia</option>
+            <option>Historia</option><option>Ensayo</option><option>Poesía</option>
+            <option>Clásico</option><option>Auto biografia</option><option>Otro</option>
           </select>
         </div>
         <div class="form-group">
@@ -877,8 +688,6 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
           </select>
         </div>
       </div>
-
-      <!-- Color fallback (if no photo) -->
       <div class="form-group" id="color-group">
         <label>Color de portada <span style="font-size:10px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(si no hay foto)</span></label>
         <div class="color-swatches">
@@ -892,7 +701,6 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
           <div class="color-swatch" style="background:#7A6A3C" onclick="pickColor('#7A6A3C',this)"></div>
         </div>
       </div>
-
       <div class="form-group">
         <label>Mi puntuación</label>
         <div class="star-input" id="star-input">
@@ -900,10 +708,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
           <span onclick="setRating(3)">☆</span><span onclick="setRating(4)">☆</span><span onclick="setRating(5)">☆</span>
         </div>
       </div>
-      <div class="form-group">
-        <label>Mi reseña / diario</label>
-        <textarea id="f-review" rows="4" placeholder="¿Qué te pareció? ¿Cómo te hizo sentir? Escribe libremente..."></textarea>
-      </div>
+      <div class="form-group"><label>Mi reseña, opinion, diario etc</label><textarea id="f-review" rows="4" placeholder="¿Qué te pareció? ¿Cómo te hizo sentir? Escribe libremente..."></textarea></div>
       <div class="form-group">
         <label>Citas favoritas</label>
         <div id="quotes-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px"></div>
@@ -912,14 +717,16 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       <div class="form-group" id="feeling-group">
         <label>Este libro me hizo sentir...</label>
         <div class="feelings-grid">
-          <button type="button" class="feeling-btn" data-f="lloré" onclick="selectFeeling(this)">😢 lloré</button>
-          <button type="button" class="feeling-btn" data-f="me inspiró" onclick="selectFeeling(this)">✨ me inspiró</button>
-          <button type="button" class="feeling-btn" data-f="me enojó" onclick="selectFeeling(this)">😤 me enojó</button>
-          <button type="button" class="feeling-btn" data-f="me cambió" onclick="selectFeeling(this)">🌀 me cambió</button>
-          <button type="button" class="feeling-btn" data-f="me reconfortó" onclick="selectFeeling(this)">🤗 me reconfortó</button>
-          <button type="button" class="feeling-btn" data-f="me inquietó" onclick="selectFeeling(this)">😶 me inquietó</button>
-          <button type="button" class="feeling-btn" data-f="me enamoré" onclick="selectFeeling(this)">🩷 me enamoré</button>
-          <button type="button" class="feeling-btn" data-f="me maravilló" onclick="selectFeeling(this)">🌟 me maravilló</button>
+          <button type="button" class="feeling-btn" data-f="lloré" onclick="selectFeeling(this)">😢 Lloré</button>
+          <button type="button" class="feeling-btn" data-f="me inspiró" onclick="selectFeeling(this)">✨ Me inspiró</button>
+          <button type="button" class="feeling-btn" data-f="me enojó" onclick="selectFeeling(this)">😤 Me enojó</button>
+          <button type="button" class="feeling-btn" data-f="me cambió" onclick="selectFeeling(this)">🌀 Me cambió</button>
+          <button type="button" class="feeling-btn" data-f="me reconfortó" onclick="selectFeeling(this)">🤗 Me reconfortó</button>
+          <button type="button" class="feeling-btn" data-f="me inquietó" onclick="selectFeeling(this)">😶 Me inquietó</button>
+          <button type="button" class="feeling-btn" data-f="me enamoré" onclick="selectFeeling(this)">🩷 Me enamoré</button>
+          <button type="button" class="feeling-btn" data-f="me maravilló" onclick="selectFeeling(this)">🌟 Me maravilló</button>
+          <button type="button" class="feeling-btn" data-f="me decepcionó" onclick="selectFeeling(this)">😴 Me decepcionó esperaba más😒</button>
+          <button type="button" class="feeling-btn" data-f="mehh" onclick="selectFeeling(this)">😒 Mehh</button>
         </div>
       </div>
     </div>
@@ -930,12 +737,12 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
   </div>
 </div>
 
-<!-- Dedicatoria Modal -->
+<!-- Dedicatoria -->
 <div class="dedicatoria-overlay" id="dedicatoria-overlay" onclick="if(event.target===this)closeDedicatoria()">
   <div class="dedicatoria-card">
     <div class="dedicatoria-card-header">
       <div class="dedicatoria-card-title">un mensaje para</div>
-      <div class="dedicatoria-card-name">Silvia</div>
+      <div class="dedicatoria-card-name">El amor de mi vida, Silvia</div>
     </div>
     <div class="dedicatoria-card-body">
       <span class="dedicatoria-flowers">🌸 🌿 🌸</span>
@@ -952,7 +759,7 @@ para ti y tus libros.</p>
   </div>
 </div>
 
-<!-- Quote of the Day Splash -->
+<!-- Quote of Day -->
 <div class="qod-splash" id="qod-splash" style="display:none">
   <div class="qod-card">
     <span class="qod-flowers">🌸 🌿 🌸</span>
@@ -966,23 +773,26 @@ para ti y tus libros.</p>
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ───────────────────────────────────────────────────
 const SUPA_URL='https://whrfnboqhypusoggvbqv.supabase.co';
 const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndocmZuYm9xaHlwdXNvZ2d2YnF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NDkyODYsImV4cCI6MjA5MTQyNTI4Nn0.Z86mWomiz9ScEPYObvL4eXazwcfVXzuAQLelSZEV98I';
-// ── STATE ────────────────────────────────────────────────────
-let books=[];let currentFilter='all';let selectedRating=0;
-let selectedColor='#8B6F47';let editingId=null;
-let currentUser=null;let currentSession=null;
-let pendingPhotoFile=null;let pendingPhotoUrl=null;
 
-// ── SUPABASE HELPERS ─────────────────────────────────────────
+let books=[],currentFilter='all',selectedRating=0,selectedColor='#8B6F47';
+let editingId=null,currentUser=null,currentSession=null;
+let pendingPhotoFile=null,pendingPhotoUrl=null,selectedFeeling='';
+
+// ── RESPONSIVE ──────────────────────────────────────────────
+const isMobile=()=>window.innerWidth<=680;
+function applyLayout(){
+  const mobile=isMobile();
+  document.getElementById('mobile-topbar').style.display=mobile?'flex':'none';
+  document.getElementById('bottom-nav').style.display=mobile?'flex':'none';
+}
+window.addEventListener('resize',applyLayout);
+
+// ── SUPABASE ─────────────────────────────────────────────────
 async function supaFetch(path,method,body,token){
   const url=SUPA_URL+'/rest/v1/'+path;
-  const h={
-    'apikey':SUPA_KEY,
-    'Authorization':'Bearer '+(token||SUPA_KEY),
-    'Content-Type':'application/json'
-  };
+  const h={'apikey':SUPA_KEY,'Authorization':'Bearer '+(token||SUPA_KEY),'Content-Type':'application/json'};
   if(method==='POST'||method==='PATCH')h['Prefer']='return=representation';
   const opts={method:method||'GET',headers:h};
   if(body)opts.body=JSON.stringify(body);
@@ -992,37 +802,18 @@ async function supaFetch(path,method,body,token){
   if(!r.ok)throw new Error(txt);
   return txt?JSON.parse(txt):null;
 }
-
 async function supaAuth(endpoint,payload){
-  const r=await fetch(SUPA_URL+'/auth/v1/'+endpoint,{
-    method:'POST',
-    headers:{'apikey':SUPA_KEY,'Content-Type':'application/json'},
-    body:JSON.stringify(payload)
-  });
+  const r=await fetch(SUPA_URL+'/auth/v1/'+endpoint,{method:'POST',headers:{'apikey':SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify(payload)});
   const data=await r.json();
   if(!r.ok)throw new Error(data.error_description||data.msg||'Error de autenticación');
   return data;
 }
-
 async function uploadPhoto(file,userId){
   const ext=(file.name.split('.').pop()||'jpg').toLowerCase();
   const path=userId+'/'+Date.now()+'.'+ext;
   const token=currentSession?.access_token||SUPA_KEY;
-  const r=await fetch(SUPA_URL+'/storage/v1/object/portadas/'+path,{
-    method:'POST',
-    headers:{
-      'apikey':SUPA_KEY,
-      'Authorization':'Bearer '+token,
-      'Content-Type':file.type||'image/jpeg',
-      'x-upsert':'true'
-    },
-    body:file
-  });
-  if(!r.ok){
-    const t=await r.text();
-    console.error('Storage error:',t);
-    throw new Error('No se pudo subir la foto: '+t);
-  }
+  const r=await fetch(SUPA_URL+'/storage/v1/object/portadas/'+path,{method:'POST',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+token,'Content-Type':file.type||'image/jpeg','x-upsert':'true'},body:file});
+  if(!r.ok){const t=await r.text();throw new Error(t);}
   return SUPA_URL+'/storage/v1/object/public/portadas/'+path;
 }
 
@@ -1033,14 +824,12 @@ function switchTab(tab){
   document.getElementById('form-login').style.display=tab==='login'?'block':'none';
   document.getElementById('form-register').style.display=tab==='register'?'block':'none';
 }
-
 async function doLogin(){
   const email=(document.getElementById('login-nick').value||'').trim().toLowerCase();
   const pass=document.getElementById('login-pass').value;
   if(!email||!pass){showAuthError('login','Por favor completa todos los campos');return}
   const btn=document.getElementById('btn-login');
-  btn.disabled=true;btn.textContent='Entrando...';
-  clearAuthError('login');
+  btn.disabled=true;btn.textContent='Entrando...';clearAuthError('login');
   try{
     const data=await supaAuth('token?grant_type=password',{email,password:pass});
     currentSession=data;
@@ -1048,12 +837,9 @@ async function doLogin(){
     currentUser={id:data.user.id,nick};
     localStorage.setItem('bib_session',JSON.stringify({nick,email,access_token:data.access_token,refresh_token:data.refresh_token,user_id:data.user.id}));
     enterApp(nick);
-  }catch(e){
-    showAuthError('login','Correo o contraseña incorrectos');
-  }
+  }catch(e){showAuthError('login','Correo o contraseña incorrectos');}
   btn.disabled=false;btn.textContent='Entrar a mi biblioteca';
 }
-
 async function doRegister(){
   const nick=(document.getElementById('reg-nick').value||'').trim();
   const email=(document.getElementById('reg-email').value||'').trim().toLowerCase();
@@ -1064,15 +850,12 @@ async function doRegister(){
   if(pass.length<6){showAuthError('reg','La contraseña debe tener al menos 6 caracteres');return}
   if(pass!==pass2){showAuthError('reg','Las contraseñas no coinciden');return}
   const btn=document.getElementById('btn-register');
-  btn.disabled=true;btn.textContent='Creando tu biblioteca...';
-  clearAuthError('reg');
+  btn.disabled=true;btn.textContent='Creando tu biblioteca...';clearAuthError('reg');
   try{
     const data=await supaAuth('signup',{email,password:pass,data:{nickname:nick}});
     if(!data.user)throw new Error('No se pudo crear la cuenta');
-    // Auto-login
     const login=await supaAuth('token?grant_type=password',{email,password:pass});
-    currentSession=login;
-    currentUser={id:login.user.id,nick};
+    currentSession=login;currentUser={id:login.user.id,nick};
     localStorage.setItem('bib_session',JSON.stringify({nick,email,access_token:login.access_token,refresh_token:login.refresh_token,user_id:login.user.id}));
     enterApp(nick);
   }catch(e){
@@ -1081,7 +864,6 @@ async function doRegister(){
   }
   btn.disabled=false;btn.textContent='Crear mi biblioteca';
 }
-
 function doLogout(){
   localStorage.removeItem('bib_session');
   currentUser=null;currentSession=null;books=[];
@@ -1091,45 +873,35 @@ function doLogout(){
   document.getElementById('login-nick').value='';
   document.getElementById('login-pass').value='';
 }
-
-function showAuthError(form,msg){
-  const el=document.getElementById(form+'-error');
-  el.textContent=msg;el.classList.add('show');
-}
-function clearAuthError(form){
-  const el=document.getElementById(form+'-error');
-  el.classList.remove('show');
-}
+function showAuthError(form,msg){const el=document.getElementById(form+'-error');el.textContent=msg;el.classList.add('show')}
+function clearAuthError(form){document.getElementById(form+'-error').classList.remove('show')}
 
 function enterApp(nick){
   document.getElementById('auth-screen').style.display='none';
-  const app=document.getElementById('app');
-  app.classList.add('visible');
+  document.getElementById('app').classList.add('visible');
+  applyLayout();
   const initial=nick.charAt(0).toUpperCase();
   document.getElementById('user-avatar').textContent=initial;
   document.getElementById('user-name-display').textContent=nick;
+  document.getElementById('mobile-avatar').textContent=initial;
+  document.getElementById('mobile-name').textContent=nick;
   loadBooks().then(()=>showQuoteOfDay());
 }
 
-// ── INIT ─────────────────────────────────────────────────────
 async function init(){
+  applyLayout();
   const saved=localStorage.getItem('bib_session');
   if(saved){
     try{
       const s=JSON.parse(saved);
-      const r=await fetch(SUPA_URL+'/auth/v1/token?grant_type=refresh_token',{
-        method:'POST',
-        headers:{'apikey':SUPA_KEY,'Content-Type':'application/json'},
-        body:JSON.stringify({refresh_token:s.refresh_token})
-      });
+      const r=await fetch(SUPA_URL+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{'apikey':SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:s.refresh_token})});
       if(r.ok){
         const data=await r.json();
         currentSession=data;
         const nick=data.user.user_metadata?.nickname||s.nick||s.email?.split('@')[0]||'Lectora';
         currentUser={id:data.user.id,nick};
         localStorage.setItem('bib_session',JSON.stringify({nick,email:s.email,access_token:data.access_token,refresh_token:data.refresh_token,user_id:data.user.id}));
-        enterApp(nick);
-        return;
+        enterApp(nick);return;
       }
     }catch(e){}
     localStorage.removeItem('bib_session');
@@ -1137,7 +909,7 @@ async function init(){
   document.getElementById('auth-screen').style.display='flex';
 }
 
-// ── BOOKS ─────────────────────────────────────────────────────
+// ── BOOKS ────────────────────────────────────────────────────
 async function loadBooks(){
   setSyncStatus('loading');
   try{
@@ -1145,27 +917,19 @@ async function loadBooks(){
     const data=await supaFetch('biblioteca?user_id=eq.'+currentUser.id+'&order=author.asc',null,null,token);
     books=(data||[]).map(b=>({...b,quotes:parseQuotes(b.quotes)}));
     setSyncStatus('ok');
-  }catch(e){
-    setSyncStatus('err');
-    books=[];
-  }
+  }catch(e){setSyncStatus('err');books=[];}
   renderBooks();updateSidebar();renderReadingNow();
 }
 
 function parseQuotes(raw){
   if(!raw)return[];
   if(Array.isArray(raw))return raw.map(q=>typeof q==='string'?{text:q,color:'none',page:null}:q);
-  try{
-    const parsed=JSON.parse(raw);
-    if(Array.isArray(parsed))return parsed.map(q=>typeof q==='string'?{text:q,color:'none',page:null}:q);
-  }catch{}
+  try{const p=JSON.parse(raw);if(Array.isArray(p))return p.map(q=>typeof q==='string'?{text:q,color:'none',page:null}:q);}catch{}
   return raw.split('\n').filter(Boolean).map(t=>({text:t,color:'none',page:null}));
 }
 
 function setSyncStatus(state){
-  const dot=document.getElementById('sync-dot');
-  const lbl=document.getElementById('sync-lbl');
-  if(!dot)return;
+  const dot=document.getElementById('sync-dot');const lbl=document.getElementById('sync-lbl');if(!dot)return;
   dot.className='sync-dot '+(state==='ok'?'ok':state==='err'?'err':'');
   lbl.textContent=state==='ok'?'Sincronizado':state==='err'?'Sin conexión':'Sincronizando...';
 }
@@ -1179,10 +943,7 @@ function renderBooks(){
   });
   filtered.sort((a,b)=>a.author.localeCompare(b.author,'es'));
   const grid=document.getElementById('books-grid');
-  if(!filtered.length){
-    grid.innerHTML=`<div class="empty-state"><div class="empty-state-icon">📖</div><p>Ningún libro aquí todavía</p><small>Añade tu primer libro con el botón de arriba</small></div>`;
-    return;
-  }
+  if(!filtered.length){grid.innerHTML=`<div class="empty-state"><div class="empty-state-icon">📖</div><p>Ningún libro aquí todavía</p><small>Añade tu primer libro con el botón de arriba</small></div>`;return;}
   grid.innerHTML=filtered.map(b=>`
     <div class="book-card" onclick="openDetail(${b.id})">
       <div class="book-cover" style="background:${b.color||'#8B6F47'}">
@@ -1204,14 +965,9 @@ function renderBooks(){
 function renderStars(n){return[1,2,3,4,5].map(i=>`<span class="star${i<=n?' filled':''}">${i<=n?'★':'☆'}</span>`).join('')}
 function statusLabel(s){return{read:'Leído',reading:'Leyendo',wishlist:'Lista de deseos'}[s]||s}
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function filterBooks(f,el){currentFilter=f;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderBooks()}
 
-function filterBooks(f,el){
-  currentFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');renderBooks();
-}
-
-// ── DETAIL PANEL ──────────────────────────────────────────────
+// ── DETAIL PANEL ─────────────────────────────────────────────
 function openDetail(id){
   const b=books.find(x=>x.id===id);if(!b)return;
   const quotes=parseQuotes(b.quotes);
@@ -1219,10 +975,7 @@ function openDetail(id){
   const cover=document.getElementById('panel-cover');
   cover.style.background=b.color||'#8B6F47';
   const img=cover.querySelector('img');
-  if(b.cover_url){
-    if(!img){const i=document.createElement('img');i.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover';cover.insertBefore(i,cover.firstChild);i.src=b.cover_url;}
-    else{img.src=b.cover_url;img.style.display='block';}
-  }else if(img){img.style.display='none';}
+  if(b.cover_url){if(!img){const i=document.createElement('img');i.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover';cover.insertBefore(i,cover.firstChild);i.src=b.cover_url;}else{img.src=b.cover_url;img.style.display='block';}}else if(img){img.style.display='none';}
   document.getElementById('panel-cover-title').textContent=b.title;
   document.getElementById('panel-body').innerHTML=`
     <p class="panel-author">${esc(b.author)}</p>
@@ -1242,16 +995,11 @@ function openDetail(id){
   document.getElementById('detail-panel').classList.add('open');
   document.getElementById('panel-overlay').style.display='block';
 }
-
-function closePanel(){
-  document.getElementById('detail-panel').classList.remove('open');
-  document.getElementById('panel-overlay').style.display='none';
-}
+function closePanel(){document.getElementById('detail-panel').classList.remove('open');document.getElementById('panel-overlay').style.display='none'}
 
 // ── MODAL ─────────────────────────────────────────────────────
 function openModal(editId){
-  editingId=editId||null;
-  pendingPhotoFile=null;pendingPhotoUrl=null;
+  editingId=editId||null;pendingPhotoFile=null;pendingPhotoUrl=null;
   document.getElementById('modal-title').textContent=editId?'Editar libro':'Añadir nuevo libro';
   resetPhotoUI();
   if(editId){
@@ -1263,129 +1011,52 @@ function openModal(editId){
     document.getElementById('f-genre').value=b.genre||'';
     document.getElementById('f-status').value=b.status||'read';
     document.getElementById('f-review').value=b.review||'';
-    setQuotes(parseQuotes(b.quotes));
-    setRating(b.rating||0);
-    pickColor(b.color||'#8B6F47',null);
-    setFeeling(b.feeling||'');
+    setQuotes(parseQuotes(b.quotes));setRating(b.rating||0);
+    pickColor(b.color||'#8B6F47',null);setFeeling(b.feeling||'');
     if(b.cover_url){showPhotoPreview(b.cover_url);pendingPhotoUrl=b.cover_url;}
   }else{
     ['f-title','f-author','f-publisher','f-year','f-review'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('f-genre').value='';
-    document.getElementById('f-status').value='read';
-    setQuotes([]);setFeeling('');
-    setRating(0);pickColor('#8B6F47',null);
+    document.getElementById('f-genre').value='';document.getElementById('f-status').value='read';
+    setQuotes([]);setFeeling('');setRating(0);pickColor('#8B6F47',null);
   }
   document.getElementById('modal').classList.add('open');
 }
 function closeModal(){document.getElementById('modal').classList.remove('open')}
+function setRating(n){selectedRating=n;document.querySelectorAll('#star-input span').forEach((s,i)=>{s.textContent=i<n?'★':'☆';s.style.color=i<n?'#D4A853':'#ccc'})}
+function pickColor(c,el){selectedColor=c;document.querySelectorAll('.color-swatch').forEach(d=>d.classList.remove('selected'));if(el)el.classList.add('selected');else document.querySelectorAll('.color-swatch').forEach(d=>{if(d.style.background===c)d.classList.add('selected')})}
 
-function setRating(n){
-  selectedRating=n;
-  document.querySelectorAll('#star-input span').forEach((s,i)=>{s.textContent=i<n?'★':'☆';s.style.color=i<n?'#D4A853':'#ccc'});
-}
-
-function pickColor(c,el){
-  selectedColor=c;
-  document.querySelectorAll('.color-swatch').forEach(d=>d.classList.remove('selected'));
-  if(el)el.classList.add('selected');
-  else document.querySelectorAll('.color-swatch').forEach(d=>{if(d.style.background===c)d.classList.add('selected')});
-}
-
-// ── PHOTO HANDLING ─────────────────────────────────────────────
-function triggerPhotoInput(){
-  if(document.getElementById('photo-preview-img').style.display!=='none')return;
-  document.getElementById('photo-input-gallery').click();
-}
-
+// ── PHOTO ─────────────────────────────────────────────────────
 function handlePhoto(e){
   const file=e.target.files[0];if(!file)return;
-  // Compress if too large (> 2MB)
-  if(file.size>2*1024*1024){
-    compressImage(file,0.8,blob=>{
-      pendingPhotoFile=new File([blob],file.name,{type:'image/jpeg'});
-      const reader=new FileReader();
-      reader.onload=ev=>showPhotoPreview(ev.target.result);
-      reader.readAsDataURL(pendingPhotoFile);
-    });
-  }else{
-    pendingPhotoFile=file;
-    const reader=new FileReader();
-    reader.onload=ev=>showPhotoPreview(ev.target.result);
-    reader.readAsDataURL(file);
-  }
+  if(file.size>2*1024*1024){compressImage(file,0.8,blob=>{pendingPhotoFile=new File([blob],file.name,{type:'image/jpeg'});const reader=new FileReader();reader.onload=ev=>showPhotoPreview(ev.target.result);reader.readAsDataURL(pendingPhotoFile)});}
+  else{pendingPhotoFile=file;const reader=new FileReader();reader.onload=ev=>showPhotoPreview(ev.target.result);reader.readAsDataURL(file);}
 }
-
 function compressImage(file,quality,callback){
-  const img=new Image();
-  const url=URL.createObjectURL(file);
-  img.onload=()=>{
-    const canvas=document.createElement('canvas');
-    let w=img.width,h=img.height;
-    const max=1200;
-    if(w>max){h=Math.round(h*max/w);w=max;}
-    if(h>max){w=Math.round(w*max/h);h=max;}
-    canvas.width=w;canvas.height=h;
-    canvas.getContext('2d').drawImage(img,0,0,w,h);
-    canvas.toBlob(callback,'image/jpeg',quality);
-    URL.revokeObjectURL(url);
-  };
-  img.src=url;
+  const img=new Image();const url=URL.createObjectURL(file);
+  img.onload=()=>{const canvas=document.createElement('canvas');let w=img.width,h=img.height;const max=1200;if(w>max){h=Math.round(h*max/w);w=max;}if(h>max){w=Math.round(w*max/h);h=max;}canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);canvas.toBlob(callback,'image/jpeg',quality);URL.revokeObjectURL(url);};img.src=url;
 }
+function showPhotoPreview(url){document.getElementById('photo-placeholder').style.display='none';const img=document.getElementById('photo-preview-img');img.src=url;img.style.display='block';document.getElementById('photo-remove-btn').style.display='flex';document.getElementById('photo-area').classList.add('has-photo')}
+function resetPhotoUI(){document.getElementById('photo-placeholder').style.display='block';document.getElementById('photo-preview-img').style.display='none';document.getElementById('photo-remove-btn').style.display='none';document.getElementById('photo-area').classList.remove('has-photo');document.getElementById('photo-input-gallery').value='';document.getElementById('photo-input-camera').value=''}
+function removePhoto(e){e.stopPropagation();pendingPhotoFile=null;pendingPhotoUrl=null;resetPhotoUI()}
 
-function showPhotoPreview(url){
-  document.getElementById('photo-placeholder').style.display='none';
-  const img=document.getElementById('photo-preview-img');
-  img.src=url;img.style.display='block';
-  document.getElementById('photo-remove-btn').style.display='flex';
-  document.getElementById('photo-area').classList.add('has-photo');
-}
-
-function resetPhotoUI(){
-  document.getElementById('photo-placeholder').style.display='block';
-  document.getElementById('photo-preview-img').style.display='none';
-  document.getElementById('photo-remove-btn').style.display='none';
-  document.getElementById('photo-area').classList.remove('has-photo');
-  document.getElementById('photo-input-gallery').value='';
-  document.getElementById('photo-input-camera').value='';
-}
-
-function removePhoto(e){
-  e.stopPropagation();
-  pendingPhotoFile=null;pendingPhotoUrl=null;
-  resetPhotoUI();
-}
-
-// ── POSTIT COLORS ───────────────────────────────────────────────
+// ── POSTIT ─────────────────────────────────────────────────────
 const POSTIT_COLORS=[
-  {id:'yellow',bg:'#FFFBCC',label:'Amarillo'},
-  {id:'pink',bg:'#FFD6E8',label:'Rosa'},
-  {id:'mint',bg:'#C8F0E4',label:'Menta'},
-  {id:'lavender',bg:'#E8D8FF',label:'Lavanda'},
-  {id:'peach',bg:'#FFD8BC',label:'Durazno'},
-  {id:'sky',bg:'#C8E8FF',label:'Celeste'},
-  {id:'rose',bg:'#FFCCD8',label:'Rosa oscuro'},
-  {id:'sage',bg:'#D8ECC8',label:'Salvia'},
+  {id:'yellow',bg:'#FFFBCC'},{id:'pink',bg:'#FFD6E8'},{id:'mint',bg:'#C8F0E4'},
+  {id:'lavender',bg:'#E8D8FF'},{id:'peach',bg:'#FFD8BC'},{id:'sky',bg:'#C8E8FF'},
+  {id:'rose',bg:'#FFCCD8'},{id:'sage',bg:'#D8ECC8'},
 ];
 
-// ── QUOTES INPUT ───────────────────────────────────────────────
 let quoteCounter=0;
-function addQuoteInput(value, color, page){
+function addQuoteInput(value,color,page){
   const list=document.getElementById('quotes-list');
   const uid='qcard-'+(++quoteCounter);
-  const div=document.createElement('div');
-  div.id=uid;
-  div.style.cssText='border:1.5px solid var(--border);border-radius:12px;padding:12px;margin-bottom:6px;transition:background 0.2s';
+  const div=document.createElement('div');div.id=uid;
   const pc=color&&color!=='none'?POSTIT_COLORS.find(c=>c.id===color):null;
-  div.style.background=pc?pc.bg:'white';
-  const selectedColor=color||'none';
-  const swatchesHtml=`
-    <div class="postit-swatches">
-      <div class="postit-none ${selectedColor==='none'?'selected':''}" onclick="selectPostitColor('${uid}','none')" title="Sin color">✕</div>
-      ${POSTIT_COLORS.map(c=>`<div class="postit-swatch ${selectedColor===c.id?'selected':''}" style="background:${c.bg}" onclick="selectPostitColor('${uid}','${c.id}')" title="${c.label}"></div>`).join('')}
-    </div>`;
+  div.style.cssText=`border:1.5px solid var(--border);border-radius:12px;padding:12px;margin-bottom:6px;transition:background 0.2s;background:${pc?pc.bg:'white'}`;
+  const sel=color||'none';
   div.innerHTML=`
     <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px">
-      <textarea class="quote-input" rows="2" placeholder="Escribe la cita aquí..." data-color="${selectedColor}" data-card="${uid}" style="flex:1;padding:8px 10px;border:none;border-radius:8px;font-size:14px;font-family:'Cormorant Garamond',serif;font-style:italic;outline:none;resize:none;background:transparent;line-height:1.6;color:var(--ink)">${esc(value||'')}</textarea>
+      <textarea class="quote-input" rows="2" placeholder="Escribe la cita aquí..." data-color="${sel}" style="flex:1;padding:8px 10px;border:none;border-radius:8px;font-size:14px;font-family:'Cormorant Garamond',serif;font-style:italic;outline:none;resize:none;background:transparent;line-height:1.6;color:var(--ink)">${esc(value||'')}</textarea>
       <button type="button" onclick="document.getElementById('${uid}').remove()" style="background:rgba(42,31,21,0.08);color:var(--muted);border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:12px;flex-shrink:0;margin-top:2px">✕</button>
     </div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
@@ -1393,72 +1064,55 @@ function addQuoteInput(value, color, page){
       <input class="quote-page" type="number" min="1" placeholder="ej. 142" value="${page||''}" style="width:80px;padding:5px 8px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;background:transparent;color:var(--ink)" onfocus="this.style.borderColor='var(--rose-light)'" onblur="this.style.borderColor='var(--border)'">
     </div>
     <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:500">Color de post-it</div>
-    ${swatchesHtml}`;
+    <div class="postit-swatches">
+      <div class="postit-none ${sel==='none'?'selected':''}" onclick="selectPostitColor('${uid}','none')" title="Sin color">✕</div>
+      ${POSTIT_COLORS.map(c=>`<div class="postit-swatch ${sel===c.id?'selected':''}" style="background:${c.bg}" onclick="selectPostitColor('${uid}','${c.id}')"></div>`).join('')}
+    </div>`;
   list.appendChild(div);
 }
-
-function selectPostitColor(uid, colorId){
-  const card=document.getElementById(uid);
-  if(!card)return;
+function selectPostitColor(uid,colorId){
+  const card=document.getElementById(uid);if(!card)return;
   card.querySelectorAll('.postit-swatch,.postit-none').forEach(s=>s.classList.remove('selected'));
   card.querySelector(colorId==='none'?'.postit-none':`.postit-swatch[onclick*="'${colorId}'"]`)?.classList.add('selected');
   const pc=colorId!=='none'?POSTIT_COLORS.find(c=>c.id===colorId):null;
   card.style.background=pc?pc.bg:'white';
-  const ta=card.querySelector('.quote-input');
-  if(ta)ta.dataset.color=colorId;
+  const ta=card.querySelector('.quote-input');if(ta)ta.dataset.color=colorId;
 }
-
 function getQuotes(){
   return Array.from(document.querySelectorAll('#quotes-list > div')).map(card=>{
-    const ta=card.querySelector('.quote-input');
-    const pg=card.querySelector('.quote-page');
-    return{
-      text:(ta?.value||'').trim(),
-      color:ta?.dataset.color||'none',
-      page:pg?.value?parseInt(pg.value):null
-    };
+    const ta=card.querySelector('.quote-input');const pg=card.querySelector('.quote-page');
+    return{text:(ta?.value||'').trim(),color:ta?.dataset.color||'none',page:pg?.value?parseInt(pg.value):null};
   }).filter(q=>q.text);
 }
-
 function setQuotes(arr){
   document.getElementById('quotes-list').innerHTML='';
-  (arr||[]).forEach(q=>{
-    if(typeof q==='string')addQuoteInput(q,'none',null);
-    else addQuoteInput(q.text,q.color||'none',q.page||null);
-  });
+  (arr||[]).forEach(q=>typeof q==='string'?addQuoteInput(q,'none',null):addQuoteInput(q.text,q.color||'none',q.page||null));
 }
 
-// ── SAVE / EDIT / DELETE ───────────────────────────────────────
+// ── FEELINGS ─────────────────────────────────────────────────
+const FEELING_COLORS={'lloré':'#5B8FD4','me inspiró':'#D4A020','me enojó':'#C04040','me cambió':'#7A50B0','me reconfortó':'#5BAA78','me inquietó':'#B07040','me enamoré':'var(--rose)','me maravilló':'#4090C0','me decepcionó':'#B05050','mehh':'#888'};
+function selectFeeling(el){
+  document.querySelectorAll('.feeling-btn').forEach(b=>b.classList.remove('selected'));
+  if(selectedFeeling===el.dataset.f){selectedFeeling='';return;}
+  el.classList.add('selected');selectedFeeling=el.dataset.f;
+}
+function setFeeling(f){
+  selectedFeeling=f||'';
+  document.querySelectorAll('.feeling-btn').forEach(b=>b.classList.toggle('selected',b.dataset.f===f));
+}
+
+// ── SAVE ─────────────────────────────────────────────────────
 async function saveBook(){
   const title=(document.getElementById('f-title').value||'').trim();
   const author=(document.getElementById('f-author').value||'').trim();
   if(!title||!author){showToast('Por favor añade título y autor','rose-toast');return}
-  const btn=document.getElementById('btn-save');
-  btn.disabled=true;btn.textContent='Guardando...';
-  setSyncStatus('loading');
+  const btn=document.getElementById('btn-save');btn.disabled=true;btn.textContent='Guardando...';setSyncStatus('loading');
   try{
-    // Upload photo if new file selected
     let cover_url=pendingPhotoUrl||null;
-    if(pendingPhotoFile){
-      showToast('Subiendo foto...');
-      cover_url=await uploadPhoto(pendingPhotoFile,currentUser.id);
-    }
+    if(pendingPhotoFile){showToast('Subiendo foto...');cover_url=await uploadPhoto(pendingPhotoFile,currentUser.id);}
     const quotesArr=getQuotes();
     const token=currentSession?.access_token||SUPA_KEY;
-    const payload={
-      title,author,
-      publisher:(document.getElementById('f-publisher').value||'').trim()||null,
-      year:document.getElementById('f-year').value||null,
-      genre:document.getElementById('f-genre').value||null,
-      status:document.getElementById('f-status').value,
-      rating:selectedRating||null,
-      review:(document.getElementById('f-review').value||'').trim()||null,
-      quotes:JSON.stringify(quotesArr),
-      color:selectedColor,
-      feeling:selectedFeeling||null,
-      cover_url,
-      user_id:currentUser.id
-    };
+    const payload={title,author,publisher:(document.getElementById('f-publisher').value||'').trim()||null,year:document.getElementById('f-year').value||null,genre:document.getElementById('f-genre').value||null,status:document.getElementById('f-status').value,rating:selectedRating||null,review:(document.getElementById('f-review').value||'').trim()||null,quotes:JSON.stringify(quotesArr),color:selectedColor,feeling:selectedFeeling||null,cover_url,user_id:currentUser.id};
     if(editingId){
       await supaFetch('biblioteca?id=eq.'+editingId,'PATCH',payload,token);
       const idx=books.findIndex(x=>x.id===editingId);
@@ -1468,47 +1122,38 @@ async function saveBook(){
       const nb=Array.isArray(created)?created[0]:created;
       books.push({...nb,quotes:quotesArr});
     }
-    setSyncStatus('ok');
-    renderBooks();updateSidebar();renderReadingNow();closeModal();closePanel();
+    setSyncStatus('ok');renderBooks();updateSidebar();renderReadingNow();closeModal();closePanel();
     showToast(editingId?'Libro actualizado ✓':'Añadido a tu colección ✓','mint-toast');
-  }catch(e){
-    showToast('Error al guardar — verifica conexión','rose-toast');
-    setSyncStatus('err');
-  }
+  }catch(e){showToast('Error al guardar — verifica conexión','rose-toast');setSyncStatus('err');}
   btn.disabled=false;btn.textContent='Guardar libro';
 }
-
 function editBook(id){closePanel();setTimeout(()=>openModal(id),300)}
-
 async function deleteBook(id){
   const token=currentSession?.access_token||SUPA_KEY;
-  try{
-    await supaFetch('biblioteca?id=eq.'+id,'DELETE',null,token);
-    books=books.filter(b=>b.id!==id);
-    renderBooks();updateSidebar();closePanel();
-    showToast('Libro eliminado');
-  }catch(e){showToast('Error al eliminar','rose-toast');}
+  try{await supaFetch('biblioteca?id=eq.'+id,'DELETE',null,token);books=books.filter(b=>b.id!==id);renderBooks();updateSidebar();closePanel();showToast('Libro eliminado');}
+  catch(e){showToast('Error al eliminar','rose-toast');}
 }
-
 function updateSidebar(){
   document.getElementById('sb-read').textContent=books.filter(b=>b.status==='read').length;
   document.getElementById('sb-reading').textContent=books.filter(b=>b.status==='reading').length;
   document.getElementById('sb-wishlist').textContent=books.filter(b=>b.status==='wishlist').length;
 }
 
-// ── PAGES ──────────────────────────────────────────────────────
+// ── PAGES ─────────────────────────────────────────────────────
 const ALL_PAGES=['library','quotes','stats','authors','notas'];
 function showPage(p){
   ALL_PAGES.forEach(x=>{
     document.getElementById('page-'+x).style.display=x===p?'block':'none';
-    const nav=document.getElementById('nav-'+x);
-    if(nav)nav.classList.toggle('active',x===p);
+    const nav=document.getElementById('nav-'+x);if(nav)nav.classList.toggle('active',x===p);
+    const bnav=document.getElementById('bnav-'+x);if(bnav)bnav.classList.toggle('active',x===p);
   });
   if(p==='quotes')renderQuotes();
   if(p==='stats')renderStats();
   if(p==='authors')renderAuthors();
   if(p==='notas')renderNotas();
   if(p==='library')renderReadingNow();
+  // scroll to top on page change
+  document.getElementById('main-content').scrollTop=0;
 }
 
 function renderQuotes(){
@@ -1519,12 +1164,7 @@ function renderQuotes(){
     const pc=POSTIT_COLORS.find(c=>c.id===q.color);
     const bgStyle=pc?`background:${pc.bg};border-color:${pc.bg}`:'';
     const cls=q.color&&q.color!=='none'?`postit-${q.color}`:'';
-    return`<div class="quote-card ${cls}" style="${bgStyle}">
-      <div class="quote-accent"></div>
-      <p class="quote-card-text">${esc(q.text)}</p>
-      <p class="quote-card-book">${esc(q.book)}</p>
-      <p class="quote-card-author">${esc(q.author)}${q.page?`<span style="margin-left:8px;background:rgba(42,31,21,0.07);padding:1px 7px;border-radius:8px;font-size:10px">pág. ${q.page}</span>`:''}</p>
-    </div>`;
+    return`<div class="quote-card ${cls}" style="${bgStyle}"><div class="quote-accent"></div><p class="quote-card-text">${esc(q.text)}</p><p class="quote-card-book">${esc(q.book)}</p><p class="quote-card-author">${esc(q.author)}${q.page?`<span style="margin-left:8px;background:rgba(42,31,21,0.07);padding:1px 7px;border-radius:8px;font-size:10px">pág. ${q.page}</span>`:''}</p></div>`;
   }).join('');
 }
 
@@ -1536,204 +1176,91 @@ function renderStats(){
   document.getElementById('st-read').textContent=read.length;
   document.getElementById('st-avg').textContent=rated.length?avg+'★':'—';
   document.getElementById('st-quotes').textContent=books.reduce((s,b)=>s+parseQuotes(b.quotes).length,0);
-  const genres={};
-  books.forEach(b=>{if(b.genre)genres[b.genre]=(genres[b.genre]||0)+1});
-  const sorted=Object.entries(genres).sort((a,b)=>b[1]-a[1]).slice(0,7);
-  const max=sorted[0]?sorted[0][1]:1;
-  document.getElementById('genre-chart').innerHTML=sorted.length
-    ?sorted.map(([g,c],i)=>`
-      <div class="bar-row">
-        <span class="bar-label">${esc(g)}</span>
-        <div class="bar-track"><div class="bar-fill${i%2===0?'':' mint'}" style="width:${Math.round(c/max*100)}%"></div></div>
-        <span class="bar-count">${c}</span>
-      </div>`).join('')
-    :'<p style="color:var(--muted);font-size:14px">Añade libros con género para ver el gráfico</p>';
+  const genres={};books.forEach(b=>{if(b.genre)genres[b.genre]=(genres[b.genre]||0)+1});
+  const sorted=Object.entries(genres).sort((a,b)=>b[1]-a[1]).slice(0,7);const max=sorted[0]?sorted[0][1]:1;
+  document.getElementById('genre-chart').innerHTML=sorted.length?sorted.map(([g,c],i)=>`<div class="bar-row"><span class="bar-label">${esc(g)}</span><div class="bar-track"><div class="bar-fill${i%2===0?'':' mint'}" style="width:${Math.round(c/max*100)}%"></div></div><span class="bar-count">${c}</span></div>`).join(''):'<p style="color:var(--muted);font-size:14px">Añade libros con género para ver el gráfico</p>';
 }
 
-// ── TOAST ──────────────────────────────────────────────────────
-function showToast(msg,cls){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast '+(cls||'');
-  t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer=setTimeout(()=>t.classList.remove('show'),2600);
-}
-
-// ── FEELINGS ──────────────────────────────────────────────────
-let selectedFeeling='';
-function selectFeeling(el){
-  document.querySelectorAll('.feeling-btn').forEach(b=>b.classList.remove('selected'));
-  if(selectedFeeling===el.dataset.f){selectedFeeling='';return;}
-  el.classList.add('selected');
-  selectedFeeling=el.dataset.f;
-}
-function setFeeling(f){
-  selectedFeeling=f||'';
-  document.querySelectorAll('.feeling-btn').forEach(b=>{
-    b.classList.toggle('selected',b.dataset.f===f);
-  });
-}
-const FEELING_COLORS={
-  'lloré':'#5B8FD4','me inspiró':'#D4A020','me enojó':'#C04040',
-  'me cambió':'#7A50B0','me reconfortó':'#5BAA78','me inquietó':'#B07040',
-  'me enamoré':'var(--rose)','me maravilló':'#4090C0'
-};
-
-// ── READING NOW ────────────────────────────────────────────────
-function renderReadingNow(){
-  const reading=books.filter(b=>b.status==='reading');
-  const sec=document.getElementById('reading-now-section');
-  const card=document.getElementById('reading-now-card');
-  if(!reading.length){sec.style.display='none';return;}
-  sec.style.display='block';
-  const b=reading[0];
-  const prog=b.progress_pages&&b.total_pages?Math.round(b.progress_pages/b.total_pages*100):0;
-  card.innerHTML=`
-    <div class="reading-now-cover" style="background:${b.color||'#8B6F47'}">
-      ${b.cover_url?`<img src="${esc(b.cover_url)}" alt="">`:''}
-    </div>
-    <div class="reading-now-body">
-      <div class="reading-now-label"><span class="reading-pulse"></span> En progreso</div>
-      <div class="reading-now-title">${esc(b.title)}</div>
-      <div class="reading-now-author">${esc(b.author)}</div>
-      ${b.total_pages?`
-        <div class="progress-row">
-          <span class="progress-label">Progreso</span>
-          <span class="progress-pct">${prog}%</span>
-        </div>
-        <div class="progress-bar-track"><div class="progress-bar-fill" style="width:${prog}%"></div></div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px">${b.progress_pages||0} de ${b.total_pages} páginas</div>
-      `:''}
-      <div class="progress-inputs">
-        <input type="number" id="prog-current" placeholder="Pág." value="${b.progress_pages||''}" min="0" max="${b.total_pages||9999}">
-        <span>de</span>
-        <input type="number" id="prog-total" placeholder="Total" value="${b.total_pages||''}" min="1">
-        <button onclick="saveProgress(${b.id})">Actualizar</button>
-      </div>
-    </div>`;
-}
-
-async function saveProgress(id){
-  const cur=parseInt(document.getElementById('prog-current').value)||0;
-  const tot=parseInt(document.getElementById('prog-total').value)||0;
-  if(!tot){showToast('Añade el total de páginas','rose-toast');return;}
-  const token=currentSession?.access_token||SUPA_KEY;
-  try{
-    await supaFetch('biblioteca?id=eq.'+id,'PATCH',{progress_pages:cur,total_pages:tot},token);
-    const b=books.find(x=>x.id===id);
-    if(b){b.progress_pages=cur;b.total_pages=tot;}
-    renderReadingNow();
-    showToast('Progreso guardado ✓','mint-toast');
-  }catch(e){showToast('Error al guardar progreso','rose-toast');}
-}
-
-// ── AUTHORS ────────────────────────────────────────────────────
 function renderAuthors(){
-  const authorMap={};
-  books.forEach(b=>{
-    if(!authorMap[b.author])authorMap[b.author]=[];
-    authorMap[b.author].push(b);
-  });
+  const authorMap={};books.forEach(b=>{if(!authorMap[b.author])authorMap[b.author]=[];authorMap[b.author].push(b)});
   const sorted=Object.entries(authorMap).sort((a,b)=>b[1].length-a[1].length);
   const list=document.getElementById('authors-list');
-  if(!sorted.length){
-    list.innerHTML='<div class="empty-state"><div class="empty-state-icon">✍️</div><p>Ningún autor todavía</p><small>Añade libros para ver a tus autores aquí</small></div>';
-    return;
-  }
+  if(!sorted.length){list.innerHTML='<div class="empty-state"><div class="empty-state-icon">✍️</div><p>Ningún autor todavía</p><small>Añade libros para ver a tus autores aquí</small></div>';return;}
   list.innerHTML=sorted.map(([author,abooks])=>{
     const rated=abooks.filter(b=>b.rating>0);
     const avg=rated.length?(rated.reduce((s,b)=>s+b.rating,0)/rated.length).toFixed(1):null;
-    const initial=author.trim().charAt(0).toUpperCase();
     const read=abooks.filter(b=>b.status==='read').length;
-    return`<div class="author-card">
-      <div class="author-avatar">${initial}</div>
-      <div class="author-info">
-        <div class="author-name">${esc(author)}</div>
-        <div class="author-meta">
-          <span>📚 ${abooks.length} libro${abooks.length!==1?'s':''}</span>
-          ${read?`<span>✓ ${read} leído${read!==1?'s':''}</span>`:''}
-          ${avg?`<span>★ ${avg} promedio</span>`:''}
-        </div>
-        <div class="author-books-mini">
-          ${abooks.slice(0,4).map(b=>`<span class="author-book-chip">${esc(b.title.length>20?b.title.slice(0,20)+'…':b.title)}</span>`).join('')}
-          ${abooks.length>4?`<span class="author-book-chip">+${abooks.length-4} más</span>`:''}
-        </div>
-      </div>
-      ${avg?`<div class="author-rating-avg"><div class="author-big-num">${avg}</div><div class="author-small-lbl">★ media</div></div>`:''}
-    </div>`;
+    return`<div class="author-card"><div class="author-avatar">${author.trim().charAt(0).toUpperCase()}</div><div class="author-info"><div class="author-name">${esc(author)}</div><div class="author-meta"><span>📚 ${abooks.length} libro${abooks.length!==1?'s':''}</span>${read?`<span>✓ ${read} leído${read!==1?'s':''}</span>`:''} ${avg?`<span>★ ${avg}</span>`:''}</div><div class="author-books-mini">${abooks.slice(0,4).map(b=>`<span class="author-book-chip">${esc(b.title.length>20?b.title.slice(0,20)+'…':b.title)}</span>`).join('')}${abooks.length>4?`<span class="author-book-chip">+${abooks.length-4} más</span>`:''}</div></div>${avg?`<div class="author-rating-avg"><div class="author-big-num">${avg}</div><div class="author-small-lbl">★ media</div></div>`:''}</div>`;
   }).join('');
 }
 
-// ── NOTAS ──────────────────────────────────────────────────────
 function renderNotas(){
   const notas=JSON.parse(localStorage.getItem('bib_notas_'+currentUser?.id)||'[]');
   const list=document.getElementById('notas-list');
-  if(!notas.length){
-    list.innerHTML='<div class="empty-state"><div class="empty-state-icon">🖊</div><p>Ninguna nota todavía</p><small>Escribe lo que sientes, lo que imaginas</small></div>';
-    return;
-  }
-  list.innerHTML=notas.slice().reverse().map((n,i)=>`
-    <div class="nota-card">
-      <div class="nota-header">
-        <span class="nota-date">${n.date}</span>
-        <button class="nota-delete" onclick="deleteNota(${notas.length-1-i})">✕</button>
-      </div>
-      <p class="nota-text">${esc(n.text)}</p>
-    </div>`).join('');
+  if(!notas.length){list.innerHTML='<div class="empty-state"><div class="empty-state-icon">🖊</div><p>Ninguna nota todavía</p><small>Escribe lo que sientes, lo que imaginas</small></div>';return;}
+  list.innerHTML=notas.slice().reverse().map((n,i)=>`<div class="nota-card"><div class="nota-header"><span class="nota-date">${n.date}</span><button class="nota-delete" onclick="deleteNota(${notas.length-1-i})">✕</button></div><p class="nota-text">${esc(n.text)}</p></div>`).join('');
 }
-
 function saveNota(){
   const text=(document.getElementById('nota-input').value||'').trim();
   if(!text){showToast('Escribe algo primero','rose-toast');return;}
   const notas=JSON.parse(localStorage.getItem('bib_notas_'+currentUser?.id)||'[]');
   notas.push({text,date:new Date().toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'})});
   localStorage.setItem('bib_notas_'+currentUser?.id,JSON.stringify(notas));
-  document.getElementById('nota-input').value='';
-  renderNotas();
-  showToast('Nota guardada ✓','mint-toast');
+  document.getElementById('nota-input').value='';renderNotas();showToast('Nota guardada ✓','mint-toast');
 }
-
 function deleteNota(idx){
   if(!confirm('¿Eliminar esta nota?'))return;
   const notas=JSON.parse(localStorage.getItem('bib_notas_'+currentUser?.id)||'[]');
-  notas.splice(idx,1);
-  localStorage.setItem('bib_notas_'+currentUser?.id,JSON.stringify(notas));
-  renderNotas();
+  notas.splice(idx,1);localStorage.setItem('bib_notas_'+currentUser?.id,JSON.stringify(notas));renderNotas();
 }
 
-// ── QUOTE OF DAY ───────────────────────────────────────────────
+// ── READING NOW ───────────────────────────────────────────────
+function renderReadingNow(){
+  const reading=books.filter(b=>b.status==='reading');
+  const sec=document.getElementById('reading-now-section');const card=document.getElementById('reading-now-card');
+  if(!reading.length){sec.style.display='none';return;}
+  sec.style.display='block';const b=reading[0];
+  const prog=b.progress_pages&&b.total_pages?Math.round(b.progress_pages/b.total_pages*100):0;
+  card.innerHTML=`<div class="reading-now-cover" style="background:${b.color||'#8B6F47'}">${b.cover_url?`<img src="${esc(b.cover_url)}" alt="">`:''}</div><div class="reading-now-body"><div class="reading-now-label"><span class="reading-pulse"></span> En progreso</div><div class="reading-now-title">${esc(b.title)}</div><div class="reading-now-author">${esc(b.author)}</div>${b.total_pages?`<div class="progress-row"><span class="progress-label">Progreso</span><span class="progress-pct">${prog}%</span></div><div class="progress-bar-track"><div class="progress-bar-fill" style="width:${prog}%"></div></div><div style="font-size:11px;color:var(--muted);margin-top:4px">${b.progress_pages||0} de ${b.total_pages} páginas</div>`:''}<div class="progress-inputs"><input type="number" id="prog-current" placeholder="Pág." value="${b.progress_pages||''}" min="0"><span>de</span><input type="number" id="prog-total" placeholder="Total" value="${b.total_pages||''}" min="1"><button onclick="saveProgress(${b.id})">Actualizar</button></div></div>`;
+}
+async function saveProgress(id){
+  const cur=parseInt(document.getElementById('prog-current').value)||0;
+  const tot=parseInt(document.getElementById('prog-total').value)||0;
+  if(!tot){showToast('Añade el total de páginas','rose-toast');return;}
+  const token=currentSession?.access_token||SUPA_KEY;
+  try{await supaFetch('biblioteca?id=eq.'+id,'PATCH',{progress_pages:cur,total_pages:tot},token);const b=books.find(x=>x.id===id);if(b){b.progress_pages=cur;b.total_pages=tot;}renderReadingNow();showToast('Progreso guardado ✓','mint-toast');}
+  catch(e){showToast('Error al guardar progreso','rose-toast');}
+}
+
+// ── QUOTE OF DAY ──────────────────────────────────────────────
 function showQuoteOfDay(){
   const allQuotes=books.flatMap(b=>parseQuotes(b.quotes).map(q=>({...q,book:b.title,author:b.author})));
   if(!allQuotes.length)return;
   const today=new Date().toDateString();
-  const lastShown=localStorage.getItem('bib_qod_date_'+currentUser?.id);
-  if(lastShown===today)return;
+  if(localStorage.getItem('bib_qod_date_'+currentUser?.id)===today)return;
   const q=allQuotes[Math.floor(Math.random()*allQuotes.length)];
   document.getElementById('qod-text').textContent='"'+q.text+'"';
   document.getElementById('qod-book').textContent='— '+q.book+', '+q.author;
-  const splash=document.getElementById('qod-splash');
-  splash.style.display='flex';
+  const splash=document.getElementById('qod-splash');splash.style.display='flex';
   localStorage.setItem('bib_qod_date_'+currentUser?.id,today);
 }
+function closeQod(){const splash=document.getElementById('qod-splash');splash.style.opacity='0';splash.style.transition='opacity 0.4s';setTimeout(()=>splash.style.display='none',400)}
 
-function closeQod(){
-  const splash=document.getElementById('qod-splash');
-  splash.style.opacity='0';
-  splash.style.transition='opacity 0.4s';
-  setTimeout(()=>splash.style.display='none',400);
-}
-
-// ── DEDICATORIA ────────────────────────────────────────────────
+// ── DEDICATORIA ───────────────────────────────────────────────
 function openDedicatoria(){document.getElementById('dedicatoria-overlay').classList.add('open')}
 function closeDedicatoria(){document.getElementById('dedicatoria-overlay').classList.remove('open')}
 
-// ── ENTER KEY SUPPORT ──────────────────────────────────────────
+// ── TOAST ─────────────────────────────────────────────────────
+function showToast(msg,cls){
+  const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(cls||'');
+  t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+// ── ENTER KEY ─────────────────────────────────────────────────
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'){
-    if(document.getElementById('form-login').style.display!=='none'&&
-       document.getElementById('auth-screen').style.display!=='none')doLogin();
-    else if(document.getElementById('form-register').style.display!=='none'&&
-            document.getElementById('auth-screen').style.display!=='none')doRegister();
+    if(document.getElementById('form-login').style.display!=='none'&&document.getElementById('auth-screen').style.display!=='none')doLogin();
+    else if(document.getElementById('form-register').style.display!=='none'&&document.getElementById('auth-screen').style.display!=='none')doRegister();
   }
 });
 
