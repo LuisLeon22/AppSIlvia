@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mi Biblioteca">
+<link rel="apple-touch-icon" sizes="180x180" href="LOGO APP.png">
 <title>Mi Biblioteca</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
@@ -603,7 +604,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
   <div class="auth-card">
     <div class="auth-header">
       <div style="text-align:center">
-        <div class="auth-logo">Biblioteca</div>
+        <div class="auth-logo">♥ Biblioteca silvita ♥</div>
         <div class="auth-tagline">mi diario literario</div>
       </div>
     </div>
@@ -616,43 +617,43 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 
       <!-- Login -->
       <div id="form-login">
-        <p class="auth-title serif">¡Bienvenida de vuelta!</p>
-        <p class="auth-sub">Ingresa con tu correo para ver tu biblioteca</p>
+        <p class="auth-title serif">¡Bienvenida mi amorcito!</p>
+        <p class="auth-sub">Pon aqui tu correo para ver tu biblioteca</p>
         <div class="auth-error" id="login-error"></div>
         <div class="auth-field">
           <label>Correo electrónico</label>
-          <input type="email" id="login-nick" placeholder="tu@correo.com" autocomplete="email" autocapitalize="none">
+          <input type="email" id="login-nick" placeholder="ejemplo@jotomail.com" autocomplete="email" autocapitalize="none">
         </div>
         <div class="auth-field">
           <label>Contraseña</label>
-          <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
+          <input type="password" id="login-pass" placeholder="Contraseña123" autocomplete="current-password">
         </div>
         <button class="auth-btn" id="btn-login" onclick="doLogin()">Entrar a mi biblioteca</button>
       </div>
 
       <!-- Register -->
       <div id="form-register" style="display:none">
-        <p class="auth-title serif">Crea tu espacio</p>
-        <p class="auth-sub">Regístrate con tu correo y elige una contraseña. Si la olvidas puedes recuperarla por email 🤍</p>
+        <p class="auth-title serif">Crea tu espacio, mi amor</p>
+        <p class="auth-sub">Regístrate con tu correo y pon una contraseña. y no la olvides porfi, si no luego vemos como la recuperamos jeje 🤍</p>
         <div class="auth-error" id="reg-error"></div>
         <div class="auth-field">
-          <label>Tu nombre</label>
-          <input type="text" id="reg-nick" placeholder="ej. Silvia" autocomplete="given-name" autocapitalize="words">
-          <p class="auth-hint">Así te saludaremos dentro de la app</p>
+          <label>Tu nombrecito</label>
+          <input type="text" id="reg-nick" placeholder="for exempo. Silvita" autocomplete="given-name" autocapitalize="words">
+          <p class="auth-hint">Para que la app te llame asi siempre</p>
         </div>
         <div class="auth-field">
-          <label>Correo electrónico</label>
-          <input type="email" id="reg-email" placeholder="tu@correo.com" autocomplete="email" autocapitalize="none">
+          <label>Tu correo </label>
+          <input type="email" id="reg-email" placeholder="ejemplo@jotomail.com" autocomplete="email" autocapitalize="none">
         </div>
         <div class="auth-field">
           <label>Contraseña</label>
-          <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+          <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres, parito" autocomplete="new-password">
         </div>
         <div class="auth-field">
           <label>Confirmar contraseña</label>
-          <input type="password" id="reg-pass2" placeholder="Repite tu contraseña" autocomplete="new-password">
+          <input type="password" id="reg-pass2" placeholder="Repite tu contraseña, parito x2" autocomplete="new-password">
         </div>
-        <button class="auth-btn" id="btn-register" onclick="doRegister()">Crear mi biblioteca</button>
+        <button class="auth-btn" id="btn-register" onclick="doRegister()">Crear mi biblioteca, ¡Yei!</button>
       </div>
     </div>
   </div>
@@ -677,29 +678,29 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
     <nav class="nav">
       <div class="nav-section">Mi biblioteca</div>
       <div class="nav-item active" onclick="showPage('library')" id="nav-library">
-        <span class="nav-icon">📚</span> Mi colección
+        <span class="nav-icon">📚</span> Mi colección de lecturas
       </div>
       <div class="nav-item" onclick="showPage('quotes')" id="nav-quotes">
-        <span class="nav-icon">✦</span> Citas favoritas
+        <span class="nav-icon">✦</span> Mis citas favoritas
       </div>
       <div class="nav-section">Descubrir</div>
       <div class="nav-item" onclick="showPage('authors')" id="nav-authors">
-        <span class="nav-icon">✍️</span> Autores
+        <span class="nav-icon">✍️</span> Autoras y autores
       </div>
       <div class="nav-item" onclick="showPage('stats')" id="nav-stats">
-        <span class="nav-icon">◎</span> Estadísticas
+        <span class="nav-icon">◎</span> Estadísticas ñoñitas
       </div>
       <div class="nav-section">Personal</div>
       <div class="nav-item" onclick="showPage('notas')" id="nav-notas">
-        <span class="nav-icon">🖊</span> Mis notas
+        <span class="nav-icon">🖊</span> Mis notitas
       </div>
     </nav>
     <!-- Dedicatoria button -->
     <div class="dedicatoria-btn" onclick="openDedicatoria()">
       <span class="dedicatoria-icon">💌</span>
       <div class="dedicatoria-label">
-        <strong>Para Silvia — abrir</strong>
-        <span>Un mensaje especial</span>
+        <strong>Para mi amorcito Silvia</strong>
+        <span>Picale aqui jeje</span>
       </div>
       <span class="dedicatoria-arrow">›</span>
     </div>
@@ -721,7 +722,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       <div class="page-header" style="margin-top:20px">
         <div class="page-header-text">
           <h2 class="serif">Mi Colección</h2>
-          <p>Todos los libros que han pasado por tus manos</p>
+          <p>Todos los libros que han pasado por tus manitas</p>
         </div>
         <button class="btn-primary" onclick="openModal()">+ Añadir libro</button>
       </div>
@@ -749,7 +750,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       <div class="page-header">
         <div class="page-header-text">
           <h2 class="serif">Citas Favoritas</h2>
-          <p>Palabras que te han marcado</p>
+          <p>Se lo mucho que te encanta poner Post Its para tus citas en tus libros</p>
         </div>
       </div>
       <div class="quotes-grid" id="quotes-grid"></div>
@@ -760,10 +761,10 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       <div class="stats-page">
         <div style="margin-bottom:24px">
           <h2 class="serif" style="font-size:34px;font-weight:300">Estadísticas</h2>
-          <p style="font-size:13px;color:var(--muted)">Tu historia como lectora</p>
+          <p style="font-size:13px;color:var(--muted)">Tu historia como lectora, por si te ayuda de algo ver estadisticas jaja</p>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-number" id="st-total">0</div><div class="stat-label">Total libros</div></div>
+          <div class="stat-card"><div class="stat-number" id="st-total">0</div><div class="stat-label">Total de libros</div></div>
           <div class="stat-card"><div class="stat-number rose" id="st-read">0</div><div class="stat-label">Leídos</div></div>
           <div class="stat-card"><div class="stat-number mint" id="st-avg">—</div><div class="stat-label">Puntuación media</div></div>
           <div class="stat-card"><div class="stat-number" id="st-quotes">0</div><div class="stat-label">Citas guardadas</div></div>
@@ -779,7 +780,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       <div class="authors-page">
         <div style="margin-bottom:24px">
           <h2 class="serif" style="font-size:34px;font-weight:300">Autores</h2>
-          <p style="font-size:13px;color:var(--muted)">Los escritores que han vivido en tus manos</p>
+          <p style="font-size:13px;color:var(--muted)">Los escritores que han vivido en tus manos y tanto te han hecho sentir ♥</p>
         </div>
         <div id="authors-list"></div>
       </div>
@@ -790,10 +791,10 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       <div class="notas-page">
         <div style="margin-bottom:20px">
           <h2 class="serif" style="font-size:34px;font-weight:300">Mis Notas</h2>
-          <p style="font-size:13px;color:var(--muted)">Pensamientos libres, ideas literarias, reflexiones</p>
+          <p style="font-size:13px;color:var(--muted)">Aqui eres libre de escribir todo lo que quieras, pienses, ideas, mas citas, pensamientos libres, reflexiones, lo que quieras mi amor.</p>
         </div>
         <div class="nota-composer">
-          <textarea id="nota-input" placeholder="Escribe lo que sientes, lo que piensas, lo que imaginas..."></textarea>
+          <textarea id="nota-input" placeholder="Escribe lo que sientes, lo que tu corazoncito de diga ..."></textarea>
           <div class="nota-composer-footer">
             <button class="btn-primary" onclick="saveNota()" style="padding:8px 18px;font-size:12px">Guardar nota</button>
           </div>
@@ -836,7 +837,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
           <div id="photo-placeholder">
             <div class="photo-upload-icon">🖼️</div>
             <div class="photo-upload-text" style="margin-bottom:14px">
-              <strong>Añadir foto de portada</strong>
+              <strong>Añadir foto de portada a tu libro</strong>
             </div>
             <div style="display:flex;gap:10px;justify-content:center">
               <button type="button" onclick="document.getElementById('photo-input-gallery').click()" style="background:var(--rose-pale);color:var(--rose-deep);border:1.5px solid var(--rose-light);padding:8px 16px;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500">📂 Galería</button>
@@ -849,23 +850,23 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       </div>
 
       <div class="form-row" style="margin-bottom:0">
-        <div class="form-group"><label>Título *</label><input id="f-title" placeholder="El nombre del libro"></div>
-        <div class="form-group"><label>Autor *</label><input id="f-author" placeholder="Nombre del autor"></div>
+        <div class="form-group"><label>Titulo del libro *</label><input id="f-title" placeholder="El nombre del libro"></div>
+        <div class="form-group"><label>Autora o autor *</label><input id="f-author" placeholder="Nombre de la autora o autor"></div>
       </div>
       <div class="form-row" style="margin-bottom:0">
         <div class="form-group"><label>Editorial</label><input id="f-publisher" placeholder="Editorial"></div>
-        <div class="form-group"><label>Año</label><input id="f-year" type="number" placeholder="2024" min="1000" max="2099"></div>
+        <div class="form-group"><label>Año de publicación</label><input id="f-year" type="number" placeholder="ej.1521" min="1000" max="2099"></div>
       </div>
       <div class="form-row" style="margin-bottom:0">
         <div class="form-group">
           <label>Género</label>
           <select id="f-genre">
             <option value="">Seleccionar...</option>
-            <option>Ficción literaria</option><option>Ciencia ficción</option>
+            <option>Ficción literaria</option><option>Novela</option>
             <option>Romance</option><option>Misterio/Thriller</option>
-            <option>Fantasía</option><option>No ficción</option>
+            <option>Fantasía</option><option>Filosofia</option>
             <option>Historia</option><option>Ensayo</option>
-            <option>Poesía</option><option>Clásico</option><option>Otro</option>
+            <option>Poesía</option><option>Clásico</option><option>Auto biografia</option><option>Otro</option>
           </select>
         </div>
         <div class="form-group">
@@ -901,8 +902,8 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
         </div>
       </div>
       <div class="form-group">
-        <label>Mi reseña / diario</label>
-        <textarea id="f-review" rows="4" placeholder="¿Qué te pareció? ¿Cómo te hizo sentir? Escribe libremente..."></textarea>
+        <label>Mi reseña, opinion, diario etc</label>
+        <textarea id="f-review" rows="4" placeholder="¿Qué te pareció? ¿Cómo te hizo sentir? Escribe libremente (depsues puedes venir a escribir mas ntp)..."></textarea>
       </div>
       <div class="form-group">
         <label>Citas favoritas</label>
@@ -912,14 +913,16 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       <div class="form-group" id="feeling-group">
         <label>Este libro me hizo sentir...</label>
         <div class="feelings-grid">
-          <button type="button" class="feeling-btn" data-f="lloré" onclick="selectFeeling(this)">😢 lloré</button>
-          <button type="button" class="feeling-btn" data-f="me inspiró" onclick="selectFeeling(this)">✨ me inspiró</button>
-          <button type="button" class="feeling-btn" data-f="me enojó" onclick="selectFeeling(this)">😤 me enojó</button>
-          <button type="button" class="feeling-btn" data-f="me cambió" onclick="selectFeeling(this)">🌀 me cambió</button>
-          <button type="button" class="feeling-btn" data-f="me reconfortó" onclick="selectFeeling(this)">🤗 me reconfortó</button>
-          <button type="button" class="feeling-btn" data-f="me inquietó" onclick="selectFeeling(this)">😶 me inquietó</button>
-          <button type="button" class="feeling-btn" data-f="me enamoré" onclick="selectFeeling(this)">🩷 me enamoré</button>
-          <button type="button" class="feeling-btn" data-f="me maravilló" onclick="selectFeeling(this)">🌟 me maravilló</button>
+          <button type="button" class="feeling-btn" data-f="lloré" onclick="selectFeeling(this)">😢 Lloré</button>
+          <button type="button" class="feeling-btn" data-f="me inspiró" onclick="selectFeeling(this)">✨ Me inspiró</button>
+          <button type="button" class="feeling-btn" data-f="me enojó" onclick="selectFeeling(this)">😤 Me enojó</button>
+          <button type="button" class="feeling-btn" data-f="me cambió" onclick="selectFeeling(this)">🌀 Me cambió</button>
+          <button type="button" class="feeling-btn" data-f="me reconfortó" onclick="selectFeeling(this)">🤗 Me reconfortó</button>
+          <button type="button" class="feeling-btn" data-f="me inquietó" onclick="selectFeeling(this)">😶 Me inquietó</button>
+          <button type="button" class="feeling-btn" data-f="me enamoré" onclick="selectFeeling(this)">🩷 Me enamoré</button>
+          <button type="button" class="feeling-btn" data-f="me maravilló" onclick="selectFeeling(this)">🌟 Me maravilló</button>
+          <button type="button" class="feeling-btn" data-f="me maravilló" onclick="selectFeeling(this)">😴 Me decepciono esperaba más😒</button>
+          <button type="button" class="feeling-btn" data-f="me maravilló" onclick="selectFeeling(this)">😒 Mehh</button>
         </div>
       </div>
     </div>
@@ -935,7 +938,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
   <div class="dedicatoria-card">
     <div class="dedicatoria-card-header">
       <div class="dedicatoria-card-title">un mensaje para</div>
-      <div class="dedicatoria-card-name">Silvia</div>
+      <div class="dedicatoria-card-name">El amor de mi vida, Silvia</div>
     </div>
     <div class="dedicatoria-card-body">
       <span class="dedicatoria-flowers">🌸 🌿 🌸</span>
