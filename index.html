@@ -406,16 +406,22 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .dedicatoria-flowers{font-size:24px;letter-spacing:8px;display:block;margin-bottom:14px;text-align:center}
 
 /* ── SIDEBAR COLAPSABLE ── */
+.sidebar{transition:width 0.3s cubic-bezier(0.4,0,0.2,1)}
+.sidebar.collapsed{width:0;min-width:0;padding:0;overflow:hidden}
+/* Botón siempre visible en esquina superior izquierda */
 .sidebar-toggle{
-  position:absolute;right:-14px;top:50%;transform:translateY(-50%);
-  width:28px;height:28px;border-radius:50%;background:var(--ink);
-  border:2px solid rgba(255,255,255,0.12);color:rgba(250,247,242,0.6);
-  cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;
-  z-index:10;transition:all 0.2s;
+  position:fixed;
+  top:calc(16px + env(safe-area-inset-top));
+  left:16px;
+  width:36px;height:36px;border-radius:10px;
+  background:var(--ink);border:1.5px solid rgba(255,255,255,0.15);
+  color:rgba(250,247,242,0.7);cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  z-index:200;transition:all 0.2s;
+  box-shadow:0 2px 8px rgba(0,0,0,0.3);
 }
 .sidebar-toggle:hover{background:var(--rose);color:white;border-color:var(--rose)}
-.sidebar.collapsed{width:0;min-width:0;padding:0;overflow:hidden}
-.sidebar.collapsed .sidebar-toggle{right:-32px;background:var(--ink);border-color:rgba(255,255,255,0.12)}
+/* Cuando sidebar está abierto, el botón va dentro del sidebar visualmente */
 .app{position:relative}
 
 /* ── FONT SIZE INCREASE (sutil ~10%) ── */
@@ -531,9 +537,10 @@ body{font-size:15px}
 
 <!-- APP -->
 <div class="app" id="app">
+  <!-- Botón toggle sidebar - siempre visible -->
+  <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" title="Menú">☰</button>
   <!-- Sidebar (tablet/desktop) -->
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-toggle" onclick="toggleSidebar()" id="sidebar-toggle" title="Contraer menú">‹</div>
     <div class="sidebar-inner">
       <div class="sidebar-logo">
         <h1>Biblioteca</h1>
@@ -1287,8 +1294,8 @@ function toggleSidebar(){
   const sb=document.getElementById('sidebar');
   const btn=document.getElementById('sidebar-toggle');
   const collapsed=sb.classList.toggle('collapsed');
-  btn.textContent=collapsed?'›':'‹';
-  btn.title=collapsed?'Expandir menú':'Contraer menú';
+  btn.textContent=collapsed?'☰':'✕';
+  btn.title=collapsed?'Abrir menú':'Cerrar menú';
 }
 
 // ── DEDICATORIA ───────────────────────────────────────────────
