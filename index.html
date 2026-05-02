@@ -140,15 +140,15 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .sync-dot{width:5px;height:5px;border-radius:50%;background:var(--star);flex-shrink:0;transition:background 0.3s}
 .sync-dot.ok{background:#7AB580}.sync-dot.err{background:var(--rose)}
 .sync-lbl{font-size:10px;color:rgba(250,247,242,0.3);letter-spacing:0.3px}
-.nav{padding:16px 0}
-.nav-section{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,247,242,0.25);padding:0 20px;margin-bottom:6px;margin-top:12px}
-.nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;cursor:pointer;transition:all 0.2s;border-left:3px solid transparent;font-size:13px;color:rgba(250,247,242,0.55)}
+.nav{padding:20px 0}
+.nav-section{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,247,242,0.25);padding:0 20px;margin-bottom:8px;margin-top:20px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:13px 20px;cursor:pointer;transition:all 0.2s;border-left:3px solid transparent;font-size:14px;color:rgba(250,247,242,0.55)}
 .nav-item:hover{background:rgba(255,255,255,0.05);color:#FAF7F2}
 .nav-item.active{background:rgba(196,120,138,0.15);color:#FAF7F2;border-left-color:var(--rose)}
-.nav-icon{font-size:15px;width:18px;text-align:center}
-.sidebar-stats{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08)}
-.stat-pill{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.stat-pill span:first-child{font-size:11px;color:rgba(250,247,242,0.4)}
+.nav-icon{font-size:16px;width:20px;text-align:center}
+.sidebar-stats{padding:20px;border-top:1px solid rgba(255,255,255,0.08)}
+.stat-pill{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.stat-pill span:first-child{font-size:12px;color:rgba(250,247,242,0.4)}
 .badge{background:var(--rose);color:white;font-size:10px;padding:1px 7px;border-radius:10px;font-weight:600}
 .badge.mint{background:var(--mint-deep)}
 
@@ -406,22 +406,35 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .dedicatoria-flowers{font-size:24px;letter-spacing:8px;display:block;margin-bottom:14px;text-align:center}
 
 /* ── SIDEBAR COLAPSABLE ── */
-.sidebar{transition:width 0.3s cubic-bezier(0.4,0,0.2,1)}
-.sidebar.collapsed{width:0;min-width:0;padding:0;overflow:hidden}
-/* Botón siempre visible en esquina superior izquierda */
-.sidebar-toggle{
-  position:fixed;
-  top:calc(16px + env(safe-area-inset-top));
-  left:16px;
-  width:36px;height:36px;border-radius:10px;
-  background:var(--ink);border:1.5px solid rgba(255,255,255,0.15);
-  color:rgba(250,247,242,0.7);cursor:pointer;font-size:16px;
-  display:flex;align-items:center;justify-content:center;
-  z-index:200;transition:all 0.2s;
-  box-shadow:0 2px 8px rgba(0,0,0,0.3);
+.sidebar{transition:width 0.3s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden}
+.sidebar.collapsed{width:56px}
+.sidebar.collapsed .sidebar-inner > *:not(.sidebar-toggle-row){opacity:0;pointer-events:none;transition:opacity 0.15s}
+.sidebar.collapsed .sidebar-toggle-row{justify-content:center;padding:0;border:none;margin-bottom:0}
+.sidebar.collapsed .toggle-label{display:none}
+
+/* Toggle integrado en el sidebar */
+.sidebar-toggle-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,0.08);
+  margin-bottom:0;transition:all 0.3s;
 }
-.sidebar-toggle:hover{background:var(--rose);color:white;border-color:var(--rose)}
-/* Cuando sidebar está abierto, el botón va dentro del sidebar visualmente */
+.sidebar-toggle-btn{
+  width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.07);
+  border:none;color:rgba(250,247,242,0.5);cursor:pointer;font-size:15px;
+  display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;
+}
+.sidebar-toggle-btn:hover{background:rgba(196,120,138,0.25);color:var(--rose-light)}
+.toggle-label{font-size:10px;color:rgba(250,247,242,0.25);letter-spacing:2px;text-transform:uppercase}
+
+/* Collapsed: mostrar solo iconos en nav */
+.sidebar.collapsed .nav-item{justify-content:center;padding:12px 0;border-left:none}
+.sidebar.collapsed .nav-item span:last-child{display:none}
+.sidebar.collapsed .nav-section{display:none}
+.sidebar.collapsed .sidebar-stats{display:none}
+.sidebar.collapsed .dedicatoria-btn{margin:12px 8px 0;padding:10px 8px;justify-content:center}
+.sidebar.collapsed .dedicatoria-label,.sidebar.collapsed .dedicatoria-arrow{display:none}
+.sidebar.collapsed .sidebar-toggle-row{padding:16px 0 16px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.sidebar.collapsed .nav-item.active{background:rgba(196,120,138,0.15);border-radius:8px;margin:0 6px}
 .app{position:relative}
 
 /* ── FONT SIZE INCREASE (sutil ~10%) ── */
@@ -537,13 +550,16 @@ body{font-size:15px}
 
 <!-- APP -->
 <div class="app" id="app">
-  <!-- Botón toggle sidebar - siempre visible -->
-  <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" title="Menú">☰</button>
-  <!-- Sidebar (tablet/desktop) -->
+  <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-inner">
       <div class="sidebar-logo">
-        <h1>Biblioteca</h1>
+        <!-- Toggle integrado -->
+        <div class="sidebar-toggle-row">
+          <span class="toggle-label">Menú</span>
+          <button class="sidebar-toggle-btn" id="sidebar-toggle" onclick="toggleSidebar()" title="Contraer">◀</button>
+        </div>
+        <h1 style="margin-top:20px">Biblioteca</h1>
         <p>mi diario literario</p>
         <div class="user-chip">
           <div class="user-avatar" id="user-avatar">?</div>
@@ -1294,8 +1310,8 @@ function toggleSidebar(){
   const sb=document.getElementById('sidebar');
   const btn=document.getElementById('sidebar-toggle');
   const collapsed=sb.classList.toggle('collapsed');
-  btn.textContent=collapsed?'☰':'✕';
-  btn.title=collapsed?'Abrir menú':'Cerrar menú';
+  btn.textContent=collapsed?'▶':'◀';
+  btn.title=collapsed?'Expandir':'Contraer';
 }
 
 // ── DEDICATORIA ───────────────────────────────────────────────
