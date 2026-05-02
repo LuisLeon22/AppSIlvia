@@ -593,7 +593,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
         <button class="filter-btn" onclick="filterBooks('wishlist',this)">♡ Lista</button>
         <div class="search-box">
           <span class="search-icon">⌕</span>
-          <input type="text" id="search" placeholder="Buscar libro o autor..." oninput="renderBooks()">
+          <input type="text" id="search" placeholder="Buscar libro o autora/autor..." oninput="renderBooks()">
         </div>
       </div>
       <div class="books-grid" id="books-grid">
@@ -624,7 +624,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
     <!-- Authors -->
     <div id="page-authors" style="display:none">
       <div class="authors-page">
-        <div style="margin-bottom:24px"><h2 class="serif" style="font-size:34px;font-weight:300">Autores</h2><p style="font-size:13px;color:var(--muted)">Los escritores que han vivido en tus manos y tanto te han hecho sentir ♥</p></div>
+        <div style="margin-bottom:24px"><h2 class="serif" style="font-size:34px;font-weight:300">Autoras/Autores</h2><p style="font-size:13px;color:var(--muted)">Las escritoras y escritores que han vivido en tus manitass y tanto te han hecho sentir ♥</p></div>
         <div id="authors-list"></div>
       </div>
     </div>
@@ -644,7 +644,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 <div class="bottom-nav" id="bottom-nav">
   <div class="bottom-nav-item active" onclick="showPage('library')" id="bnav-library"><span class="bnav-icon">📚</span><span class="bnav-label">Colección</span></div>
   <div class="bottom-nav-item" onclick="showPage('quotes')" id="bnav-quotes"><span class="bnav-icon">✦</span><span class="bnav-label">Citas</span></div>
-  <div class="bottom-nav-item" onclick="showPage('authors')" id="bnav-authors"><span class="bnav-icon">✍️</span><span class="bnav-label">Autores</span></div>
+  <div class="bottom-nav-item" onclick="showPage('authors')" id="bnav-authors"><span class="bnav-icon">✍️</span><span class="bnav-label">Autoras/Autores</span></div>
   <div class="bottom-nav-item" onclick="showPage('notas')" id="bnav-notas"><span class="bnav-icon">🖊</span><span class="bnav-label">Notas</span></div>
   <div class="bottom-nav-item" onclick="showPage('stats')" id="bnav-stats"><span class="bnav-icon">◎</span><span class="bnav-label">Stats</span></div>
 </div>
@@ -681,7 +681,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
       </div>
       <div class="form-row" style="margin-bottom:0">
         <div class="form-group"><label>Titulo del libro *</label><input id="f-title" placeholder="El nombre del libro"></div>
-        <div class="form-group"><label>Autora o autor *</label><input id="f-author" placeholder="Nombre de la autora o autor"></div>
+        <div class="form-group"><label>Autora/Autor *</label><input id="f-author" placeholder="Nombre de la autora o autor"></div>
       </div>
       <div class="form-row" style="margin-bottom:0">
         <div class="form-group"><label>Editorial</label><input id="f-publisher" placeholder="Editorial"></div>
@@ -765,12 +765,22 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
     </div>
     <div class="dedicatoria-card-body">
       <span class="dedicatoria-flowers">🌸 🌿 🌸</span>
-      <p class="dedicatoria-text">Aquí va tu dedicatoria.
-Puedes escribir lo que quieras,
-con todo el espacio que necesites.
+      <p class="dedicatoria-text">Silvia, mi amor:
 
-Este es tu lugar, hecho con cariño
-para ti y tus libros.</p>
+Tú sabes que lo mío no son los poemas ni las cartas; que, por más que quiera, mis palabras no siempre son exactas.
+Qué más quisiera yo que tener esa habilidad que tanto admiras en tus autoras y autores favoritos. Siempre he envidiado la dicción de aquellos que, con sus palabras, te han llevado al límite de tus emociones.
+
+Qué más quisiera poder describir poéticamente cómo me hace sentir esa primera mirada que nos damos los sábados por la tarde, o el oírte reír y todo lo que eso provoca en mí. Ver tus fotos y sentir esa necesidad de tenerte cerca, porque me inunda la ternura de tu carita.
+
+Pero ya lo acepté… no se me da.
+Afortunadamente, alguna vez leí que:
+“Las palabras nunca alcanzan cuando lo que hay que decir desborda el alma”.
+
+Y esta pequeña app es la manera en la que, en mi idioma, a mi estilo ñoño pero con mucho cariño, intento decirte todo eso. Porque ni las más de 1500 líneas de este código bastan para siquiera acercarme a expresarte cuánto te amo.
+
+Disfruta tu app. Es tuya, solo para ti. Nadie más la tiene.
+
+Y si alguna vez encuentras algún error, no es la app… soy yo, que sigo aprendiendo a amarte mejor cada día.</p>
       <p class="dedicatoria-firma">— Con amor, Luis 🤍</p>
       <div style="height:20px"></div>
       <button class="dedicatoria-close" onclick="closeDedicatoria()">Cerrar</button>
@@ -1123,7 +1133,7 @@ function setFeeling(f){
 async function saveBook(){
   const title=(document.getElementById('f-title').value||'').trim();
   const author=(document.getElementById('f-author').value||'').trim();
-  if(!title||!author){showToast('Por favor añade título y autor','rose-toast');return}
+  if(!title||!author){showToast('Por favor añade título y Autora/Autor','rose-toast');return}
   const btn=document.getElementById('btn-save');btn.disabled=true;btn.textContent='Guardando...';setSyncStatus('loading');
   try{
     let cover_url=pendingPhotoUrl||null;
@@ -1203,7 +1213,7 @@ function renderAuthors(){
   const authorMap={};books.forEach(b=>{if(!authorMap[b.author])authorMap[b.author]=[];authorMap[b.author].push(b)});
   const sorted=Object.entries(authorMap).sort((a,b)=>b[1].length-a[1].length);
   const list=document.getElementById('authors-list');
-  if(!sorted.length){list.innerHTML='<div class="empty-state"><div class="empty-state-icon">✍️</div><p>Ningún autor todavía</p><small>Añade libros para ver a tus autores aquí</small></div>';return;}
+  if(!sorted.length){list.innerHTML='<div class="empty-state"><div class="empty-state-icon">✍️</div><p>Ningúna autora o autor todavía</p><small>Añade libros para ver a tus autoras/autores aquí</small></div>';return;}
   list.innerHTML=sorted.map(([author,abooks])=>{
     const rated=abooks.filter(b=>b.rating>0);
     const avg=rated.length?(rated.reduce((s,b)=>s+b.rating,0)/rated.length).toFixed(1):null;
