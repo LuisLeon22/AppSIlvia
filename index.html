@@ -21,36 +21,8 @@
   --safe-top:env(safe-area-inset-top);--safe-bottom:env(safe-area-inset-bottom);
   --safe-left:env(safe-area-inset-left);--safe-right:env(safe-area-inset-right);
 }
-html{height:-webkit-fill-available}
 html,body{height:100%;overflow:hidden}
 body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--ink);-webkit-font-smoothing:antialiased}
-
-/* Standalone mode (app guardada en escritorio) - safe areas reales */
-@media all and (display-mode: standalone){
-  :root{
-    --safe-top:env(safe-area-inset-top);
-    --safe-bottom:env(safe-area-inset-bottom);
-  }
-  /* iPad standalone: sidebar llena hasta el fondo real */
-  .sidebar{
-    padding-bottom:calc(20px + env(safe-area-inset-bottom)) !important;
-  }
-  /* iPhone standalone: main respeta barra de inicio real */
-  .main{
-    padding-bottom:calc(60px + env(safe-area-inset-bottom)) !important;
-  }
-  /* Bottom nav sobre la barra de inicio */
-  .bottom-nav{
-    padding-bottom:calc(4px + env(safe-area-inset-bottom)) !important;
-  }
-}
-
-/* Safari normal: safe-area-inset-bottom = 0 porque la barra de Safari lo compensa */
-@media not all and (display-mode: standalone){
-  :root{
-    --safe-bottom:0px;
-  }
-}
 h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 
 /* ── AUTH ── */
@@ -80,16 +52,18 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .auth-decoration{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--rose-pale),var(--mint-pale));margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:26px}
 
 /* ── APP LAYOUT ── */
-.app{display:flex;height:100vh;height:100dvh;min-height:-webkit-fill-available;opacity:0;transition:opacity 0.4s}
+.app{display:flex;height:100dvh;opacity:0;transition:opacity 0.4s}
 .app.visible{opacity:1}
 
-/* ── SIDEBAR (tablet/desktop) ── */
+/* ── SIDEBAR ── */
 .sidebar{
   width:240px;background:var(--ink);
   padding-top:calc(24px + env(safe-area-inset-top));
-  padding-left:env(safe-area-inset-left);
-  display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;
-  padding-bottom:calc(16px + env(safe-area-inset-bottom));
+  padding-bottom:calc(20px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;flex-shrink:0;
+  overflow-y:auto;overflow-x:hidden;
+  /* Extend background to very bottom on iPad standalone */
+  box-shadow:0 100vh 0 100vh var(--ink);
 }
 .sidebar-inner{display:flex;flex-direction:column;flex:1;}
 .main{flex:1;overflow-y:auto;background:var(--cream);padding-top:env(safe-area-inset-top)}
@@ -414,18 +388,57 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 /* ── DEDICATORIA MODAL ── */
 .dedicatoria-overlay{position:fixed;inset:0;background:rgba(42,31,21,0.6);z-index:500;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)}
 .dedicatoria-overlay.open{display:flex}
-.dedicatoria-card{background:var(--cream);border-radius:24px;width:100%;max-width:480px;overflow:hidden;box-shadow:var(--shadow-lg);animation:card-in 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+.dedicatoria-card{
+  background:var(--cream);border-radius:24px;width:100%;max-width:480px;
+  max-height:85vh;display:flex;flex-direction:column;
+  box-shadow:var(--shadow-lg);animation:card-in 0.4s cubic-bezier(0.34,1.56,0.64,1);overflow:hidden;
+}
 @keyframes card-in{from{transform:scale(0.8) translateY(20px);opacity:0}to{transform:none;opacity:1}}
-.dedicatoria-card-header{background:var(--ink);padding:32px 32px 24px;text-align:center;position:relative}
+.dedicatoria-card-header{background:var(--ink);padding:28px 32px 20px;text-align:center;position:relative;flex-shrink:0}
 .dedicatoria-card-header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:20px;background:var(--cream);border-radius:20px 20px 0 0}
 .dedicatoria-card-title{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--mid-brown);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
-.dedicatoria-card-name{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:#FAF7F2;letter-spacing:1px}
-.dedicatoria-card-body{padding:28px 32px 32px}
-.dedicatoria-text{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;line-height:2;color:var(--ink);white-space:pre-wrap;margin-bottom:24px}
-.dedicatoria-firma{font-size:14px;color:var(--rose-deep);font-weight:500;text-align:right;margin-top:8px}
-.dedicatoria-close{width:100%;padding:13px;background:var(--ink);color:var(--cream);border:none;border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:opacity 0.2s}
+.dedicatoria-card-name{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:#FAF7F2;letter-spacing:1px}
+.dedicatoria-card-body{padding:24px 32px 28px;overflow-y:auto;flex:1}
+.dedicatoria-text{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;line-height:2;color:var(--ink);white-space:pre-wrap;margin-bottom:20px}
+.dedicatoria-firma{font-size:14px;color:var(--rose-deep);font-weight:500;text-align:right;margin-top:8px;margin-bottom:20px}
+.dedicatoria-close{width:100%;padding:13px;background:var(--ink);color:var(--cream);border:none;border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:opacity 0.2s;flex-shrink:0}
 .dedicatoria-close:hover{opacity:0.85}
-.dedicatoria-flowers{font-size:28px;letter-spacing:8px;display:block;margin-bottom:16px;text-align:center}
+.dedicatoria-flowers{font-size:24px;letter-spacing:8px;display:block;margin-bottom:14px;text-align:center}
+
+/* ── SIDEBAR COLAPSABLE ── */
+.sidebar-toggle{
+  position:absolute;right:-14px;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:50%;background:var(--ink);
+  border:2px solid rgba(255,255,255,0.12);color:rgba(250,247,242,0.6);
+  cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;
+  z-index:10;transition:all 0.2s;
+}
+.sidebar-toggle:hover{background:var(--rose);color:white;border-color:var(--rose)}
+.sidebar.collapsed{width:0;min-width:0;padding:0;overflow:hidden}
+.sidebar.collapsed .sidebar-toggle{right:-32px;background:var(--ink);border-color:rgba(255,255,255,0.12)}
+.app{position:relative}
+
+/* ── FONT SIZE INCREASE (sutil ~10%) ── */
+body{font-size:15px}
+.nav-item{font-size:14px}
+.book-author{font-size:12px}
+.cover-title{font-size:17px}
+.tag{font-size:11px}
+.filter-btn{font-size:13px}
+.search-box input{font-size:14px}
+.panel-author{font-size:16px}
+.panel-meta{font-size:13px}
+.review-text{font-size:16px}
+.quote-text{font-size:16px}
+.quote-card-text{font-size:17px}
+.quote-card-book{font-size:13px}
+.quote-card-author{font-size:12px}
+.nota-text{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--ink);line-height:1.75;white-space:pre-wrap}
+.reading-now-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;color:var(--ink);margin-bottom:2px;line-height:1.2}
+.reading-now-author{font-size:13px;color:var(--muted);margin-bottom:12px}
+.author-name{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:400;color:var(--ink);margin-bottom:4px}
+.author-meta{font-size:13px}
+.stat-label{font-size:12px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
 
 /* ── QUOTE OF DAY ── */
 .qod-splash{position:fixed;inset:0;background:var(--ink);z-index:900;display:flex;align-items:center;justify-content:center;padding:40px;opacity:0;animation:qod-in 0.6s ease 0.2s forwards}
@@ -519,7 +532,8 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 <!-- APP -->
 <div class="app" id="app">
   <!-- Sidebar (tablet/desktop) -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-toggle" onclick="toggleSidebar()" id="sidebar-toggle" title="Contraer menú">‹</div>
     <div class="sidebar-inner">
       <div class="sidebar-logo">
         <h1>Biblioteca</h1>
@@ -1267,6 +1281,15 @@ function showQuoteOfDay(){
   localStorage.setItem('bib_qod_date_'+currentUser?.id,today);
 }
 function closeQod(){const splash=document.getElementById('qod-splash');splash.style.opacity='0';splash.style.transition='opacity 0.4s';setTimeout(()=>splash.style.display='none',400)}
+
+// ── SIDEBAR TOGGLE ────────────────────────────────────────────
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');
+  const btn=document.getElementById('sidebar-toggle');
+  const collapsed=sb.classList.toggle('collapsed');
+  btn.textContent=collapsed?'›':'‹';
+  btn.title=collapsed?'Expandir menú':'Contraer menú';
+}
 
 // ── DEDICATORIA ───────────────────────────────────────────────
 function openDedicatoria(){document.getElementById('dedicatoria-overlay').classList.add('open')}
