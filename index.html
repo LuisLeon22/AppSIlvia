@@ -419,7 +419,7 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .sidebar.collapsed .user-chip,
 .sidebar.collapsed .sync-row,
 .sidebar.collapsed .nav-section,
-.sidebar.collapsed .nav-item span:not(.nav-icon),
+.sidebar.collapsed .nav-text,
 .sidebar.collapsed .sidebar-stats,
 .sidebar.collapsed .dedicatoria-label,
 .sidebar.collapsed .dedicatoria-arrow,
@@ -427,16 +427,19 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
   display:none;
 }
 .sidebar.collapsed .nav-item{
-  justify-content:center;padding:13px 0;border-left:none;
+  justify-content:center;padding:14px 0;border-left:none;gap:0;
+}
+.sidebar.collapsed .nav-icon{
+  font-size:20px;width:auto;
 }
 .sidebar.collapsed .nav-item.active{
-  background:rgba(196,120,138,0.15);border-radius:8px;margin:0 6px;
+  background:rgba(196,120,138,0.2);border-radius:10px;margin:0 8px;
 }
 .sidebar.collapsed .dedicatoria-btn{
-  margin:12px 4px;padding:10px 0;justify-content:center;
+  margin:12px 8px;padding:12px 0;justify-content:center;
 }
 .sidebar.collapsed .sidebar-toggle-row{
-  justify-content:center;padding:0 0 16px 0;border-bottom:1px solid rgba(255,255,255,0.08);
+  justify-content:center;padding:0 0 16px 0;
 }
 .app{position:relative}
 
@@ -576,13 +579,13 @@ body{font-size:15px}
       </div>
       <nav class="nav">
         <div class="nav-section">Mi biblioteca</div>
-        <div class="nav-item active" onclick="showPage('library')" id="nav-library"><span class="nav-icon">📚</span> Mi colección de lecturas</div>
-        <div class="nav-item" onclick="showPage('quotes')" id="nav-quotes"><span class="nav-icon">✦</span> Mis citas favoritas</div>
+        <div class="nav-item active" onclick="showPage('library')" id="nav-library"><span class="nav-icon">📚</span><span class="nav-text"> Mi colección de lecturas</span></div>
+        <div class="nav-item" onclick="showPage('quotes')" id="nav-quotes"><span class="nav-icon">✦</span><span class="nav-text"> Mis citas favoritas</span></div>
         <div class="nav-section">Descubrir</div>
-        <div class="nav-item" onclick="showPage('authors')" id="nav-authors"><span class="nav-icon">✍️</span> Autoras y autores</div>
-        <div class="nav-item" onclick="showPage('stats')" id="nav-stats"><span class="nav-icon">◎</span> Estadísticas ñoñitas</div>
+        <div class="nav-item" onclick="showPage('authors')" id="nav-authors"><span class="nav-icon">✍️</span><span class="nav-text"> Autoras y autores</span></div>
+        <div class="nav-item" onclick="showPage('stats')" id="nav-stats"><span class="nav-icon">◎</span><span class="nav-text"> Estadísticas ñoñitas</span></div>
         <div class="nav-section">Personal</div>
-        <div class="nav-item" onclick="showPage('notas')" id="nav-notas"><span class="nav-icon">🖊</span> Mis notitas</div>
+        <div class="nav-item" onclick="showPage('notas')" id="nav-notas"><span class="nav-icon">🖊</span><span class="nav-text"> Mis notitas</span></div>
       </nav>
       <div class="dedicatoria-btn" onclick="openDedicatoria()">
         <span class="dedicatoria-icon">💌</span>
