@@ -64,7 +64,54 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
   overflow-y:auto;overflow-x:hidden;
 }
 .sidebar-inner{display:flex;flex-direction:column;flex:1;}
-.main{flex:1;overflow-y:auto;background:var(--cream);padding-top:env(safe-area-inset-top)}
+
+/* ── FONDO TIPO PAPEL ── */
+.main{
+  flex:1;overflow-y:auto;
+  background-color:var(--cream);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+  padding-top:env(safe-area-inset-top);
+}
+
+/* ── ANIMACIONES TARJETAS ── */
+@keyframes card-fade-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.book-card{animation:card-fade-up 0.4s ease both}
+.book-card:nth-child(1){animation-delay:0.04s}
+.book-card:nth-child(2){animation-delay:0.08s}
+.book-card:nth-child(3){animation-delay:0.12s}
+.book-card:nth-child(4){animation-delay:0.16s}
+.book-card:nth-child(5){animation-delay:0.20s}
+.book-card:nth-child(6){animation-delay:0.24s}
+.book-card:nth-child(7){animation-delay:0.28s}
+.book-card:nth-child(8){animation-delay:0.32s}
+.book-card:nth-child(n+9){animation-delay:0.36s}
+
+/* ── PORTADA SIN FOTO - INICIALES ── */
+.cover-initials{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.cover-initial-letter{font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:300;color:rgba(255,255,255,0.4);line-height:1}
+.cover-initial-line{width:36px;height:1px;background:rgba(255,255,255,0.2)}
+.cover-initial-author{font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:1.5px;text-transform:uppercase;text-align:center;padding:0 12px}
+
+/* ── ESTRELLAS ANIMADAS ── */
+@keyframes star-pop{0%{transform:scale(1)}40%{transform:scale(1.6)}70%{transform:scale(0.88)}100%{transform:scale(1)}}
+.star-input span.popping{animation:star-pop 0.3s ease}
+
+/* ── VISTA LISTA/GRID ── */
+.view-toggle{display:flex;gap:3px;background:white;border-radius:8px;padding:3px;border:1.5px solid var(--border);margin-left:6px}
+.view-btn{width:28px;height:28px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all 0.2s}
+.view-btn.active{background:var(--rose);color:white}
+.books-grid.list-view{grid-template-columns:1fr;gap:10px}
+.books-grid.list-view .book-card{display:flex;flex-direction:row;height:88px}
+.books-grid.list-view .book-cover{width:64px;min-width:64px;height:88px;flex-shrink:0;border-radius:0}
+.books-grid.list-view .cover-title,.books-grid.list-view .book-cover-gradient,.books-grid.list-view .cover-initials{display:none}
+.books-grid.list-view .book-info{display:flex;flex-direction:column;justify-content:center;padding:10px 16px}
+.books-grid.list-view .book-author{font-size:12px;margin-bottom:4px}
+.books-grid.list-view .stars{margin-bottom:4px}
+
+/* ── STATS CONTADOR ANIMADO ── */
+@keyframes num-pop{from{opacity:0;transform:scale(0.7) translateY(6px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.stat-number.pop{animation:num-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both}
 
 /* ── BOTTOM NAV (iPhone) ── */
 .bottom-nav{display:none}
@@ -634,6 +681,10 @@ body{font-size:15px}
         <button class="filter-btn" onclick="filterBooks('read',this)">✓ Leídos</button>
         <button class="filter-btn" onclick="filterBooks('reading',this)">◉ Leyendo</button>
         <button class="filter-btn" onclick="filterBooks('wishlist',this)">♡ Lista</button>
+        <div class="view-toggle">
+          <button class="view-btn active" id="view-grid" onclick="setView('grid')" title="Cuadrícula">⊞</button>
+          <button class="view-btn" id="view-list" onclick="setView('list')" title="Lista">☰</button>
+        </div>
         <div class="search-box">
           <span class="search-icon">⌕</span>
           <input type="text" id="search" placeholder="Buscar libro o autora/autor..." oninput="renderBooks()">
@@ -1009,10 +1060,14 @@ function renderBooks(){
   filtered.sort((a,b)=>a.author.localeCompare(b.author,'es'));
   const grid=document.getElementById('books-grid');
   if(!filtered.length){grid.innerHTML=`<div class="empty-state"><div class="empty-state-icon">📖</div><p>Ningún libro aquí todavía</p><small>Añade tu primer libro con el botón de arriba</small></div>`;return;}
-  grid.innerHTML=filtered.map(b=>`
-    <div class="book-card" onclick="openDetail(${b.id})">
+  grid.innerHTML=filtered.map(b=>{
+    const initial=b.title.trim().charAt(0).toUpperCase();
+    const coverContent=b.cover_url
+      ?`<img src="${esc(b.cover_url)}" alt="${esc(b.title)}" loading="lazy">`
+      :`<div class="cover-initials"><div class="cover-initial-letter">${initial}</div><div class="cover-initial-line"></div><div class="cover-initial-author">${esc(b.author.split(' ').slice(-1)[0])}</div></div>`;
+    return`<div class="book-card" onclick="openDetail(${b.id})">
       <div class="book-cover" style="background:${b.color||'#8B6F47'}">
-        ${b.cover_url?`<img src="${esc(b.cover_url)}" alt="${esc(b.title)}" loading="lazy">`:''}
+        ${coverContent}
         <div class="book-cover-gradient"></div>
         <div class="cover-title">${esc(b.title)}</div>
       </div>
@@ -1024,7 +1079,8 @@ function renderBooks(){
           ${b.genre?`<span class="tag tag-genre">${esc(b.genre)}</span>`:''}
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function renderStars(n){return[1,2,3,4,5].map(i=>`<span class="star${i<=n?' filled':''}">${i<=n?'★':'☆'}</span>`).join('')}
@@ -1087,7 +1143,7 @@ function openModal(editId){
   document.getElementById('modal').classList.add('open');
 }
 function closeModal(){document.getElementById('modal').classList.remove('open')}
-function setRating(n){selectedRating=n;document.querySelectorAll('#star-input span').forEach((s,i)=>{s.textContent=i<n?'★':'☆';s.style.color=i<n?'#D4A853':'#ccc'})}
+function setRating(n){selectedRating=n;document.querySelectorAll('#star-input span').forEach((s,i)=>{s.textContent=i<n?'★':'☆';s.style.color=i<n?'#D4A853':'#ccc';if(i<n){s.classList.remove('popping');void s.offsetWidth;s.classList.add('popping');}})}
 function pickColor(c,el){selectedColor=c;document.querySelectorAll('.color-swatch').forEach(d=>d.classList.remove('selected'));if(el)el.classList.add('selected');else document.querySelectorAll('.color-swatch').forEach(d=>{if(d.style.background===c)d.classList.add('selected')})}
 
 // ── PHOTO ─────────────────────────────────────────────────────
@@ -1233,14 +1289,35 @@ function renderQuotes(){
   }).join('');
 }
 
+function animateCount(el, target, suffix){
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow to restart animation
+  el.classList.add('pop');
+  if(typeof target==='number'&&target>0){
+    let start=0;const dur=600;const step=16;
+    const inc=target/(dur/step);
+    const timer=setInterval(()=>{
+      start=Math.min(start+inc,target);
+      el.textContent=Math.floor(start)+(suffix||'');
+      if(start>=target){el.textContent=target+(suffix||'');clearInterval(timer);}
+    },step);
+  } else {
+    el.textContent=target;
+  }
+}
+
 function renderStats(){
   const read=books.filter(b=>b.status==='read');
   const rated=read.filter(b=>b.rating>0);
   const avg=rated.length?(rated.reduce((s,b)=>s+b.rating,0)/rated.length).toFixed(1):0;
-  document.getElementById('st-total').textContent=books.length;
-  document.getElementById('st-read').textContent=read.length;
-  document.getElementById('st-avg').textContent=rated.length?avg+'★':'—';
-  document.getElementById('st-quotes').textContent=books.reduce((s,b)=>s+parseQuotes(b.quotes).length,0);
+  const totalQuotes=books.reduce((s,b)=>s+parseQuotes(b.quotes).length,0);
+  setTimeout(()=>{
+    animateCount(document.getElementById('st-total'),books.length);
+    animateCount(document.getElementById('st-read'),read.length);
+    if(rated.length){animateCount(document.getElementById('st-avg'),parseFloat(avg),'★');}
+    else document.getElementById('st-avg').textContent='—';
+    animateCount(document.getElementById('st-quotes'),totalQuotes);
+  },100);
   const genres={};books.forEach(b=>{if(b.genre)genres[b.genre]=(genres[b.genre]||0)+1});
   const sorted=Object.entries(genres).sort((a,b)=>b[1]-a[1]).slice(0,7);const max=sorted[0]?sorted[0][1]:1;
   document.getElementById('genre-chart').innerHTML=sorted.length?sorted.map(([g,c],i)=>`<div class="bar-row"><span class="bar-label">${esc(g)}</span><div class="bar-track"><div class="bar-fill${i%2===0?'':' mint'}" style="width:${Math.round(c/max*100)}%"></div></div><span class="bar-count">${c}</span></div>`).join(''):'<p style="color:var(--muted);font-size:14px">Añade libros con género para ver el gráfico</p>';
@@ -1310,6 +1387,16 @@ function showQuoteOfDay(){
   localStorage.setItem('bib_qod_date_'+currentUser?.id,today);
 }
 function closeQod(){const splash=document.getElementById('qod-splash');splash.style.opacity='0';splash.style.transition='opacity 0.4s';setTimeout(()=>splash.style.display='none',400)}
+
+// ── VIEW TOGGLE ───────────────────────────────────────────────
+let currentView='grid';
+function setView(v){
+  currentView=v;
+  const grid=document.getElementById('books-grid');
+  grid.classList.toggle('list-view',v==='list');
+  document.getElementById('view-grid').classList.toggle('active',v==='grid');
+  document.getElementById('view-list').classList.toggle('active',v==='list');
+}
 
 // ── SIDEBAR TOGGLE ────────────────────────────────────────────
 function toggleSidebar(){
