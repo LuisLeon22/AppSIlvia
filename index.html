@@ -174,9 +174,71 @@ h1,h2,h3,h4,.serif{font-family:'Cormorant Garamond',serif}
 .sidebar-logo{padding:0 20px 24px;border-bottom:1px solid rgba(255,255,255,0.08)}
 .sidebar-logo h1{font-size:26px;color:#FAF7F2;font-weight:300;letter-spacing:0.5px}
 .sidebar-logo p{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:2px;text-transform:uppercase}
-.user-chip{display:flex;align-items:center;gap:8px;margin-top:12px;background:rgba(255,255,255,0.06);border-radius:8px;padding:7px 10px}
-.user-avatar{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--rose-light));display:flex;align-items:center;justify-content:center;font-size:11px;color:white;font-weight:600;flex-shrink:0}
-.user-name{font-size:12px;color:rgba(250,247,242,0.7);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.user-chip{display:flex;align-items:center;gap:8px;margin-top:12px;background:rgba(255,255,255,0.06);border-radius:8px;padding:7px 10px;cursor:pointer;transition:all 0.2s}
+.user-chip:hover{background:rgba(255,255,255,0.10)}
+.user-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--rose),var(--rose-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:white;font-weight:600;flex-shrink:0;
+  overflow:hidden;border:2px solid rgba(255,255,255,0.15);
+  position:relative;transition:all 0.2s;
+}
+.user-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.user-avatar-edit{
+  position:absolute;inset:0;background:rgba(42,31,21,0.55);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity 0.2s;font-size:12px;
+}
+.user-chip:hover .user-avatar-edit{opacity:1}
+
+/* Avatar upload modal */
+.avatar-overlay{position:fixed;inset:0;background:rgba(42,31,21,0.6);z-index:600;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)}
+.avatar-overlay.open{display:flex}
+.avatar-modal{background:white;border-radius:20px;padding:28px;width:100%;max-width:340px;text-align:center;box-shadow:var(--shadow-lg)}
+.avatar-modal h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin-bottom:6px}
+.avatar-modal p{font-size:13px;color:var(--muted);margin-bottom:24px}
+.avatar-preview-wrap{
+  width:100px;height:100px;border-radius:50%;margin:0 auto 20px;
+  background:linear-gradient(135deg,var(--rose-pale),var(--mint-pale));
+  border:3px solid var(--border);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;font-size:36px;
+}
+.avatar-preview-wrap img{width:100%;height:100%;object-fit:cover}
+.avatar-btns{display:flex;flex-direction:column;gap:10px}
+.avatar-btn{
+  padding:11px;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;
+  cursor:pointer;font-weight:500;border:1.5px solid var(--border);
+  background:var(--cream);color:var(--ink);transition:all 0.2s;
+}
+.avatar-btn:hover{background:var(--rose-pale);border-color:var(--rose-light);color:var(--rose-deep)}
+.avatar-btn.primary{background:var(--rose);color:white;border-color:var(--rose)}
+.avatar-btn.primary:hover{background:var(--rose-deep)}
+.avatar-btn.danger{color:var(--rose-deep);border-color:var(--rose-light)}
+.avatar-btn.danger:hover{background:var(--rose-pale)}
+
+/* QOD mejorado con foto y saludo */
+.qod-splash{position:fixed;inset:0;background:var(--ink);z-index:900;display:flex;align-items:center;justify-content:center;padding:40px;opacity:0;animation:qod-in 0.6s ease 0.2s forwards}
+@keyframes qod-in{to{opacity:1}}
+.qod-card{max-width:520px;text-align:center;width:100%}
+.qod-avatar{
+  width:80px;height:80px;border-radius:50%;margin:0 auto 16px;
+  background:linear-gradient(135deg,var(--rose),var(--rose-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:32px;color:white;font-weight:600;
+  overflow:hidden;border:3px solid rgba(255,255,255,0.15);
+}
+.qod-avatar img{width:100%;height:100%;object-fit:cover}
+.qod-greeting{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:#FAF7F2;margin-bottom:6px}
+.qod-subgreeting{font-size:13px;color:var(--muted);margin-bottom:32px;font-style:italic}
+.qod-divider{width:40px;height:1px;background:rgba(255,255,255,0.15);margin:0 auto 28px}
+.qod-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.qod-text{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:#FAF7F2;line-height:1.7;margin-bottom:14px}
+@media(max-width:680px){.qod-text{font-size:18px}.qod-greeting{font-size:24px}}
+.qod-book{font-size:12px;color:var(--mid-brown);margin-bottom:36px}
+.qod-btn{background:transparent;border:1.5px solid rgba(250,247,242,0.2);color:rgba(250,247,242,0.6);padding:12px 32px;border-radius:30px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+.qod-btn:hover{border-color:var(--rose-light);color:var(--rose-light)}
+.qod-flowers{font-size:20px;letter-spacing:4px;display:block;margin-bottom:20px;opacity:0.5}.user-name{font-size:12px;color:rgba(250,247,242,0.7);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .user-logout{font-size:10px;color:var(--muted);cursor:pointer;padding:2px 4px;border-radius:4px;transition:color 0.2s}
 .user-logout:hover{color:var(--rose-light)}
 .sync-row{display:flex;align-items:center;gap:5px;margin-top:8px}
@@ -612,10 +674,13 @@ body{font-size:15px}
         </div>
         <h1 style="margin-top:20px">Biblioteca</h1>
         <p>mi diario literario</p>
-        <div class="user-chip">
-          <div class="user-avatar" id="user-avatar">?</div>
+        <div class="user-chip" onclick="openAvatarModal()">
+          <div class="user-avatar" id="user-avatar">
+            <span id="user-avatar-initial">?</span>
+            <div class="user-avatar-edit">📷</div>
+          </div>
           <span class="user-name" id="user-name-display">—</span>
-          <span class="user-logout" onclick="doLogout()" title="Cerrar sesión">✕</span>
+          <span class="user-logout" onclick="event.stopPropagation();doLogout()" title="Cerrar sesión">✕</span>
         </div>
         <div class="sync-row">
           <span class="sync-dot" id="sync-dot"></span>
@@ -877,11 +942,33 @@ Y si alguna vez encuentras algún error, no es la app… soy yo, que sigo aprend
 <!-- Quote of Day -->
 <div class="qod-splash" id="qod-splash" style="display:none">
   <div class="qod-card">
-    <span class="qod-flowers">🌸 🌿 🌸</span>
-    <div class="qod-label">Cita del día</div>
+    <div class="qod-avatar" id="qod-avatar"><span id="qod-avatar-initial">?</span></div>
+    <div class="qod-greeting" id="qod-greeting"></div>
+    <div class="qod-subgreeting" id="qod-subgreeting"></div>
+    <div class="qod-divider"></div>
+    <div class="qod-label">Cita del día ✦</div>
     <p class="qod-text" id="qod-text"></p>
     <p class="qod-book" id="qod-book"></p>
     <button class="qod-btn" onclick="closeQod()">Entrar a mi biblioteca →</button>
+  </div>
+</div>
+
+<!-- Avatar Modal -->
+<div class="avatar-overlay" id="avatar-overlay" onclick="if(event.target===this)closeAvatarModal()">
+  <div class="avatar-modal">
+    <h3 class="serif">Tu foto de perfil</h3>
+    <p>Se verá en el sidebar y en la pantalla de bienvenida</p>
+    <div class="avatar-preview-wrap" id="avatar-preview-wrap">
+      <span id="avatar-modal-initial">?</span>
+    </div>
+    <input type="file" id="avatar-input-gallery" accept="image/*" onchange="handleAvatarPhoto(event)" style="display:none">
+    <input type="file" id="avatar-input-camera" accept="image/*" capture="environment" onchange="handleAvatarPhoto(event)" style="display:none">
+    <div class="avatar-btns">
+      <button class="avatar-btn" onclick="document.getElementById('avatar-input-gallery').click()">📂 Elegir de galería</button>
+      <button class="avatar-btn" onclick="document.getElementById('avatar-input-camera').click()">📷 Tomar foto</button>
+      <button class="avatar-btn danger" id="avatar-remove-btn" onclick="removeAvatar()" style="display:none">🗑 Quitar foto</button>
+      <button class="avatar-btn primary" onclick="closeAvatarModal()">Listo</button>
+    </div>
   </div>
 </div>
 
@@ -986,8 +1073,11 @@ function enterApp(nick){
   document.getElementById('auth-screen').style.display='none';
   document.getElementById('app').classList.add('visible');
   const initial=nick.charAt(0).toUpperCase();
-  document.getElementById('user-avatar').textContent=initial;
+  document.getElementById('user-avatar-initial').textContent=initial;
   document.getElementById('user-name-display').textContent=nick;
+  document.getElementById('avatar-modal-initial').textContent=initial;
+  document.getElementById('qod-avatar-initial').textContent=initial;
+  loadAvatar();
   loadBooks().then(()=>showQuoteOfDay());
 }
 
@@ -1380,19 +1470,139 @@ async function saveProgress(id){
   catch(e){showToast('Error al guardar progreso','rose-toast');}
 }
 
+// ── AVATAR ────────────────────────────────────────────────────
+function avatarKey(){return 'bib_avatar_'+(currentUser?.id||'');}
+
+function loadAvatar(){
+  const url=localStorage.getItem(avatarKey());
+  if(url){
+    setAvatarImage(url);
+    document.getElementById('avatar-remove-btn').style.display='block';
+  }
+}
+
+function setAvatarImage(url){
+  // Sidebar avatar
+  const av=document.getElementById('user-avatar');
+  let img=av.querySelector('img');
+  if(!img){img=document.createElement('img');av.insertBefore(img,av.firstChild);}
+  img.src=url;
+  document.getElementById('user-avatar-initial').style.display='none';
+  // QOD avatar
+  const qav=document.getElementById('qod-avatar');
+  let qimg=qav.querySelector('img');
+  if(!qimg){qimg=document.createElement('img');qav.insertBefore(qimg,qav.firstChild);}
+  qimg.src=url;
+  document.getElementById('qod-avatar-initial').style.display='none';
+  // Modal preview
+  const pw=document.getElementById('avatar-preview-wrap');
+  let pimg=pw.querySelector('img');
+  if(!pimg){pimg=document.createElement('img');pimg.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%';pw.insertBefore(pimg,pw.firstChild);}
+  pimg.src=url;
+  document.getElementById('avatar-modal-initial').style.display='none';
+}
+
+function clearAvatarImage(){
+  ['user-avatar','qod-avatar'].forEach(id=>{
+    const el=document.getElementById(id);
+    const img=el.querySelector('img');
+    if(img)img.remove();
+  });
+  document.getElementById('user-avatar-initial').style.display='';
+  document.getElementById('qod-avatar-initial').style.display='';
+  const pw=document.getElementById('avatar-preview-wrap');
+  const pimg=pw.querySelector('img');
+  if(pimg)pimg.remove();
+  document.getElementById('avatar-modal-initial').style.display='';
+}
+
+function handleAvatarPhoto(e){
+  const file=e.target.files[0];if(!file)return;
+  compressImage(file,0.85,blob=>{
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      const url=ev.target.result;
+      localStorage.setItem(avatarKey(),url);
+      setAvatarImage(url);
+      document.getElementById('avatar-remove-btn').style.display='block';
+      showToast('Foto de perfil actualizada ✓','mint-toast');
+    };
+    reader.readAsDataURL(blob);
+  });
+  e.target.value='';
+}
+
+function removeAvatar(){
+  localStorage.removeItem(avatarKey());
+  clearAvatarImage();
+  document.getElementById('avatar-remove-btn').style.display='none';
+  showToast('Foto eliminada');
+}
+
+function openAvatarModal(){document.getElementById('avatar-overlay').classList.add('open')}
+function closeAvatarModal(){document.getElementById('avatar-overlay').classList.remove('open')}
+
+// ── FRASES DE BIENVENIDA ──────────────────────────────────────
+function getGreeting(nick){
+  const h=new Date().getHours();
+  const name=nick||'Silvia';
+  let time,emoji;
+  if(h>=6&&h<12){time='Buenos días';emoji='☀️';}
+  else if(h>=12&&h<18){time='Buenas tardes';emoji='🌸';}
+  else if(h>=18&&h<22){time='Buenas noches';emoji='🌙';}
+  else{time='Hola';emoji='✨';}
+
+  const frases=[
+    `${time}, ${name} ${emoji}`,
+    `${name}, qué bueno que estás aquí, te amo ${emoji}`,
+    `¡${name}! Tu biblioteca te esperaba ${emoji}`,
+    `Holaaa, ${name} ${emoji}`,
+    `${time}, mi vida preciosa ${emoji}`,
+  ];
+  return frases[Math.floor(Math.random()*frases.length)];
+}
+
+function getSubgreeting(){
+  const subs=[
+    '¿Qué libro agregaras hoy?',
+    'Tu próxima historia favorita te está esperando.',
+    'Hoy es un buen día para leer.',
+  ];
+  return subs[Math.floor(Math.random()*subs.length)];
+}
+
 // ── QUOTE OF DAY ──────────────────────────────────────────────
 function showQuoteOfDay(){
   const allQuotes=books.flatMap(b=>parseQuotes(b.quotes).map(q=>({...q,book:b.title,author:b.author})));
-  if(!allQuotes.length)return;
   const today=new Date().toDateString();
-  if(localStorage.getItem('bib_qod_date_'+currentUser?.id)===today)return;
-  const q=allQuotes[Math.floor(Math.random()*allQuotes.length)];
-  document.getElementById('qod-text').textContent='"'+q.text+'"';
-  document.getElementById('qod-book').textContent='— '+q.book+', '+q.author;
-  const splash=document.getElementById('qod-splash');splash.style.display='flex';
+  const lastShown=localStorage.getItem('bib_qod_date_'+currentUser?.id);
+  if(lastShown===today)return;
+
+  // Greeting always shows, quote only if there are quotes
+  document.getElementById('qod-greeting').textContent=getGreeting(currentUser?.nick);
+  document.getElementById('qod-subgreeting').textContent=getSubgreeting();
+
+  if(allQuotes.length){
+    const q=allQuotes[Math.floor(Math.random()*allQuotes.length)];
+    document.getElementById('qod-text').textContent='"'+q.text+'"';
+    document.getElementById('qod-book').textContent='— '+q.book+', '+q.author;
+  }else{
+    // No quotes yet — hide the quote section gracefully
+    document.getElementById('qod-text').textContent='Añade citas a tus libros y aquí aparecerán cada día 🌸';
+    document.getElementById('qod-book').textContent='';
+  }
+
+  const splash=document.getElementById('qod-splash');
+  splash.style.display='flex';
   localStorage.setItem('bib_qod_date_'+currentUser?.id,today);
 }
-function closeQod(){const splash=document.getElementById('qod-splash');splash.style.opacity='0';splash.style.transition='opacity 0.4s';setTimeout(()=>splash.style.display='none',400)}
+
+function closeQod(){
+  const splash=document.getElementById('qod-splash');
+  splash.style.opacity='0';
+  splash.style.transition='opacity 0.4s';
+  setTimeout(()=>splash.style.display='none',400);
+}
 
 // ── VIEW TOGGLE ───────────────────────────────────────────────
 let currentView='grid';
